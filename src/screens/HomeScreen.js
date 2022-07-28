@@ -24,7 +24,7 @@ export default function HomeScreen() {
         <title>Shopping now</title>
       </Helmet>
       {products.map((product) => (
-        <div className='col col-2'>
+        <div key={product._id} className='col col-2'>
           <Product product={product} />
         </div>
       ))}
