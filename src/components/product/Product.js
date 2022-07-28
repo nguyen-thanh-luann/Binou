@@ -6,15 +6,14 @@ import Rating from '../rating/Rating'
 
 import './Product.scss'
 export default function Product({ product }) {
-  console.log('product card: ' + product)
   return (
-    <Card className="cart">
-      <Link to={`/product/${product.id}`}>
-        <img src={product.image} className="card-img-top img-fluid" alt="" />
+    <Card className='cart'>
+      <Link to={`/product/${product._id}`}>
+        <img src={product.image} className='card-img-top img-fluid' alt='' />
       </Link>
       <Card.Body>
         <Link
-          className="cart-title"
+          className='cart-title'
           style={{ textDecoration: 'none', color: '#000' }}
           to={`/product/${product._id}`}
         >
@@ -22,13 +21,14 @@ export default function Product({ product }) {
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews} />
         <Card.Text>${product.price}</Card.Text>
+        <p>{product.description}</p>
         {product.countInStock === 0 ? (
-          <Button variant="danger" disabled>
+          <Button variant='danger' disabled>
             Out of stock
           </Button>
         ) : (
-          <Button variant="warning">
-            <i className="fa-solid fa-plus me-2"></i>
+          <Button variant='warning'>
+            <i className='fa-solid fa-plus me-2'></i>
             Add to cart
           </Button>
         )}

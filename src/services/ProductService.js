@@ -4,4 +4,8 @@ const getAllProducts = () => {
   return api.get('/product')
 }
 
-export { getAllProducts }
+const getProductById = async (id) => {
+  return await api.get(`/product/${id}`)
+}
+
+export { getAllProducts, getProductById }
