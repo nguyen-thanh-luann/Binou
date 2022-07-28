@@ -1,3 +1,4 @@
+import './Rating.scss'
 export default function Rating(props) {
   const { rating, numReviews, caption } = props
   return (
