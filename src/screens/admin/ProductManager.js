@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { getAllProducts, addNewProduct } from '../../services/ProductService'
+import {
+  getAllProducts,
+  addNewProduct,
+  deleteProductById,
+} from '../../services/ProductService'
 
 export default function ProductManager() {
   const [products, setProducts] = useState()
@@ -10,6 +14,7 @@ export default function ProductManager() {
   const [productPrice, setProductPrice] = useState()
   const [productCountInStock, setProductCountInStock] = useState()
   const [productDescription, setProductDescription] = useState('')
+  const [productImage, setProductImage] = useState()
 
   const loadProducts = () => {
     getAllProducts()
@@ -43,9 +48,40 @@ export default function ProductManager() {
     setProductPrice('')
     setProductCountInStock('')
     setProductDescription('')
+    setProductImage(null)
   }
 
-  const addProduct = () => {}
+  const addProduct = () => {
+    const newPro = {
+      name: productName,
+      category: productCategory,
+      brand: productBrand,
+      price: productPrice,
+      countInStock: productCountInStock,
+      description: productDescription,
+      image:
+        'https://res.cloudinary.com/imthanhluan/image/upload/v1658936257/qy5jgepzdlksabr8l32e.webp',
+      images: [],
+      rating: 0,
+      numReviews: 0,
+      reviews: [],
+    }
+    addNewProduct(newPro)
+      .then((res) => {
+        console.log(res)
+        loadProducts()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const deleteProduct = (id) => {
+    deleteProductById(id).then((res) => {
+      console.log(res)
+      loadProducts()
+    })
+  }
 
   return (
     <div className='row mt-5 mx-0 p-4'>
@@ -105,7 +141,16 @@ export default function ProductManager() {
                       style={{ content: '', border: '1px solid #ccc' }}
                       className='mx-2'
                     ></span>
-                    <i className='fa-solid fa-trash text-danger delete-btn'></i>
+                    <i
+                      className='fa-solid fa-trash text-danger delete-btn'
+                      onClick={() => {
+                        if (window.confirm(`delete ${product.name} ?`)) {
+                          deleteProduct(product._id)
+                        } else {
+                          return
+                        }
+                      }}
+                    ></i>
                   </td>
                 </tr>
               ))}
@@ -133,66 +178,98 @@ export default function ProductManager() {
                   ></button>
                 </div>
                 <div className='modal-body'>
-                  <div>
-                    <label htmlFor='productName'>Name</label>
-                    <input
-                      id='productName'
-                      className='form-control'
-                      type='text'
-                      value={productName}
-                      onChange={(e) => setProductName(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor='productCategory'>Category</label>
-                    <input
-                      id='productCategory'
-                      className='form-control'
-                      type='text'
-                      value={productCategory}
-                      onChange={(e) => setProductCategory(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor='productBrand'>Brand</label>
-                    <input
-                      id='productBrand'
-                      className='form-control'
-                      type='text'
-                      value={productBrand}
-                      onChange={(e) => setProductBrand(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor='productPrice'>Price</label>
-                    <input
-                      id='productPrice'
-                      className='form-control'
-                      type='number'
-                      value={productPrice}
-                      onChange={(e) => setProductPrice(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor='productCountInStock'>Stock</label>
-                    <input
-                      id='productCountInStock'
-                      className='form-control'
-                      type='number'
-                      value={productCountInStock}
-                      onChange={(e) => setProductCountInStock(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor='productDescription'>Description</label>
-                    <textarea
-                      id='productDescription'
-                      className='form-control'
-                      type='number'
-                      value={productDescription}
-                      onChange={(e) => setProductDescription(e.target.value)}
-                    ></textarea>
-                  </div>
+                  <form>
+                    <div>
+                      <label htmlFor='productName'>Name</label>
+                      <input
+                        id='productName'
+                        className='form-control'
+                        type='text'
+                        value={productName}
+                        onChange={(e) => setProductName(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor='productCategory'>Category</label>
+                      <input
+                        id='productCategory'
+                        className='form-control'
+                        type='text'
+                        value={productCategory}
+                        onChange={(e) => setProductCategory(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor='productBrand'>Brand</label>
+                      <input
+                        id='productBrand'
+                        className='form-control'
+                        type='text'
+                        value={productBrand}
+                        onChange={(e) => setProductBrand(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor='productPrice'>Price</label>
+                      <input
+                        id='productPrice'
+                        className='form-control'
+                        type='number'
+                        value={productPrice}
+                        onChange={(e) => setProductPrice(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor='productCountInStock'>Stock</label>
+                      <input
+                        id='productCountInStock'
+                        className='form-control'
+                        type='number'
+                        value={productCountInStock}
+                        onChange={(e) => setProductCountInStock(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor='productDescription'>Description</label>
+                      <textarea
+                        id='productDescription'
+                        className='form-control'
+                        type='number'
+                        value={productDescription}
+                        onChange={(e) => setProductDescription(e.target.value)}
+                      ></textarea>
+                    </div>
+                    <div>
+                      <label htmlFor='productImage'>Photo</label>
+                      <input
+                        id='productImage'
+                        type='file'
+                        className='form-control'
+                        onChange={(e) => {
+                          let url = URL.createObjectURL(e.target.files[0])
+                          setProductImage(url)
+                        }}
+                      />
+                      <div className='d-flex'>
+                        {productImage && (
+                          <img
+                            src={productImage}
+                            alt=''
+                            className='img-fluid'
+                            style={{
+                              width: '25%',
+                              margin: '1rem auto 0',
+                            }}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </form>
                 </div>
                 <div className='modal-footer'>
                   <button
@@ -207,7 +284,12 @@ export default function ProductManager() {
                       Update
                     </button>
                   ) : (
-                    <button type='button' className='btn btn-success'>
+                    <button
+                      type='button'
+                      className='btn btn-success'
+                      onClick={addProduct}
+                      data-bs-dismiss='modal'
+                    >
                       Add
                     </button>
                   )}
