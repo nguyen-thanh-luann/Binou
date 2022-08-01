@@ -8,4 +8,8 @@ const getProductById = async (id) => {
   return await api.get(`/product/${id}`)
 }
 
-export { getAllProducts, getProductById }
+const addNewProduct = async (newProduct) => {
+  return await api.post(`/product`, newProduct)
+}
+
+export { getAllProducts, getProductById, addNewProduct }

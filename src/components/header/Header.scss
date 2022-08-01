@@ -1,6 +1,49 @@
+$bc: rgb(36, 36, 36);
+
 #header {
   position: fixed;
+  background-color: $bc;
   width: 100%;
+  padding: 0rem 4rem;
   z-index: 1;
   top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  text-transform: capitalize;
+
+  a {
+    text-decoration: none;
+    color: white;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    li {
+      list-style-type: none;
+      display: inline-block;
+      position: relative;
+      line-height: 3rem;
+      &:hover > ul {
+        display: block;
+      }
+      ul {
+        position: absolute;
+        display: none;
+        margin: 0;
+        background-color: $bc;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        li {
+          margin: 0;
+          line-height: 2rem;
+          padding: 0 2rem;
+          a {
+            display: block;
+          }
+        }
+      }
+    }
+  }
 }

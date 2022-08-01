@@ -7,7 +7,7 @@ import Rating from '../rating/Rating'
 import './Product.scss'
 export default function Product({ product }) {
   return (
-    <Card className='cart'>
+    <Card className='cart' style={{ width: '19rem' }}>
       <Link to={`/product/${product._id}`}>
         <img src={product.image} className='card-img-top img-fluid' alt='' />
       </Link>
