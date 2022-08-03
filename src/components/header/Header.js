@@ -13,6 +13,11 @@ export default function Header() {
         <ul>
           <li>
             <Link to='/'>
+              <i className='fa-solid fa-user'></i>
+            </Link>
+          </li>
+          <li>
+            <Link to='/' className='ms-3'>
               <i className='fa-solid fa-cart-shopping'></i>
             </Link>
           </li>

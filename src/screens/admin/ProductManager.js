@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {
   getAllProducts,
   addNewProduct,
@@ -15,6 +15,20 @@ export default function ProductManager() {
   const [productCountInStock, setProductCountInStock] = useState()
   const [productDescription, setProductDescription] = useState('')
   const [productImage, setProductImage] = useState()
+  const [imagePreview, setImagePreview] = useState()
+  // const [imageUrl, setImageUrl] = useState()
+  const [productImageUrl, setProductImageUrl] = useState(
+    'https://res.cloudinary.com/imthanhluan/image/upload/v1659500844/profileDefault_raklnm.png'
+  )
+
+  /*
+    - in update form, to display preoduct image: productImage
+    - in insert form, just display for user preview image that he choose: imagePreviewUrl
+    - in insert form, get image file from input to push to cloudinary: imageUrl
+    - receive image url from cloudinary to insert new product: productImageUrl
+  */
+
+  const ref = useRef()
 
   const loadProducts = () => {
     getAllProducts()
@@ -38,6 +52,8 @@ export default function ProductManager() {
     setProductPrice(product.price)
     setProductCountInStock(product.countInStock)
     setProductDescription(product.description)
+    setProductImage(product.image)
+    ref.current.value = ''
   }
 
   const setUpFormInsert = () => {
@@ -49,6 +65,24 @@ export default function ProductManager() {
     setProductCountInStock('')
     setProductDescription('')
     setProductImage(null)
+    setImagePreview(null)
+    ref.current.value = ''
+  }
+
+  const uploadImage = (e) => {
+    const data = new FormData()
+    data.append('file', e.target.files[0])
+    data.append('upload_preset', 'clothes')
+    fetch(`https://api.cloudinary.com/v1_1/imthanhluan/upload`, {
+      method: 'post',
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        setProductImageUrl(data.url)
+      })
+      .catch((err) => console.log(err))
   }
 
   const addProduct = () => {
@@ -59,8 +93,7 @@ export default function ProductManager() {
       price: productPrice,
       countInStock: productCountInStock,
       description: productDescription,
-      image:
-        'https://res.cloudinary.com/imthanhluan/image/upload/v1658936257/qy5jgepzdlksabr8l32e.webp',
+      image: productImageUrl,
       images: [],
       rating: 0,
       numReviews: 0,
@@ -249,14 +282,16 @@ export default function ProductManager() {
                       <input
                         id='productImage'
                         type='file'
+                        ref={ref}
                         className='form-control'
                         onChange={(e) => {
                           let url = URL.createObjectURL(e.target.files[0])
-                          setProductImage(url)
+                          setImagePreview(url)
+                          uploadImage(e)
                         }}
                       />
                       <div className='d-flex'>
-                        {productImage && (
+                        {productImage ? (
                           <img
                             src={productImage}
                             alt=''
@@ -266,7 +301,17 @@ export default function ProductManager() {
                               margin: '1rem auto 0',
                             }}
                           />
-                        )}
+                        ) : imagePreview ? (
+                          <img
+                            src={imagePreview}
+                            alt=''
+                            className='img-fluid'
+                            style={{
+                              width: '25%',
+                              margin: '1rem auto 0',
+                            }}
+                          />
+                        ) : null}
                       </div>
                     </div>
                   </form>
