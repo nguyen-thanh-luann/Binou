@@ -16,4 +16,14 @@ const deleteProductById = async (id) => {
   return await api.delete(`/product/${id}`)
 }
 
-export { getAllProducts, getProductById, addNewProduct, deleteProductById }
+const updateProduct = async (id, updatePro) => {
+  return await api.put(`/product/${id}`, updatePro)
+}
+
+export {
+  getAllProducts,
+  getProductById,
+  addNewProduct,
+  deleteProductById,
+  updateProduct,
+}

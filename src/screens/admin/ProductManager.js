@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { Helmet } from 'react-helmet-async'
 import {
   getAllProducts,
   addNewProduct,
   deleteProductById,
+  updateProduct,
 } from '../../services/ProductService'
 
 export default function ProductManager() {
   const [products, setProducts] = useState()
   const [isUpdateForm, setIsUpdateForm] = useState(false)
+  const [productId, setProductId] = useState('')
   const [productName, setProductName] = useState('')
   const [productCategory, setProductCategory] = useState('')
   const [productBrand, setProductBrand] = useState('')
@@ -53,6 +56,7 @@ export default function ProductManager() {
     setProductCountInStock(product.countInStock)
     setProductDescription(product.description)
     setProductImage(product.image)
+    setProductImageUrl(product.image)
     ref.current.value = ''
   }
 
@@ -116,8 +120,36 @@ export default function ProductManager() {
     })
   }
 
+  const updateHandler = () => {
+    const updatePro = {
+      name: productName,
+      category: productCategory,
+      brand: productBrand,
+      price: productPrice,
+      countInStock: productCountInStock,
+      description: productDescription,
+      image: productImageUrl,
+      images: [],
+      rating: 0,
+      numReviews: 0,
+      reviews: [],
+    }
+    console.log(`update product: ${updateProduct}`)
+    updateProduct(productId, updatePro)
+      .then((res) => {
+        console.log(res)
+        loadProducts()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   return (
     <div className='row mt-5 mx-0 p-4'>
+      <Helmet>
+        <title>ProductManager</title>
+      </Helmet>
       {!products ? (
         <h2>Product not found</h2>
       ) : (
@@ -166,6 +198,7 @@ export default function ProductManager() {
                       className='fa-solid fa-pen-to-square text-warning'
                       onClick={() => {
                         setUpFormUpdate(product)
+                        setProductId(product._id)
                       }}
                       data-bs-toggle='modal'
                       data-bs-target='#productModal'
@@ -219,7 +252,9 @@ export default function ProductManager() {
                         className='form-control'
                         type='text'
                         value={productName}
-                        onChange={(e) => setProductName(e.target.value)}
+                        onChange={(e) => {
+                          setProductName(e.target.value)
+                        }}
                         required
                       />
                     </div>
@@ -230,7 +265,9 @@ export default function ProductManager() {
                         className='form-control'
                         type='text'
                         value={productCategory}
-                        onChange={(e) => setProductCategory(e.target.value)}
+                        onChange={(e) => {
+                          setProductCategory(e.target.value)
+                        }}
                         required
                       />
                     </div>
@@ -241,7 +278,9 @@ export default function ProductManager() {
                         className='form-control'
                         type='text'
                         value={productBrand}
-                        onChange={(e) => setProductBrand(e.target.value)}
+                        onChange={(e) => {
+                          setProductBrand(e.target.value)
+                        }}
                         required
                       />
                     </div>
@@ -252,7 +291,9 @@ export default function ProductManager() {
                         className='form-control'
                         type='number'
                         value={productPrice}
-                        onChange={(e) => setProductPrice(e.target.value)}
+                        onChange={(e) => {
+                          setProductPrice(e.target.value)
+                        }}
                         required
                       />
                     </div>
@@ -263,7 +304,9 @@ export default function ProductManager() {
                         className='form-control'
                         type='number'
                         value={productCountInStock}
-                        onChange={(e) => setProductCountInStock(e.target.value)}
+                        onChange={(e) => {
+                          setProductCountInStock(e.target.value)
+                        }}
                         required
                       />
                     </div>
@@ -274,7 +317,9 @@ export default function ProductManager() {
                         className='form-control'
                         type='number'
                         value={productDescription}
-                        onChange={(e) => setProductDescription(e.target.value)}
+                        onChange={(e) => {
+                          setProductDescription(e.target.value)
+                        }}
                       ></textarea>
                     </div>
                     <div>
@@ -325,7 +370,12 @@ export default function ProductManager() {
                     Close
                   </button>
                   {isUpdateForm ? (
-                    <button type='button' className='btn btn-primary'>
+                    <button
+                      type='button'
+                      className='btn btn-primary'
+                      data-bs-dismiss='modal'
+                      onClick={updateHandler}
+                    >
                       Update
                     </button>
                   ) : (
