@@ -6,17 +6,18 @@ import { login } from '../services/UserService'
 import { Store } from '../Store'
 export default function LoginScreen() {
   const navigate = useNavigate()
-  const { state, dispatch: ctxDispatch } = useContext(Store)
+  const { dispatch: ctxDispatch } = useContext(Store)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
   const submitHandler = async (e) => {
     e.preventDefault()
     try {
       const { data } = await login({ email, password })
       ctxDispatch({ type: 'USER_LOGIN', payload: data })
       localStorage.setItem('userInfo', JSON.stringify(data))
-      navigate('/')
+      navigate('/userInfo')
     } catch (err) {
       console.log(err)
     }
@@ -26,9 +27,9 @@ export default function LoginScreen() {
       <Helmet>
         <title>Login</title>
       </Helmet>
-      <h1>Login</h1>
       <div className='d-flex justify-content-center'>
         <form className='form w-25' onSubmit={submitHandler}>
+          <h1 className='text-center'>Login</h1>
           <div>
             <label htmlFor='email'>Email</label>
             <input

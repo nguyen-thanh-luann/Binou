@@ -4,4 +4,8 @@ const login = (userData) => {
   return api.post(`/user/login`, userData)
 }
 
-export { login }
+const signup = (user) => {
+  return api.post(`/user/signup`, user)
+}
+
+export { login, signup }

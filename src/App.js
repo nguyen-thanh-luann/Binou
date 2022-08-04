@@ -6,6 +6,7 @@ import ProductScreen from './screens/ProductScreen'
 import ProductManager from './screens/admin/ProductManager'
 import LoginScreen from './screens/LoginScreen'
 import SignupScreen from './screens/SignupScreen'
+import UserInfoScreen from './screens/UserInfoScreen'
 function App() {
   return (
     <BrowserRouter>
@@ -16,6 +17,7 @@ function App() {
         <Route path='/productManager' element={<ProductManager />} />
         <Route path='/login' element={<LoginScreen />} />
         <Route path='/signup' element={<SignupScreen />} />
+        <Route path='/userInfo' element={<UserInfoScreen />} />
       </Routes>
     </BrowserRouter>
   )
