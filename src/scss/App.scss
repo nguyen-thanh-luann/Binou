@@ -3,6 +3,16 @@
 @import 'Product';
 @import 'CartScreen';
 @import 'Footer';
+@import 'Mycolor';
 * {
   font-family: 'Playfair Display', serif;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+
+  .content {
+    margin-top: 5rem;
+  }
 }

@@ -1,10 +1,10 @@
-$bc: rgb(36, 36, 36);
-
+$background-color: black;
 #header {
   position: fixed;
-  background-color: $bc;
+  background-color: $background-color;
   width: 100%;
-  padding: 0rem 4rem;
+  padding: 0.4rem 4rem;
+  margin-bottom: 4rem;
   z-index: 1;
   top: 0;
   display: flex;
@@ -33,7 +33,7 @@ $bc: rgb(36, 36, 36);
         position: absolute;
         display: none;
         margin: 0;
-        background-color: $bc;
+        background-color: $background-color;
         border: 1px solid rgba(255, 255, 255, 0.5);
         li {
           margin: 0;

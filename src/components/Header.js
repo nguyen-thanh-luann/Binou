@@ -9,9 +9,11 @@ export default function Header() {
   const { cart, userInfo } = state
 
   return (
-    <div id='header' bg='dark' variant='dark'>
+    <div id='header'>
       <div>
-        <Link to='/'>shopping_now</Link>
+        <h4>
+          <Link to='/'>shopping_now</Link>
+        </h4>
       </div>
       <div>
         <ul>

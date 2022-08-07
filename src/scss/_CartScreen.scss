@@ -1,5 +1,14 @@
+@import 'Mycolor';
+
 .cart-noti {
-  margin-top: 4rem;
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+
+  a {
+    text-decoration: none;
+    color: $link-color;
+  }
 }
 
 .cart-screen {

@@ -12,7 +12,6 @@ import Footer from './components/Footer'
 function App() {
   return (
     <BrowserRouter>
-      <Header />
       <Routes>
         <Route path='/' element={<HomeScreen />} />
         <Route path='/product/:id' element={<ProductScreen />} />
@@ -22,7 +21,6 @@ function App() {
         <Route path='/userInfo' element={<UserInfoScreen />} />
         <Route path='/cart' element={<CartScreen />} />
       </Routes>
-      <Footer />
     </BrowserRouter>
   )
 }
