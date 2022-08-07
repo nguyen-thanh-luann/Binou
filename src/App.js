@@ -7,6 +7,7 @@ import ProductManager from './screens/admin/ProductManager'
 import LoginScreen from './screens/LoginScreen'
 import SignupScreen from './screens/SignupScreen'
 import UserInfoScreen from './screens/UserInfoScreen'
+import CartScreen from './screens/CartScreen'
 function App() {
   return (
     <BrowserRouter>
@@ -18,6 +19,7 @@ function App() {
         <Route path='/login' element={<LoginScreen />} />
         <Route path='/signup' element={<SignupScreen />} />
         <Route path='/userInfo' element={<UserInfoScreen />} />
+        <Route path='/cart' element={<CartScreen />} />
       </Routes>
     </BrowserRouter>
   )

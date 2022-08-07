@@ -6,7 +6,7 @@ import { Store } from '../../Store'
 import './Header.scss'
 export default function Header() {
   const { state, dispatch: ctxDispatch } = useContext(Store)
-  const { userInfo } = state
+  const { cart, userInfo } = state
 
   return (
     <div id='header' bg='dark' variant='dark'>
@@ -27,8 +27,13 @@ export default function Header() {
             )}
           </li>
           <li>
-            <Link to='/' className='ms-3'>
+            <Link to='/cart' className='ms-3'>
               <i className='fa-solid fa-cart-shopping'></i>
+              {cart.cartItems.length > 0 && (
+                <span className='badge rounded-pill text-bg-danger p-1'>
+                  {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                </span>
+              )}
             </Link>
           </li>
           {userInfo && userInfo.isAdmin && (

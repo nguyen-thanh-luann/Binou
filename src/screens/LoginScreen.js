@@ -1,11 +1,10 @@
 import React, { useState, useContext } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { login } from '../services/UserService'
 import { Store } from '../Store'
 export default function LoginScreen() {
-  const navigate = useNavigate()
   const { dispatch: ctxDispatch } = useContext(Store)
 
   const [email, setEmail] = useState('')
@@ -17,7 +16,7 @@ export default function LoginScreen() {
       const { data } = await login({ email, password })
       ctxDispatch({ type: 'USER_LOGIN', payload: data })
       localStorage.setItem('userInfo', JSON.stringify(data))
-      navigate('/userInfo')
+      window.location.href = '/userInfo'
     } catch (err) {
       console.log(err)
     }
@@ -50,9 +49,12 @@ export default function LoginScreen() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button type='submit' className='form-control btn btn-success mt-2'>
-            Login
-          </button>
+          <input
+            type='submit'
+            className='form-control btn btn-success mt-2'
+            value='Login'
+          />
+
           <div className='mt-3'>
             New customer?
             <Link to='/signup' style={{ textDecoration: 'none' }}>

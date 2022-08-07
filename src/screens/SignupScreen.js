@@ -10,8 +10,8 @@ export default function SignupScreen() {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm()
+
   const onSubmit = (data) => {
     const user = {
       name: data.name,

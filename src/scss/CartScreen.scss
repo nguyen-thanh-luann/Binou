@@ -1,0 +1,29 @@
+.cart-noti {
+  margin-top: 4rem;
+}
+
+.cart-screen {
+  display: flex;
+  margin-top: 3rem;
+  padding: 3rem;
+  .cart-item-table {
+    flex: 60%;
+    img {
+      width: 3rem;
+      border-radius: 30px;
+    }
+    i {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .cart-total {
+    flex: 30%;
+    margin-left: 1rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+}
