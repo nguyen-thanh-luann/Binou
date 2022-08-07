@@ -8,6 +8,7 @@ import LoginScreen from './screens/LoginScreen'
 import SignupScreen from './screens/SignupScreen'
 import UserInfoScreen from './screens/UserInfoScreen'
 import CartScreen from './screens/CartScreen'
+import Footer from './components/Footer'
 function App() {
   return (
     <BrowserRouter>
@@ -21,6 +22,7 @@ function App() {
         <Route path='/userInfo' element={<UserInfoScreen />} />
         <Route path='/cart' element={<CartScreen />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }
