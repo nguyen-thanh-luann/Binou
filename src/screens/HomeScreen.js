@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getAllProducts } from '../services/ProductService'
 import { Helmet } from 'react-helmet-async'
 
-import Product from '../components/product/Product'
+import Product from '../components/Product'
 export default function HomeScreen() {
   const [products, setProducts] = useState([])
 

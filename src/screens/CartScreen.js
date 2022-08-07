@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async'
 
 import { Store } from '../Store'
 import { getProductById } from '../services/ProductService'
-import '../scss/CartScreen.scss'
+import '../scss/App.scss'
 export default function CartScreen() {
   const { state, dispatch: ctxDispatch } = useContext(Store)
   const {

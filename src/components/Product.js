@@ -3,11 +3,11 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import { Link } from 'react-router-dom'
 
-import { Store } from '../../Store'
-import { getProductById } from '../../services/ProductService'
-import Rating from '../rating/Rating'
+import { Store } from '../Store'
+import { getProductById } from '../services/ProductService'
+import Rating from './Rating'
 
-import './Product.scss'
+import '../scss/App.scss'
 export default function Product({ product }) {
   const { state, dispatch: ctxDispatch } = useContext(Store)
   const {

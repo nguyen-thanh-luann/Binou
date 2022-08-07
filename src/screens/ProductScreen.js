@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import { Helmet } from 'react-helmet-async'
 
-import Rating from '../components/rating/Rating'
+import Rating from '../components/Rating'
 import { getProductById } from '../services/ProductService'
 export default function ProductScreen() {
   const param = useParams()

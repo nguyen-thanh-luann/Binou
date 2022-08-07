@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Store } from '../../Store'
+import { Store } from '../Store'
 
-import './Header.scss'
+import '../scss/App.scss'
 export default function Header() {
   const { state, dispatch: ctxDispatch } = useContext(Store)
   const { cart, userInfo } = state
