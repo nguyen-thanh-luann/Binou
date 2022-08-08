@@ -29,7 +29,7 @@ export default function Product({ product }) {
   }
 
   return (
-    <Card className='cart my-2' style={{ width: '19rem' }}>
+    <Card className='cart product' style={{ width: '19rem' }}>
       <Link to={`/product/${product._id}`}>
         <img src={product.image} className='card-img-top img-fluid' alt='' />
       </Link>
@@ -42,8 +42,8 @@ export default function Product({ product }) {
           <Card.Title>{product.name}</Card.Title>
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews} />
-        <Card.Text>${product.price}</Card.Text>
-        <p>{product.description}</p>
+        <p className='price'>${product.price}</p>
+        <p className='descr'>{product.description}</p>
         {product.countInStock === 0 ? (
           <Button variant='danger' disabled>
             Out of stock

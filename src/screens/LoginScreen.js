@@ -11,6 +11,7 @@ export default function LoginScreen() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [errMessage, setErrMessage] = useState()
 
   const submitHandler = async (e) => {
     e.preventDefault()
@@ -20,7 +21,7 @@ export default function LoginScreen() {
       localStorage.setItem('userInfo', JSON.stringify(data))
       window.location.href = '/userInfo'
     } catch (err) {
-      console.log(err)
+      setErrMessage('Wrong email or password')
     }
   }
   return (
@@ -54,12 +55,18 @@ export default function LoginScreen() {
                 />
               </div>
               <div className='form-group'>
+                {errMessage && (
+                  <p className='text-danger'>
+                    {` * `}
+                    {errMessage}
+                  </p>
+                )}
                 <input
                   type='submit'
                   className='form-control btn btn-success'
                   value='Login'
                 />
-                <div>
+                <div className='mt-2'>
                   New customer?
                   <Link to='/signup'> Create your account</Link>
                 </div>

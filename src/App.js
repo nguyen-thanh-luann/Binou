@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-import Header from './components/Header'
 import HomeScreen from './screens/HomeScreen'
 import ProductScreen from './screens/ProductScreen'
 import ProductManager from './screens/admin/ProductManager'
@@ -8,7 +7,6 @@ import LoginScreen from './screens/LoginScreen'
 import SignupScreen from './screens/SignupScreen'
 import UserInfoScreen from './screens/UserInfoScreen'
 import CartScreen from './screens/CartScreen'
-import Footer from './components/Footer'
 function App() {
   return (
     <BrowserRouter>

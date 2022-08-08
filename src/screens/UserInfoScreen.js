@@ -61,7 +61,10 @@ export default function UserInfoScreen() {
                   }}
                 />
               </div>
-              <p className='text-danger mt-4' onClick={() => logoutHandler()}>
+              <p
+                className='text-danger mt-3 logout-btn'
+                onClick={() => logoutHandler()}
+              >
                 Logout
               </p>
             </form>

@@ -11,6 +11,12 @@
   }
 }
 
+.cart-title {
+  text-align: center;
+  color: $link-color;
+  margin-bottom: 2rem;
+}
+
 .cart-screen {
   display: flex;
   .cart-item-table {
@@ -31,7 +37,7 @@
     margin-left: 1rem;
     padding: 1rem;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 5px;
   }
 }
 
