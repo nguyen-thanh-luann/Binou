@@ -11,9 +11,7 @@ export default function Header() {
   return (
     <div id='header'>
       <div>
-        <h4>
-          <Link to='/'>shopping_now</Link>
-        </h4>
+        <Link to='/'>shopping_now</Link>
       </div>
       <div>
         <ul>

@@ -1,0 +1,38 @@
+@import 'Mycolor';
+.user-info-page {
+  width: 70%;
+  margin: auto;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 5px 5px 8px #ccc;
+
+  .page-title {
+    text-align: center;
+    color: $link-color;
+  }
+
+  .info-area {
+    width: 50%;
+    margin: auto;
+
+    .form-group {
+      margin-top: 1rem;
+      input {
+        margin-top: 0.2rem;
+      }
+    }
+  }
+}
+
+//mobile
+@media (max-width: 740px) {
+  .user-info-page {
+    width: 100%;
+    border: none;
+    padding: 0.5rem;
+    .info-area {
+      width: 100%;
+    }
+  }
+}

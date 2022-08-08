@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet-async'
 import Layout from './Layout'
 import Rating from '../components/Rating'
 import { getProductById } from '../services/ProductService'
+import '../scss/App.scss'
 export default function ProductScreen() {
   const param = useParams()
   const productId = param.id
@@ -32,21 +33,23 @@ export default function ProductScreen() {
           {!product ? (
             <h4>product not found</h4>
           ) : (
-            <div className='row'>
+            <div className='product-page'>
               <Helmet>
                 <title>{product.name}</title>
               </Helmet>
-              <div className='col col-4'>
+              <div className='product-img'>
                 <img src={product.image} alt='' className='img-fluid' />
               </div>
-              <div className='col'>
+              <div className='product-info'>
                 <h3>{product.name}</h3>
                 <Rating
                   rating={product.rating}
                   numReviews={product.numReviews}
                 />
                 <h4 className='mt-2'>${product.price}</h4>
-                <p>{product.description}</p>
+                <div className='product-description'>
+                  <p>{product.description}</p>
+                </div>
                 {product.countInStock === 0 ? (
                   <Button variant='danger' disabled>
                     Out of stock

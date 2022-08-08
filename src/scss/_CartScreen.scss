@@ -13,8 +13,6 @@
 
 .cart-screen {
   display: flex;
-  margin-top: 3rem;
-  padding: 3rem;
   .cart-item-table {
     flex: 60%;
     img {
@@ -28,11 +26,32 @@
     }
   }
 
-  .cart-total {
+  .cart-bill {
     flex: 30%;
     margin-left: 1rem;
     padding: 1rem;
     border: 1px solid #ccc;
     border-radius: 10px;
+  }
+}
+
+//mobile
+@media (max-width: 740px) {
+  .cart-noti {
+    font-size: 1rem;
+  }
+  .cart-screen {
+    flex-direction: column;
+    width: 100%;
+    .cart-item-table {
+      flex: 100%;
+      width: 100%;
+      overflow: scroll;
+    }
+    .cart-bill {
+      width: 100%;
+      flex: 100%;
+      margin-left: 0;
+    }
   }
 }

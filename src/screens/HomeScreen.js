@@ -22,7 +22,7 @@ export default function HomeScreen() {
   return (
     <Layout
       children={
-        <div className='row px-5'>
+        <div className='row'>
           <Helmet>
             <title>Shopping now</title>
           </Helmet>

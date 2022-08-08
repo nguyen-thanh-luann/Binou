@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import Layout from './Layout'
 import { signup } from '../services/UserService'
 
+import '../scss/App.scss'
 export default function SignupScreen() {
   const {
     register,
@@ -38,16 +39,15 @@ export default function SignupScreen() {
           <Helmet>
             <title>Signup</title>
           </Helmet>
-          <div className='d-flex justify-content-center'>
-            <form className='form w-25' onSubmit={handleSubmit(onSubmit)}>
+          <div className='signup-page'>
+            <form className='form' onSubmit={handleSubmit(onSubmit)}>
               <h1 className='text-center'>Signup</h1>
-
-              <div>
-                <label htmlFor='email' className='fw-bold'>
+              <div className='form-group'>
+                <label htmlFor='email'>
                   Name{' '}
                   {errors.name && (
                     <span className='text-danger'>
-                      *
+                      *{' '}
                       {errors.name?.type === 'required' &&
                         'This field is required'}
                       {errors.name?.type === 'maxLength' &&
@@ -68,12 +68,12 @@ export default function SignupScreen() {
                   })}
                 />
               </div>
-              <div className='mt-2'>
-                <label htmlFor='email' className='fw-bold'>
+              <div className='form-group'>
+                <label htmlFor='email'>
                   Email{' '}
                   {errors.email && (
                     <span className='text-danger'>
-                      *
+                      *{' '}
                       {errors.email?.type === 'required' &&
                         'This field is required'}
                     </span>
@@ -86,12 +86,12 @@ export default function SignupScreen() {
                   {...register('email', { required: true })}
                 />
               </div>
-              <div className='mt-2'>
-                <label htmlFor='password' className='fw-bold'>
+              <div className='form-group'>
+                <label htmlFor='password'>
                   Password{' '}
                   {errors.password && (
                     <span className='text-danger'>
-                      *
+                      *{' '}
                       {errors.password?.type === 'required' &&
                         'This field is required'}
                       {errors.password?.type === 'minLength' &&
@@ -106,18 +106,16 @@ export default function SignupScreen() {
                   {...register('password', { required: true, minLength: 6 })}
                 />
               </div>
-              <input
-                type='submit'
-                className='form-control btn btn-success mt-2'
-                value='Signup'
-              />
-
-              <div className='mt-3'>
-                you already have account?
-                <Link to='/login' style={{ textDecoration: 'none' }}>
-                  {' '}
-                  Login
-                </Link>
+              <div className='form-group'>
+                <input
+                  type='submit'
+                  className='form-control btn btn-success'
+                  value='Signup'
+                />
+                <div>
+                  you already have account?
+                  <Link to='/login'> Login</Link>
+                </div>
               </div>
             </form>
           </div>

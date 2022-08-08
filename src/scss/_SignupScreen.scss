@@ -1,0 +1,16 @@
+@import 'Mycolor';
+.signup-page {
+  display: flex;
+  justify-content: center;
+
+  .form-group {
+    &:not(:first-child) {
+      margin-top: 0.5rem;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: $link-color;
+  }
+}

@@ -1,0 +1,32 @@
+.product-page {
+  display: flex;
+  .product-img {
+    flex: 30%;
+  }
+
+  .product-info {
+    flex: 60%;
+    padding-left: 2rem;
+
+    .product-description {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      width: fit-content;
+      padding: 0.5rem;
+    }
+  }
+}
+//mobile
+@media (max-width: 740px) {
+  .product-page {
+    flex-direction: column;
+    .product-img {
+      flex: 100%;
+    }
+
+    .product-info {
+      flex: 100%;
+      padding: 1rem 0 0 0;
+    }
+  }
+}

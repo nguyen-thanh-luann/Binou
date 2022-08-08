@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { login } from '../services/UserService'
 import { Store } from '../Store'
 import Layout from './Layout'
+import '../scss/App.scss'
 export default function LoginScreen() {
   const { dispatch: ctxDispatch } = useContext(Store)
 
@@ -29,10 +30,10 @@ export default function LoginScreen() {
           <Helmet>
             <title>Login</title>
           </Helmet>
-          <div className='d-flex justify-content-center'>
-            <form className='form w-25' onSubmit={submitHandler}>
+          <div className='login-page'>
+            <form className='form' onSubmit={submitHandler}>
               <h1 className='text-center'>Login</h1>
-              <div>
+              <div className='form-group'>
                 <label htmlFor='email'>Email</label>
                 <input
                   id='email'
@@ -42,7 +43,7 @@ export default function LoginScreen() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className='mt-2'>
+              <div className='form-group'>
                 <label htmlFor='password'>Password</label>
                 <input
                   id='password'
@@ -52,18 +53,16 @@ export default function LoginScreen() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <input
-                type='submit'
-                className='form-control btn btn-success mt-2'
-                value='Login'
-              />
-
-              <div className='mt-3'>
-                New customer?
-                <Link to='/signup' style={{ textDecoration: 'none' }}>
-                  {' '}
-                  Create your account
-                </Link>
+              <div className='form-group'>
+                <input
+                  type='submit'
+                  className='form-control btn btn-success'
+                  value='Login'
+                />
+                <div>
+                  New customer?
+                  <Link to='/signup'> Create your account</Link>
+                </div>
               </div>
             </form>
           </div>

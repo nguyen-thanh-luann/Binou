@@ -122,7 +122,7 @@ export default function CartScreen() {
                   </tbody>
                 </table>
               </div>
-              <div className='cart-total'>
+              <div className='cart-bill'>
                 <h4 className='text-center'>Bill</h4>
                 <h5>
                   Invoice Total:{' '}
