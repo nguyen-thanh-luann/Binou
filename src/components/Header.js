@@ -41,7 +41,7 @@ export default function Header() {
           </li>
           {userInfo && userInfo.isAdmin && (
             <li>
-              <Link to='/' className='ms-3'>
+              <Link to='/'>
                 Admin
                 <i className='fa-solid fa-angle-down ms-1 fs-6'></i>
               </Link>
