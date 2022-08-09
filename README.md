@@ -1,6 +1,7 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).\
+You can visit live demo here: [shopping now](https://shopping-now.vercel.app/)
 
 ## Available Scripts
 

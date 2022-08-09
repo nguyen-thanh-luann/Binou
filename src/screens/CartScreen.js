@@ -10,6 +10,7 @@ export default function CartScreen() {
   const { state, dispatch: ctxDispatch } = useContext(Store)
   const {
     cart: { cartItems },
+    userInfo,
   } = state
 
   const removeItemHandler = (item) => {
@@ -26,6 +27,14 @@ export default function CartScreen() {
       type: 'CART_ADD_ITEM',
       payload: { ...item, quantity },
     })
+  }
+
+  const checkoutHandler = () => {
+    if (userInfo) {
+      window.alert('comming soon')
+    } else {
+      window.location.href = '/login'
+    }
   }
   return (
     <Layout
@@ -132,7 +141,14 @@ export default function CartScreen() {
                     Invoice Total:{' '}
                     {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
                   </h5>
-                  <button className='btn btn-success'>Checkout</button>
+                  <button
+                    className='btn btn-success'
+                    onClick={() => {
+                      checkoutHandler()
+                    }}
+                  >
+                    Checkout
+                  </button>
                 </div>
               </div>
             </>

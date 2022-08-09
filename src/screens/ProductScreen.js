@@ -6,12 +6,16 @@ import { Helmet } from 'react-helmet-async'
 import { Store } from '../Store'
 import Layout from './Layout'
 import Rating from '../components/Rating'
+import LoadingBox from '../components/LoadingBox'
 import { getProductById } from '../services/ProductService'
 import '../scss/App.scss'
 export default function ProductScreen() {
   const param = useParams()
   const productId = param.id
+
   const [product, setProduct] = useState()
+  const [isLoading, setIsLoading] = useState(true)
+
   const { state, dispatch: ctxDispatch } = useContext(Store)
   const {
     cart: { cartItems },
@@ -21,6 +25,7 @@ export default function ProductScreen() {
     getProductById(productId)
       .then((res) => {
         setProduct(res.data)
+        setIsLoading(false)
       })
       .catch((err) => {
         console.log(err)
@@ -49,44 +54,48 @@ export default function ProductScreen() {
     <Layout
       children={
         <div>
-          {!product ? (
-            <h4>product not found</h4>
-          ) : (
-            <div className='product-page'>
-              <Helmet>
-                <title>{product.name}</title>
-              </Helmet>
-              <div className='product-img'>
-                <img src={product.image} alt='' className='img-fluid' />
-              </div>
-              <div className='product-info'>
-                <h3>{product.name}</h3>
-                <Rating
-                  rating={product.rating}
-                  numReviews={product.numReviews}
-                />
-                <h4 className='mt-2'>${product.price}</h4>
-                <div className='product-description'>
-                  <p>{product.description}</p>
-                </div>
-                {product.countInStock === 0 ? (
-                  <Button variant='danger' className='mt-2' disabled>
-                    Out of stock
-                  </Button>
-                ) : (
-                  <Button
-                    variant='warning'
-                    className='mt-2'
-                    onClick={() => {
-                      addToCartHandler(product)
-                    }}
-                  >
-                    <i className='fa-solid fa-plus me-2'></i>
-                    Add to cart
-                  </Button>
-                )}
-              </div>
+          {isLoading ? (
+            <div className='text-center'>
+              <LoadingBox />
             </div>
+          ) : (
+            product && (
+              <div className='product-page'>
+                <Helmet>
+                  <title>{product.name}</title>
+                </Helmet>
+                <div className='product-img'>
+                  <img src={product.image} alt='' className='img-fluid' />
+                </div>
+                <div className='product-info'>
+                  <h3>{product.name}</h3>
+                  <Rating
+                    rating={product.rating}
+                    numReviews={product.numReviews}
+                  />
+                  <h4 className='mt-2'>${product.price}</h4>
+                  <div className='product-description'>
+                    <p>{product.description}</p>
+                  </div>
+                  {product.countInStock === 0 ? (
+                    <Button variant='danger' className='mt-2' disabled>
+                      Out of stock
+                    </Button>
+                  ) : (
+                    <Button
+                      variant='warning'
+                      className='mt-2'
+                      onClick={() => {
+                        addToCartHandler(product)
+                      }}
+                    >
+                      <i className='fa-solid fa-plus me-2'></i>
+                      Add to cart
+                    </Button>
+                  )}
+                </div>
+              </div>
+            )
           )}
         </div>
       }

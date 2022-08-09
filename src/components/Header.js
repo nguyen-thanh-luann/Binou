@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Store } from '../Store'
-
+import SearchBox from './SearchBox'
 import '../scss/App.scss'
 export default function Header() {
   const { state, dispatch: ctxDispatch } = useContext(Store)
@@ -15,6 +15,9 @@ export default function Header() {
       </div>
       <div>
         <ul>
+          <li className='search-group'>
+            <SearchBox />
+          </li>
           <li>
             {userInfo ? (
               <Link to='/userInfo'>
@@ -27,7 +30,7 @@ export default function Header() {
             )}
           </li>
           <li>
-            <Link to='/cart' className='ms-3'>
+            <Link to='/cart'>
               <i className='fa-solid fa-cart-shopping'></i>
               {cart.cartItems.length > 0 && (
                 <span className='badge rounded-pill text-bg-danger p-1'>
