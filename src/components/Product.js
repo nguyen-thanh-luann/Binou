@@ -29,7 +29,7 @@ export default function Product({ product }) {
   }
 
   return (
-    <Card className='cart product' style={{ width: '19rem' }}>
+    <Card className='cart product'>
       <Link to={`/product/${product._id}`}>
         <img src={product.image} className='card-img-top img-fluid' alt='' />
       </Link>

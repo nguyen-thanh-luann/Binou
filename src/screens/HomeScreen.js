@@ -25,7 +25,7 @@ export default function HomeScreen() {
   return (
     <Layout
       children={
-        <div className='row'>
+        <div className='row px-5'>
           <Helmet>
             <title>Shopping now</title>
           </Helmet>

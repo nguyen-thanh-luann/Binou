@@ -47,7 +47,7 @@ export default function CartScreen() {
             <div className='cart-noti'>
               <p>
                 Cart is empty.
-                <Link to='/'> Go Shopping now</Link>
+                <Link to='/'> Let's Shopping now!</Link>
               </p>
             </div>
           ) : (

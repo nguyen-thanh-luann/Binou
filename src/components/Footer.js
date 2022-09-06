@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 import '../scss/App.scss'
 export default function Footer() {
@@ -30,13 +29,6 @@ export default function Footer() {
           rel='noreferrer'
         >
           <i className='fa-brands fa-tiktok'></i>
-        </a>
-        <a
-          href='https://www.facebook.com/imthanhluann'
-          target='_blank'
-          rel='noreferrer'
-        >
-          <i className='fa-brands fa-youtube'></i>
         </a>
       </div>
       <h6 className='mt-3'>Made by Nguyen Thanh Luan</h6>

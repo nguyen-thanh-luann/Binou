@@ -1,6 +1,7 @@
 .product {
   box-shadow: 5px 5px 8px #ccc;
   margin-bottom: 2rem;
+  transition: 0.2s;
   .name {
     margin: 0;
     text-align: start;
@@ -9,5 +10,8 @@
   .descr,
   .price {
     margin: 0.2rem 0;
+  }
+  &:hover {
+    transform: scale(1.02);
   }
 }

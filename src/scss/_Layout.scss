@@ -1,0 +1,19 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+
+  .content {
+    margin-top: 5rem;
+    padding: 0 2rem;
+  }
+}
+
+//mobile
+@media (max-width: 740px) {
+  .layout {
+    .content {
+      margin-top: 5rem;
+      padding: 0 1rem;
+    }
+  }
+}

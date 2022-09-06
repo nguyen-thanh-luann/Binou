@@ -88,7 +88,6 @@ export default function ProductManager() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
         setProductImageUrl(data.url)
       })
       .catch((err) => console.log(err))
@@ -139,7 +138,6 @@ export default function ProductManager() {
       numReviews: 0,
       reviews: [],
     }
-    console.log(`update product: ${updateProduct}`)
     updateProduct(productId, updatePro)
       .then((res) => {
         console.log(res)

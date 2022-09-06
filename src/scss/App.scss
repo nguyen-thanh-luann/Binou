@@ -7,17 +7,9 @@
 @import 'LoginScreen';
 @import 'SignupScreen';
 @import 'UserInfoScreen';
+@import 'SearchScreen';
+@import 'Layout';
 @import 'Mycolor';
 * {
   font-family: 'Playfair Display', serif;
-}
-
-.layout {
-  display: flex;
-  flex-direction: column;
-
-  .content {
-    margin-top: 5rem;
-    padding: 0 2rem;
-  }
 }
