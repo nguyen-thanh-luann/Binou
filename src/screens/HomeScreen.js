@@ -12,7 +12,7 @@ export default function HomeScreen() {
   const loadProducts = () => {
     getAllProducts()
       .then((res) => {
-        setProducts(res.data)
+        setProducts(res.data.products)
         setIsLoading(false)
       })
       .catch((err) => {

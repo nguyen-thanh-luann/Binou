@@ -4,6 +4,10 @@ const getAllProducts = () => {
   return api.get('/product')
 }
 
+const getProductByPage = (limit, page) => {
+  return api.get(`/product?limit=${limit}&page=${page}`)
+}
+
 const getProductById = async (id) => {
   return await api.get(`/product/${id}`)
 }
@@ -22,6 +26,7 @@ const updateProduct = async (id, updatePro) => {
 
 export {
   getAllProducts,
+  getProductByPage,
   getProductById,
   addNewProduct,
   deleteProductById,

@@ -3,8 +3,10 @@ import { Helmet } from 'react-helmet-async'
 
 import LoadingBox from '../../components/LoadingBox'
 import Layout from '../Layout'
+import Pagination from '../../components/Pagination'
 import {
   getAllProducts,
+  getProductByPage,
   addNewProduct,
   deleteProductById,
   updateProduct,
@@ -12,8 +14,14 @@ import {
 
 export default function ProductManager() {
   const [isLoading, setIsLoading] = useState(true)
-  const [products, setProducts] = useState()
   const [isUpdateForm, setIsUpdateForm] = useState(false)
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 2,
+    pages: 1,
+  })
+
+  const [products, setProducts] = useState()
   const [productId, setProductId] = useState('')
   const [productName, setProductName] = useState('')
   const [productCategory, setProductCategory] = useState('')
@@ -38,9 +46,14 @@ export default function ProductManager() {
   const ref = useRef()
 
   const loadProducts = () => {
-    getAllProducts()
+    getProductByPage(pagination.limit, pagination.page)
       .then((res) => {
-        setProducts(res.data)
+        setProducts(res.data.products)
+        setPagination({
+          ...pagination,
+          pages: res.data.pages,
+        })
+
         setIsLoading(false)
       })
       .catch((err) => {
@@ -50,7 +63,7 @@ export default function ProductManager() {
 
   useEffect(() => {
     loadProducts()
-  }, [])
+  }, [pagination.page])
 
   const setUpFormUpdate = (product) => {
     setIsUpdateForm(true)
@@ -148,6 +161,13 @@ export default function ProductManager() {
       })
   }
 
+  const handlePageChange = (newPage) => {
+    setPagination({
+      ...pagination,
+      page: newPage,
+    })
+  }
+
   return (
     <Layout
       children={
@@ -230,6 +250,12 @@ export default function ProductManager() {
                     ))}
                   </tbody>
                 </table>
+                <div>
+                  <Pagination
+                    pagination={pagination}
+                    onPageChange={handlePageChange}
+                  />
+                </div>
                 {/* product modal */}
                 <div
                   className='modal fade'
