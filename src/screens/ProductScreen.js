@@ -60,41 +60,47 @@ export default function ProductScreen() {
             </div>
           ) : (
             product && (
-              <div className='product-page'>
-                <Helmet>
-                  <title>{product.name}</title>
-                </Helmet>
-                <div className='product-img'>
-                  <img src={product.image} alt='' className='img-fluid' />
-                </div>
-                <div className='product-info'>
-                  <h3>{product.name}</h3>
-                  <Rating
-                    rating={product.rating}
-                    numReviews={product.numReviews}
-                  />
-                  <h4 className='mt-2'>${product.price}</h4>
-                  <div className='product-description'>
-                    <p>{product.description}</p>
+              <>
+                <div className='product-area'>
+                  <Helmet>
+                    <title>{product.name}</title>
+                  </Helmet>
+                  <div className='product-img'>
+                    <img src={product.image} alt='' className='img-fluid' />
                   </div>
-                  {product.countInStock === 0 ? (
-                    <Button variant='danger' className='mt-2' disabled>
-                      Out of stock
-                    </Button>
-                  ) : (
-                    <Button
-                      variant='warning'
-                      className='mt-2'
-                      onClick={() => {
-                        addToCartHandler(product)
-                      }}
-                    >
-                      <i className='fa-solid fa-plus me-2'></i>
-                      Add to cart
-                    </Button>
-                  )}
+                  <div className='product-info'>
+                    <h3>{product.name}</h3>
+                    <Rating
+                      rating={product.rating}
+                      numReviews={product.numReviews}
+                    />
+                    <h4 className='mt-2'>${product.price}</h4>
+                    <div className='product-description'>
+                      <p>{product.description}</p>
+                    </div>
+                    {product.countInStock === 0 ? (
+                      <Button variant='danger' className='mt-2' disabled>
+                        Out of stock
+                      </Button>
+                    ) : (
+                      <Button
+                        variant='warning'
+                        className='mt-2'
+                        onClick={() => {
+                          addToCartHandler(product)
+                        }}
+                      >
+                        <i className='fa-solid fa-plus me-2'></i>
+                        Add to cart
+                      </Button>
+                    )}
+                  </div>
                 </div>
-              </div>
+                <div>
+                  <h2>Reviews</h2>
+                  <p>dell ai preview</p>
+                </div>
+              </>
             )
           )}
         </div>

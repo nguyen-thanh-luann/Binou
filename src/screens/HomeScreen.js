@@ -1,19 +1,32 @@
 import React, { useEffect, useState } from 'react'
-import { getAllProducts } from '../services/ProductService'
+import { getProductByPage } from '../services/ProductService'
 import { Helmet } from 'react-helmet-async'
 
+import Pagination from '../components/Pagination'
 import Layout from './Layout'
 import Product from '../components/Product'
 import LoadingBox from '../components/LoadingBox'
 export default function HomeScreen() {
   const [products, setProducts] = useState()
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoadingPage, setIsLoadingPage] = useState(true)
+  const [isLoadMore, setIsLoadMore] = useState(false)
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 4,
+    pages: 1,
+  })
 
   const loadProducts = () => {
-    getAllProducts()
+    setIsLoadMore(true)
+    getProductByPage(pagination.limit, pagination.page)
       .then((res) => {
         setProducts(res.data.products)
-        setIsLoading(false)
+        setPagination({
+          ...pagination,
+          pages: res.data.pages,
+        })
+        setIsLoadingPage(false)
+        setIsLoadMore(false)
       })
       .catch((err) => {
         console.log(err)
@@ -21,7 +34,14 @@ export default function HomeScreen() {
   }
   useEffect(() => {
     loadProducts()
-  }, [])
+  }, [pagination.page])
+
+  const handlePageChange = (newPage) => {
+    setPagination({
+      ...pagination,
+      page: newPage,
+    })
+  }
   return (
     <Layout
       children={
@@ -29,7 +49,7 @@ export default function HomeScreen() {
           <Helmet>
             <title>Shopping now</title>
           </Helmet>
-          {isLoading ? (
+          {isLoadingPage ? (
             <div className='text-center'>
               <LoadingBox />
             </div>
@@ -45,6 +65,14 @@ export default function HomeScreen() {
                     <Product product={product} />
                   </div>
                 ))}
+              {/* pagination */}
+              <div className='text-center'>
+                {isLoadMore && <LoadingBox />}
+                <Pagination
+                  pagination={pagination}
+                  onPageChange={handlePageChange}
+                />
+              </div>
             </>
           )}
         </div>

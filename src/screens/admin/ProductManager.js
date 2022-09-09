@@ -5,36 +5,44 @@ import LoadingBox from '../../components/LoadingBox'
 import Layout from '../Layout'
 import Pagination from '../../components/Pagination'
 import {
-  getAllProducts,
   getProductByPage,
   addNewProduct,
   deleteProductById,
   updateProduct,
 } from '../../services/ProductService'
+import { objectEqual } from '../../utils'
 
 export default function ProductManager() {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoadingPage, setIsLoadingPage] = useState(true)
+  const [isLoadMore, setIsLoadMore] = useState(false)
   const [isUpdateForm, setIsUpdateForm] = useState(false)
+  const [isPreviewImgPriority, setPreviewImgPriority] = useState(false)
+  const [isChangeProImg, setIsChangeProImg] = useState(false)
   const [pagination, setPagination] = useState({
     page: 1,
-    limit: 2,
+    limit: 4,
     pages: 1,
   })
-
   const [products, setProducts] = useState()
   const [productId, setProductId] = useState('')
-  const [productName, setProductName] = useState('')
-  const [productCategory, setProductCategory] = useState('')
-  const [productBrand, setProductBrand] = useState('')
-  const [productPrice, setProductPrice] = useState()
-  const [productCountInStock, setProductCountInStock] = useState()
-  const [productDescription, setProductDescription] = useState('')
-  const [productImage, setProductImage] = useState()
-  const [imagePreview, setImagePreview] = useState()
-  // const [imageUrl, setImageUrl] = useState()
-  const [productImageUrl, setProductImageUrl] = useState(
-    'https://res.cloudinary.com/imthanhluan/image/upload/v1659500844/profileDefault_raklnm.png'
-  )
+  const [previewImage, setPreviewImage] = useState()
+  const DEFAULT_PRODUCT_IMAGE =
+    'https://res.cloudinary.com/imthanhluan/image/upload/v1660192190/cld-sample-5.jpg'
+
+  const [formData, setFormData] = useState({
+    name: '',
+    category: '',
+    brand: '',
+    price: '',
+    countInStock: '',
+    description: '',
+    image: null,
+    images: [],
+    rating: 0,
+    numReviews: 0,
+    reviews: [],
+  })
+  const [formDataTemp, setFormDataTemp] = useState()
 
   /*
     - in update form, to display preoduct image: productImage
@@ -44,8 +52,11 @@ export default function ProductManager() {
   */
 
   const ref = useRef()
+  // dotenv.config()
 
+  // console.log(`env: ${process.env.DEFAULT_PRODUCT_IMAGE}`)
   const loadProducts = () => {
+    setIsLoadMore(true)
     getProductByPage(pagination.limit, pagination.page)
       .then((res) => {
         setProducts(res.data.products)
@@ -53,8 +64,8 @@ export default function ProductManager() {
           ...pagination,
           pages: res.data.pages,
         })
-
-        setIsLoading(false)
+        setIsLoadingPage(false)
+        setIsLoadMore(false)
       })
       .catch((err) => {
         console.log(err)
@@ -67,67 +78,114 @@ export default function ProductManager() {
 
   const setUpFormUpdate = (product) => {
     setIsUpdateForm(true)
-    setProductName(product.name)
-    setProductCategory(product.category)
-    setProductBrand(product.brand)
-    setProductPrice(product.price)
-    setProductCountInStock(product.countInStock)
-    setProductDescription(product.description)
-    setProductImage(product.image)
-    setProductImageUrl(product.image)
+    setPreviewImgPriority(false)
+    setFormData({
+      name: product.name,
+      category: product.category,
+      brand: product.brand,
+      price: product.price,
+      countInStock: product.countInStock,
+      description: product.description,
+      image: product.image,
+      images: product.images,
+      rating: product.rating,
+      numReviews: product.numReviews,
+      reviews: product.reviews,
+    })
+    setFormDataTemp({
+      name: product.name,
+      category: product.category,
+      brand: product.brand,
+      price: product.price,
+      countInStock: product.countInStock,
+      description: product.description,
+      image: product.image,
+      images: product.images,
+      rating: product.rating,
+      numReviews: product.numReviews,
+      reviews: product.reviews,
+    })
     ref.current.value = ''
   }
 
   const setUpFormInsert = () => {
     setIsUpdateForm(false)
-    setProductName('')
-    setProductCategory('')
-    setProductBrand('')
-    setProductPrice('')
-    setProductCountInStock('')
-    setProductDescription('')
-    setProductImage(null)
-    setImagePreview(null)
-    ref.current.value = ''
-  }
-
-  const uploadImage = (e) => {
-    const data = new FormData()
-    data.append('file', e.target.files[0])
-    data.append('upload_preset', 'clothes')
-    fetch(`https://api.cloudinary.com/v1_1/imthanhluan/upload`, {
-      method: 'post',
-      body: data,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setProductImageUrl(data.url)
-      })
-      .catch((err) => console.log(err))
-  }
-
-  const addProduct = () => {
-    const newPro = {
-      name: productName,
-      category: productCategory,
-      brand: productBrand,
-      price: productPrice,
-      countInStock: productCountInStock,
-      description: productDescription,
-      image: productImageUrl,
+    setFormData({
+      name: '',
+      category: '',
+      brand: '',
+      price: '',
+      countInStock: '',
+      description: '',
+      image: null,
       images: [],
       rating: 0,
       numReviews: 0,
       reviews: [],
+    })
+    setFormDataTemp({
+      name: '',
+      category: '',
+      brand: '',
+      price: '',
+      countInStock: '',
+      description: '',
+      image: null,
+      images: [],
+      rating: 0,
+      numReviews: 0,
+      reviews: [],
+    })
+    setPreviewImage(null)
+    ref.current.value = ''
+  }
+
+  const handleFormChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleImageChange = (e) => {
+    setFormData({
+      ...formData,
+      image: e.target.files[0],
+    })
+    setPreviewImage(URL.createObjectURL(e.target.files[0]))
+    setPreviewImgPriority(true)
+    setIsChangeProImg(true)
+  }
+
+  const addProduct = () => {
+    if (formData.image) {
+      //if user choose image for product
+      const data = new FormData()
+      data.append('file', formData.image)
+      data.append('upload_preset', 'clothes')
+      fetch(`https://api.cloudinary.com/v1_1/imthanhluan/upload`, {
+        method: 'post',
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const newProduct = { ...formData, image: data.url }
+          addNewProduct(newProduct)
+            .then((res) => {
+              loadProducts()
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        })
+        .catch((err) => console.log(err))
+    } else {
+      const newProduct = { ...formData, image: DEFAULT_PRODUCT_IMAGE }
+      addNewProduct(newProduct)
+        .then((res) => {
+          loadProducts()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
-    addNewProduct(newPro)
-      .then((res) => {
-        console.log(res)
-        loadProducts()
-      })
-      .catch((err) => {
-        console.log(err)
-      })
   }
 
   const deleteProduct = (id) => {
@@ -138,27 +196,40 @@ export default function ProductManager() {
   }
 
   const updateHandler = () => {
-    const updatePro = {
-      name: productName,
-      category: productCategory,
-      brand: productBrand,
-      price: productPrice,
-      countInStock: productCountInStock,
-      description: productDescription,
-      image: productImageUrl,
-      images: [],
-      rating: 0,
-      numReviews: 0,
-      reviews: [],
+    if (objectEqual(formDataTemp, formData)) {
+      //if user do not change any things
+      return
+    } else {
+      if (isChangeProImg) {
+        const data = new FormData()
+        data.append('file', formData.image)
+        data.append('upload_preset', 'clothes')
+        fetch(`https://api.cloudinary.com/v1_1/imthanhluan/upload`, {
+          method: 'post',
+          body: data,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            const updatePro = { ...formData, image: data.url }
+            updateProduct(productId, updatePro)
+              .then((res) => {
+                loadProducts()
+              })
+              .catch((err) => {
+                console.log(err)
+              })
+          })
+          .catch((err) => console.log(err))
+      } else {
+        updateProduct(productId, formData)
+          .then((res) => {
+            loadProducts()
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
     }
-    updateProduct(productId, updatePro)
-      .then((res) => {
-        console.log(res)
-        loadProducts()
-      })
-      .catch((err) => {
-        console.log(err)
-      })
   }
 
   const handlePageChange = (newPage) => {
@@ -175,7 +246,7 @@ export default function ProductManager() {
           <Helmet>
             <title>ProductManager</title>
           </Helmet>
-          {isLoading ? (
+          {isLoadingPage ? (
             <div className='text-center'>
               <LoadingBox />
             </div>
@@ -219,11 +290,12 @@ export default function ProductManager() {
                         </td>
                         <td>{product.brand}</td>
                         <td>{product.category}</td>
-                        <td>{product.price}</td>
+                        <td>${product.price}</td>
                         <td>{product.countInStock}</td>
                         <td>
                           <i
                             className='fa-solid fa-pen-to-square text-warning'
+                            role='button'
                             onClick={() => {
                               setUpFormUpdate(product)
                               setProductId(product._id)
@@ -237,6 +309,7 @@ export default function ProductManager() {
                           ></span>
                           <i
                             className='fa-solid fa-trash text-danger delete-btn'
+                            role='button'
                             onClick={() => {
                               if (window.confirm(`delete ${product.name} ?`)) {
                                 deleteProduct(product._id)
@@ -250,7 +323,8 @@ export default function ProductManager() {
                     ))}
                   </tbody>
                 </table>
-                <div>
+                <div className='text-center'>
+                  {isLoadMore && <LoadingBox />}
                   <Pagination
                     pagination={pagination}
                     onPageChange={handlePageChange}
@@ -280,81 +354,85 @@ export default function ProductManager() {
                       <div className='modal-body'>
                         <form>
                           <div>
-                            <label htmlFor='productName'>Name</label>
+                            <label htmlFor='name'>Name</label>
                             <input
-                              id='productName'
+                              id='name'
+                              name='name'
                               className='form-control'
                               type='text'
-                              value={productName}
+                              value={formData.name}
                               onChange={(e) => {
-                                setProductName(e.target.value)
+                                handleFormChange(e)
                               }}
                               required
                             />
                           </div>
                           <div>
-                            <label htmlFor='productCategory'>Category</label>
+                            <label htmlFor='category'>Category</label>
                             <input
-                              id='productCategory'
+                              id='category'
+                              name='category'
                               className='form-control'
                               type='text'
-                              value={productCategory}
+                              value={formData.category}
                               onChange={(e) => {
-                                setProductCategory(e.target.value)
+                                handleFormChange(e)
                               }}
                               required
                             />
                           </div>
                           <div>
-                            <label htmlFor='productBrand'>Brand</label>
+                            <label htmlFor='brand'>Brand</label>
                             <input
-                              id='productBrand'
+                              id='brand'
+                              name='brand'
                               className='form-control'
                               type='text'
-                              value={productBrand}
+                              value={formData.brand}
                               onChange={(e) => {
-                                setProductBrand(e.target.value)
+                                handleFormChange(e)
                               }}
                               required
                             />
                           </div>
                           <div>
-                            <label htmlFor='productPrice'>Price</label>
+                            <label htmlFor='price'>Price</label>
                             <input
-                              id='productPrice'
+                              id='price'
+                              name='price'
                               className='form-control'
                               type='number'
-                              value={productPrice}
+                              value={formData.price}
                               onChange={(e) => {
-                                setProductPrice(e.target.value)
+                                handleFormChange(e)
                               }}
                               required
                             />
                           </div>
                           <div>
-                            <label htmlFor='productCountInStock'>Stock</label>
+                            <label htmlFor='countInStock'>Stock</label>
                             <input
-                              id='productCountInStock'
+                              id='countInStock'
+                              name='countInStock'
                               className='form-control'
                               type='number'
-                              value={productCountInStock}
+                              value={formData.countInStock}
                               onChange={(e) => {
-                                setProductCountInStock(e.target.value)
+                                handleFormChange(e)
                               }}
                               required
                             />
                           </div>
                           <div>
-                            <label htmlFor='productDescription'>
-                              Description
-                            </label>
+                            <label htmlFor='description'>Description</label>
                             <textarea
-                              id='productDescription'
+                              id='description'
+                              name='description'
                               className='form-control'
                               type='number'
-                              value={productDescription}
+                              value={formData.description}
                               onChange={(e) => {
-                                setProductDescription(e.target.value)
+                                handleFormChange(e)
                               }}
                             ></textarea>
                           </div>
@@ -366,15 +444,20 @@ export default function ProductManager() {
                               ref={ref}
                               className='form-control'
                               onChange={(e) => {
-                                let url = URL.createObjectURL(e.target.files[0])
-                                setImagePreview(url)
-                                uploadImage(e)
+                                // xử lí cleanup function sau
+                                handleImageChange(e)
                               }}
                             />
                             <div className='d-flex'>
-                              {productImage ? (
+                              {
                                 <img
-                                  src={productImage}
+                                  src={
+                                    isPreviewImgPriority && previewImage
+                                      ? previewImage
+                                      : !isPreviewImgPriority && formData.image
+                                      ? formData.image
+                                      : null
+                                  }
                                   alt=''
                                   className='img-fluid'
                                   style={{
@@ -382,17 +465,7 @@ export default function ProductManager() {
                                     margin: '1rem auto 0',
                                   }}
                                 />
-                              ) : imagePreview ? (
-                                <img
-                                  src={imagePreview}
-                                  alt=''
-                                  className='img-fluid'
-                                  style={{
-                                    width: '25%',
-                                    margin: '1rem auto 0',
-                                  }}
-                                />
-                              ) : null}
+                              }
                             </div>
                           </div>
                         </form>

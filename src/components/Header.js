@@ -48,7 +48,11 @@ export default function Header() {
               <ul>
                 <li>
                   <Link to='/productManager'>Product</Link>
+                </li>
+                <li>
                   <Link to='/'>Category</Link>
+                </li>
+                <li>
                   <Link to='/'>Order</Link>
                 </li>
               </ul>
