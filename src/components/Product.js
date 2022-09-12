@@ -35,15 +35,13 @@ export default function Product({ product }) {
       </Link>
       <Card.Body>
         <Link
-          className='cart-title'
           style={{ textDecoration: 'none', color: '#000' }}
           to={`/product/${product._id}`}
         >
           <h5 className='name'>{product.name}</h5>
+          <Rating rating={product.rating} numReviews={product.numReviews} />
+          <p className='price'>${product.price}</p>
         </Link>
-        <Rating rating={product.rating} numReviews={product.numReviews} />
-        <p className='price'>${product.price}</p>
-        <p className='descr'>{product.description}</p>
         {product.countInStock === 0 ? (
           <Button variant='danger' disabled>
             Out of stock

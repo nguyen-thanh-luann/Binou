@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Helmet } from 'react-helmet-async'
+import { Modal } from 'react-bootstrap'
 
 import LoadingBox from '../../components/LoadingBox'
 import Layout from '../Layout'
@@ -13,11 +14,13 @@ import {
 import { objectEqual } from '../../utils'
 
 export default function ProductManager() {
+  const [loading, setLoading] = useState(false)
   const [isLoadingPage, setIsLoadingPage] = useState(true)
   const [isLoadMore, setIsLoadMore] = useState(false)
-  const [isUpdateForm, setIsUpdateForm] = useState(false)
+  const [isUpdatePro, setIsUpdatePro] = useState(false)
   const [isPreviewImgPriority, setPreviewImgPriority] = useState(false)
   const [isChangeProImg, setIsChangeProImg] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const [pagination, setPagination] = useState({
     page: 1,
     limit: 4,
@@ -44,17 +47,8 @@ export default function ProductManager() {
   })
   const [formDataTemp, setFormDataTemp] = useState()
 
-  /*
-    - in update form, to display preoduct image: productImage
-    - in insert form, just display for user preview image that he choose: imagePreviewUrl
-    - in insert form, get image file from input to push to cloudinary: imageUrl
-    - receive image url from cloudinary to insert new product: productImageUrl
-  */
-
   const ref = useRef()
-  // dotenv.config()
 
-  // console.log(`env: ${process.env.DEFAULT_PRODUCT_IMAGE}`)
   const loadProducts = () => {
     setIsLoadMore(true)
     getProductByPage(pagination.limit, pagination.page)
@@ -76,8 +70,17 @@ export default function ProductManager() {
     loadProducts()
   }, [pagination.page])
 
+  const submitHandle = (e) => {
+    e.preventDefault()
+    if (isUpdatePro) {
+      updateHandler()
+    } else {
+      addProduct()
+    }
+  }
+
   const setUpFormUpdate = (product) => {
-    setIsUpdateForm(true)
+    setIsUpdatePro(true)
     setPreviewImgPriority(false)
     setFormData({
       name: product.name,
@@ -105,11 +108,11 @@ export default function ProductManager() {
       numReviews: product.numReviews,
       reviews: product.reviews,
     })
-    ref.current.value = ''
+    // ref.current.value = ''
   }
 
   const setUpFormInsert = () => {
-    setIsUpdateForm(false)
+    setIsUpdatePro(false)
     setFormData({
       name: '',
       category: '',
@@ -137,7 +140,7 @@ export default function ProductManager() {
       reviews: [],
     })
     setPreviewImage(null)
-    ref.current.value = ''
+    // ref.current.value = ''
   }
 
   const handleFormChange = (e) => {
@@ -155,6 +158,7 @@ export default function ProductManager() {
   }
 
   const addProduct = () => {
+    setLoading(true)
     if (formData.image) {
       //if user choose image for product
       const data = new FormData()
@@ -169,6 +173,8 @@ export default function ProductManager() {
           const newProduct = { ...formData, image: data.url }
           addNewProduct(newProduct)
             .then((res) => {
+              setLoading(false)
+              setShowModal(false)
               loadProducts()
             })
             .catch((err) => {
@@ -180,6 +186,8 @@ export default function ProductManager() {
       const newProduct = { ...formData, image: DEFAULT_PRODUCT_IMAGE }
       addNewProduct(newProduct)
         .then((res) => {
+          setLoading(false)
+          setShowModal(false)
           loadProducts()
         })
         .catch((err) => {
@@ -200,6 +208,7 @@ export default function ProductManager() {
       //if user do not change any things
       return
     } else {
+      setLoading(true)
       if (isChangeProImg) {
         const data = new FormData()
         data.append('file', formData.image)
@@ -213,6 +222,8 @@ export default function ProductManager() {
             const updatePro = { ...formData, image: data.url }
             updateProduct(productId, updatePro)
               .then((res) => {
+                setLoading(false)
+                setShowModal(false)
                 loadProducts()
               })
               .catch((err) => {
@@ -223,6 +234,8 @@ export default function ProductManager() {
       } else {
         updateProduct(productId, formData)
           .then((res) => {
+            setLoading(false)
+            setShowModal(false)
             loadProducts()
           })
           .catch((err) => {
@@ -255,9 +268,10 @@ export default function ProductManager() {
               <div>
                 <button
                   className='btn btn-success'
-                  data-bs-toggle='modal'
-                  data-bs-target='#productModal'
-                  onClick={setUpFormInsert}
+                  onClick={() => {
+                    setUpFormInsert()
+                    setShowModal(true)
+                  }}
                 >
                   <i className='fa-solid fa-plus me-1'></i>
                   New Product
@@ -299,9 +313,8 @@ export default function ProductManager() {
                             onClick={() => {
                               setUpFormUpdate(product)
                               setProductId(product._id)
+                              setShowModal(true)
                             }}
-                            data-bs-toggle='modal'
-                            data-bs-target='#productModal'
                           ></i>
                           <span
                             style={{ content: '', border: '1px solid #ccc' }}
@@ -331,177 +344,155 @@ export default function ProductManager() {
                   />
                 </div>
                 {/* product modal */}
-                <div
-                  className='modal fade'
-                  id='productModal'
-                  tabIndex='-1'
-                  aria-labelledby='productModal'
-                  aria-hidden='true'
-                >
-                  <div className='modal-dialog modal-dialog-centered'>
-                    <div className='modal-content'>
-                      <div className='modal-header'>
-                        <h5 className='modal-title' id='exampleModalLabel'>
-                          {isUpdateForm ? 'Update product' : 'Add new product'}
-                        </h5>
-                        <button
-                          type='button'
-                          className='btn-close'
-                          data-bs-dismiss='modal'
-                          aria-label='Close'
-                        ></button>
+
+                <Modal show={showModal}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>
+                      {isUpdatePro ? 'Update product' : 'Add new product'}
+                    </Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <form onSubmit={(e) => submitHandle(e)}>
+                      <div>
+                        <label htmlFor='name'>Name</label>
+                        <input
+                          id='name'
+                          name='name'
+                          className='form-control'
+                          type='text'
+                          value={formData.name}
+                          onChange={(e) => {
+                            handleFormChange(e)
+                          }}
+                          required
+                        />
                       </div>
-                      <div className='modal-body'>
-                        <form>
-                          <div>
-                            <label htmlFor='name'>Name</label>
-                            <input
-                              id='name'
-                              name='name'
-                              className='form-control'
-                              type='text'
-                              value={formData.name}
-                              onChange={(e) => {
-                                handleFormChange(e)
-                              }}
-                              required
-                            />
-                          </div>
-                          <div>
-                            <label htmlFor='category'>Category</label>
-                            <input
-                              id='category'
-                              name='category'
-                              className='form-control'
-                              type='text'
-                              value={formData.category}
-                              onChange={(e) => {
-                                handleFormChange(e)
-                              }}
-                              required
-                            />
-                          </div>
-                          <div>
-                            <label htmlFor='brand'>Brand</label>
-                            <input
-                              id='brand'
-                              name='brand'
-                              className='form-control'
-                              type='text'
-                              value={formData.brand}
-                              onChange={(e) => {
-                                handleFormChange(e)
-                              }}
-                              required
-                            />
-                          </div>
-                          <div>
-                            <label htmlFor='price'>Price</label>
-                            <input
-                              id='price'
-                              name='price'
-                              className='form-control'
-                              type='number'
-                              value={formData.price}
-                              onChange={(e) => {
-                                handleFormChange(e)
-                              }}
-                              required
-                            />
-                          </div>
-                          <div>
-                            <label htmlFor='countInStock'>Stock</label>
-                            <input
-                              id='countInStock'
-                              name='countInStock'
-                              className='form-control'
-                              type='number'
-                              value={formData.countInStock}
-                              onChange={(e) => {
-                                handleFormChange(e)
-                              }}
-                              required
-                            />
-                          </div>
-                          <div>
-                            <label htmlFor='description'>Description</label>
-                            <textarea
-                              id='description'
-                              name='description'
-                              className='form-control'
-                              type='number'
-                              value={formData.description}
-                              onChange={(e) => {
-                                handleFormChange(e)
-                              }}
-                            ></textarea>
-                          </div>
-                          <div>
-                            <label htmlFor='productImage'>Photo</label>
-                            <input
-                              id='productImage'
-                              type='file'
-                              ref={ref}
-                              className='form-control'
-                              onChange={(e) => {
-                                // xử lí cleanup function sau
-                                handleImageChange(e)
-                              }}
-                            />
-                            <div className='d-flex'>
-                              {
-                                <img
-                                  src={
-                                    isPreviewImgPriority && previewImage
-                                      ? previewImage
-                                      : !isPreviewImgPriority && formData.image
-                                      ? formData.image
-                                      : null
-                                  }
-                                  alt=''
-                                  className='img-fluid'
-                                  style={{
-                                    width: '25%',
-                                    margin: '1rem auto 0',
-                                  }}
-                                />
+                      <div>
+                        <label htmlFor='category'>Category</label>
+                        <input
+                          id='category'
+                          name='category'
+                          className='form-control'
+                          type='text'
+                          value={formData.category}
+                          onChange={(e) => {
+                            handleFormChange(e)
+                          }}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor='brand'>Brand</label>
+                        <input
+                          id='brand'
+                          name='brand'
+                          className='form-control'
+                          type='text'
+                          value={formData.brand}
+                          onChange={(e) => {
+                            handleFormChange(e)
+                          }}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor='price'>Price</label>
+                        <input
+                          id='price'
+                          name='price'
+                          className='form-control'
+                          type='number'
+                          value={formData.price}
+                          onChange={(e) => {
+                            handleFormChange(e)
+                          }}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor='countInStock'>Stock</label>
+                        <input
+                          id='countInStock'
+                          name='countInStock'
+                          className='form-control'
+                          type='number'
+                          value={formData.countInStock}
+                          onChange={(e) => {
+                            handleFormChange(e)
+                          }}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor='description'>Description</label>
+                        <textarea
+                          id='description'
+                          name='description'
+                          className='form-control'
+                          type='number'
+                          value={formData.description}
+                          onChange={(e) => {
+                            handleFormChange(e)
+                          }}
+                        ></textarea>
+                      </div>
+                      <div>
+                        <label htmlFor='productImage'>Photo</label>
+                        <input
+                          id='productImage'
+                          type='file'
+                          ref={ref}
+                          className='form-control'
+                          onChange={(e) => {
+                            // xử lí cleanup function sau
+                            handleImageChange(e)
+                          }}
+                        />
+                        <div className='d-flex'>
+                          {
+                            <img
+                              src={
+                                isPreviewImgPriority && previewImage
+                                  ? previewImage
+                                  : !isPreviewImgPriority && formData.image
+                                  ? formData.image
+                                  : null
                               }
-                            </div>
-                          </div>
-                        </form>
+                              alt=''
+                              className='img-fluid'
+                              style={{
+                                width: '25%',
+                                margin: '1rem auto 0',
+                              }}
+                            />
+                          }
+                        </div>
                       </div>
+                      {loading && (
+                        <div className='text-center my-2'>
+                          <LoadingBox />
+                        </div>
+                      )}
                       <div className='modal-footer'>
                         <button
-                          type='button'
                           className='btn btn-secondary'
-                          data-bs-dismiss='modal'
+                          onClick={() => setShowModal(false)}
                         >
                           Close
                         </button>
-                        {isUpdateForm ? (
-                          <button
-                            type='button'
-                            className='btn btn-primary'
-                            data-bs-dismiss='modal'
-                            onClick={updateHandler}
-                          >
+                        {isUpdatePro ? (
+                          <button type='submit' className='btn btn-primary'>
                             Update
                           </button>
                         ) : (
-                          <button
-                            type='button'
-                            className='btn btn-success'
-                            onClick={addProduct}
-                            data-bs-dismiss='modal'
-                          >
+                          <button type='submit' className='btn btn-success'>
                             Add
                           </button>
                         )}
                       </div>
-                    </div>
-                  </div>
-                </div>
-                {/*  */}
+                    </form>
+                  </Modal.Body>
+                </Modal>
               </div>
             )
           )}
