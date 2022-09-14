@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Modal } from 'react-bootstrap'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 import LoadingBox from '../../components/LoadingBox'
 import Layout from '../Layout'
@@ -30,7 +31,7 @@ export default function ProductManager() {
   const [productId, setProductId] = useState('')
   const [previewImage, setPreviewImage] = useState()
   const DEFAULT_PRODUCT_IMAGE =
-    'https://res.cloudinary.com/imthanhluan/image/upload/v1660192190/cld-sample-5.jpg'
+    'https://res.cloudinary.com/imthanhluan/image/upload/v1658936316/esejbjxbzficuj6n66tx.jpg'
 
   const [formData, setFormData] = useState({
     name: '',
@@ -176,6 +177,13 @@ export default function ProductManager() {
               setLoading(false)
               setShowModal(false)
               loadProducts()
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'New product added!!!',
+                showConfirmButton: false,
+                timer: 1000,
+              })
             })
             .catch((err) => {
               console.log(err)
@@ -189,6 +197,13 @@ export default function ProductManager() {
           setLoading(false)
           setShowModal(false)
           loadProducts()
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'New product added!!!',
+            showConfirmButton: false,
+            timer: 1000,
+          })
         })
         .catch((err) => {
           console.log(err)
@@ -197,10 +212,19 @@ export default function ProductManager() {
   }
 
   const deleteProduct = (id) => {
-    deleteProductById(id).then((res) => {
-      console.log(res)
-      loadProducts()
-    })
+    deleteProductById(id)
+      .then((res) => {
+        loadProducts()
+        Swal.fire({
+          icon: 'success',
+          title: 'Delete Success!',
+          showConfirmButton: false,
+          timer: 1000,
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   const updateHandler = () => {
@@ -224,6 +248,13 @@ export default function ProductManager() {
               .then((res) => {
                 setLoading(false)
                 setShowModal(false)
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'Update Success!!!',
+                  showConfirmButton: false,
+                  timer: 1000,
+                })
                 loadProducts()
               })
               .catch((err) => {
@@ -237,6 +268,13 @@ export default function ProductManager() {
             setLoading(false)
             setShowModal(false)
             loadProducts()
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Update Success!!!',
+              showConfirmButton: false,
+              timer: 1000,
+            })
           })
           .catch((err) => {
             console.log(err)
@@ -324,11 +362,24 @@ export default function ProductManager() {
                             className='fa-solid fa-trash text-danger delete-btn'
                             role='button'
                             onClick={() => {
-                              if (window.confirm(`delete ${product.name} ?`)) {
-                                deleteProduct(product._id)
-                              } else {
-                                return
-                              }
+                              // if (window.confirm(`delete ${product.name} ?`)) {
+                              //   deleteProduct(product._id)
+                              // } else {
+                              //   return
+                              // }
+                              Swal.fire({
+                                icon: 'warning',
+                                title: `Delete ${product.name}?`,
+                                showCancelButton: true,
+
+                                cancelButtonText: 'Cancel',
+                                confirmButtonColor: 'red',
+                                confirmButtonText: 'Delete',
+                              }).then((result) => {
+                                if (result.isConfirmed) {
+                                  deleteProduct(product._id)
+                                }
+                              })
                             }}
                           ></i>
                         </td>
