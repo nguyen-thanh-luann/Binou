@@ -3,6 +3,8 @@ import { getAllProducts } from '../services/ProductService'
 import { Helmet } from 'react-helmet-async'
 import { useLocation } from 'react-router-dom'
 
+import { BsFillCaretDownFill } from 'react-icons/bs'
+
 import Layout from './Layout'
 import Product from '../components/Product'
 import LoadingBox from '../components/LoadingBox'
@@ -10,13 +12,13 @@ import '../scss/App.scss'
 export default function SearchScreen() {
   const { search } = useLocation()
   console.log(search)
-  const [products, setProducts] = useState()
+  const [products, setProducts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
   const loadProducts = () => {
     getAllProducts()
       .then((res) => {
-        setProducts(res.data)
+        setProducts(res.data.products)
         setIsLoading(false)
       })
       .catch((err) => {
@@ -79,15 +81,15 @@ export default function SearchScreen() {
                 <ul>
                   <li>
                     <span>Brand</span>
-                    <i className='fa-solid fa-angle-down'></i>
+                    <BsFillCaretDownFill />
                   </li>
                   <li>
                     <span>Category</span>
-                    <i className='fa-solid fa-angle-down'></i>
+                    <BsFillCaretDownFill />
                   </li>
                   <li>
                     <span>Price</span>
-                    <i className='fa-solid fa-angle-down'></i>
+                    <BsFillCaretDownFill />
                   </li>
                 </ul>
               </div>

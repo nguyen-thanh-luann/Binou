@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card'
 import { Link } from 'react-router-dom'
 
 import { AiOutlinePlus } from 'react-icons/ai'
+import { BsCart } from 'react-icons/bs'
 
 import { Store } from '../Store'
 import { getProductById } from '../services/ProductService'
@@ -54,8 +55,9 @@ export default function Product({ product }) {
             onClick={() => {
               addToCartHandler(product)
             }}
+            className='d-flex  align-items-center'
           >
-            <AiOutlinePlus />
+            <BsCart className='me-1' />
             Add to cart
           </Button>
         )}

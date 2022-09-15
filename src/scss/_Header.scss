@@ -1,5 +1,5 @@
 @import './variables.scss';
-#header {
+.header {
   position: fixed;
   background-color: $background-color;
   width: 100%;
@@ -12,55 +12,69 @@
   justify-content: space-between;
   font-size: 1.2rem;
   text-transform: uppercase;
+  transition: 0.3s ease all;
+
+  @include breakpoint(md) {
+    padding: 0 0.5rem;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.8);
+    height: 100vh;
+  }
 
   a {
     text-decoration: none;
     color: white;
   }
 
-  ul {
-    margin: 0;
-    padding: 0;
-    li {
-      list-style-type: none;
-      display: inline-block;
-      position: relative;
-      line-height: 3rem;
-      &:not(:first-child) {
-        margin-left: 1rem;
+  .header__content {
+    ul {
+      margin: 0;
+      padding: 0;
+      @include breakpoint(md) {
+        display: flex;
+        flex-direction: column;
       }
-      &:hover > ul {
-        display: block;
-      }
-      ul {
-        position: absolute;
-        display: none;
-        margin: 0;
-        background-color: $background-color;
-        box-shadow: 5px 5px 8px #000;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        border-radius: 10px;
-        li {
-          margin: 0 !important;
-          line-height: 2rem;
-          padding: 0 1rem;
-          font-size: 1rem;
-          &:hover {
-            transform: scale(1.2);
+      li {
+        list-style-type: none;
+        display: inline-block;
+        position: relative;
+        line-height: 3rem;
+        &:not(:first-child) {
+          margin-left: 1rem;
+        }
+        &:hover > ul {
+          transform: none;
+        }
+        ul {
+          position: absolute;
+          transform: translate(200%);
+          margin: 0;
+          background-color: $background-color;
+          box-shadow: 5px 5px 8px #000;
+          border: 1px solid rgba(255, 255, 255, 0.5);
+          border-radius: 10px;
+          li {
+            margin: 0 !important;
+            line-height: 2rem;
+            padding: 0 1rem;
+            font-size: 1rem;
+            &:hover {
+              transform: scale(1.2);
+            }
           }
         }
       }
     }
   }
-}
 
-// mobile
-@media (max-width: 740px) {
-  #header {
-    padding: 0 0.5rem;
-    font-size: 1rem;
-    .search-group {
-      display: none;
+  .header__toggle {
+    cursor: pointer;
+    color: white;
+    display: none;
+    position: relative;
+
+    @include breakpoint(md) {
+      display: flex;
     }
   }
 }

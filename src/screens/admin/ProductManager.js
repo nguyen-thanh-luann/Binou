@@ -3,6 +3,9 @@ import { Helmet } from 'react-helmet-async'
 import { Modal } from 'react-bootstrap'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 
+import { FiTrash } from 'react-icons/fi'
+import { AiOutlineEdit } from 'react-icons/ai'
+
 import LoadingBox from '../../components/LoadingBox'
 import Layout from '../Layout'
 import Pagination from '../../components/Pagination'
@@ -345,28 +348,25 @@ export default function ProductManager() {
                         <td>${product.price}</td>
                         <td>{product.countInStock}</td>
                         <td>
-                          <i
-                            className='fa-solid fa-pen-to-square text-warning'
+                          <AiOutlineEdit
+                            className='text-warning'
                             role='button'
                             onClick={() => {
                               setUpFormUpdate(product)
                               setProductId(product._id)
                               setShowModal(true)
                             }}
-                          ></i>
+                          />
+
                           <span
                             style={{ content: '', border: '1px solid #ccc' }}
                             className='mx-2'
                           ></span>
-                          <i
-                            className='fa-solid fa-trash text-danger delete-btn'
+
+                          <FiTrash
+                            className='text-danger'
                             role='button'
                             onClick={() => {
-                              // if (window.confirm(`delete ${product.name} ?`)) {
-                              //   deleteProduct(product._id)
-                              // } else {
-                              //   return
-                              // }
                               Swal.fire({
                                 icon: 'warning',
                                 title: `Delete ${product.name}?`,
@@ -381,7 +381,7 @@ export default function ProductManager() {
                                 }
                               })
                             }}
-                          ></i>
+                          />
                         </td>
                       </tr>
                     ))}

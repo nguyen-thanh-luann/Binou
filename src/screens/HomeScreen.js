@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getProductByPage } from '../services/ProductService'
+import { getAllProducts, getProductByPage } from '../services/ProductService'
 import { Helmet } from 'react-helmet-async'
 
 import Pagination from '../components/Pagination'

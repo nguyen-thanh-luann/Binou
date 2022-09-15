@@ -2,3 +2,19 @@ $headerHeight: 5rem;
 $footerHeight: 10rem;
 $link-color: rgb(229, 107, 127);
 $background-color: black;
+$dark: rgb(29, 29, 29);
+$light: #fff;
+$spacing-md: 16px;
+$spacing-lg: 32px;
+$borderRadius: 12px;
+$primary: rgb(162, 162, 246);
+$bg: rgb(244, 244, 255);
+
+@mixin breakpoint($point) {
+  @if $point == md {
+    // 740px
+    @media (max-width: 740px) {
+      @content;
+    }
+  }
+}
