@@ -1,5 +1,12 @@
 import React from 'react'
 
+import {
+  FaFacebookF,
+  FaTelegramPlane,
+  FaTiktok,
+  FaTwitter,
+} from 'react-icons/fa'
+
 import '../scss/App.scss'
 export default function Footer() {
   return (
@@ -11,24 +18,24 @@ export default function Footer() {
           target='_blank'
           rel='noreferrer'
         >
-          <i className='fa-brands fa-square-facebook'></i>
+          <FaFacebookF />
         </a>
         <a href='https://t.me/imthanhluan' target='_blank' rel='noreferrer'>
-          <i className='fa-brands fa-telegram'></i>
+          <FaTelegramPlane />
         </a>
         <a
           href='https://www.facebook.com/imthanhluann'
           target='_blank'
           rel='noreferrer'
         >
-          <i className='fa-brands fa-twitter'></i>
+          <FaTwitter />
         </a>
         <a
           href='https://www.facebook.com/imthanhluann'
           target='_blank'
           rel='noreferrer'
         >
-          <i className='fa-brands fa-tiktok'></i>
+          <FaTiktok />
         </a>
       </div>
       <h6 className='mt-3'>Made by Nguyen Thanh Luan</h6>

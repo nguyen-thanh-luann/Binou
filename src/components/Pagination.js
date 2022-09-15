@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from 'react-icons/ai'
+
 export default function Pagination(props) {
   const { pagination, onPageChange } = props
   const { page, pages } = pagination
@@ -13,15 +15,6 @@ export default function Pagination(props) {
 
   return (
     <div>
-      {/* <button disabled={page <= 1} onClick={() => handlePageChange(page - 1)}>
-        Prev
-      </button>
-      <button
-        disabled={page >= pages}
-        onClick={() => handlePageChange(page + 1)}
-      >
-        Next
-      </button> */}
       <button
         className={`pagination-btn ${page <= 1 ? 'disable' : ''}`}
         onClick={() => {
@@ -32,7 +25,7 @@ export default function Pagination(props) {
           }
         }}
       >
-        <i className='fa-solid fa-angle-left'></i>
+        <AiOutlineDoubleLeft />
       </button>
       {[...Array(pages).keys()].map((x) => (
         <button
@@ -53,7 +46,7 @@ export default function Pagination(props) {
           }
         }}
       >
-        <i className='fa-solid fa-angle-right'></i>
+        <AiOutlineDoubleRight />
       </button>
     </div>
   )

@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import { Link } from 'react-router-dom'
 
+import { AiOutlinePlus } from 'react-icons/ai'
+
 import { Store } from '../Store'
 import { getProductById } from '../services/ProductService'
 import Rating from './Rating'
@@ -53,7 +55,7 @@ export default function Product({ product }) {
               addToCartHandler(product)
             }}
           >
-            <i className='fa-solid fa-plus me-2'></i>
+            <AiOutlinePlus />
             Add to cart
           </Button>
         )}

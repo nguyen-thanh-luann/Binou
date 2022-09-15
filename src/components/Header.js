@@ -1,6 +1,10 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
+import { BiUser } from 'react-icons/bi'
+import { BsCart } from 'react-icons/bs'
+import { AiOutlineCaretDown } from 'react-icons/ai'
+
 import { Store } from '../Store'
 import SearchBox from './SearchBox'
 import '../scss/App.scss'
@@ -19,19 +23,13 @@ export default function Header() {
             <SearchBox />
           </li>
           <li>
-            {userInfo ? (
-              <Link to='/userInfo'>
-                <i className='fa-solid fa-user'></i>
-              </Link>
-            ) : (
-              <Link to='/login'>
-                <i className='fa-solid fa-user'></i>
-              </Link>
-            )}
+            <Link to={`${userInfo ? '/userInfo' : '/login'}`}>
+              <BiUser />
+            </Link>
           </li>
           <li>
             <Link to='/cart'>
-              <i className='fa-solid fa-cart-shopping'></i>
+              <BsCart />
               {cart.cartItems.length > 0 && (
                 <span className='badge rounded-pill text-bg-danger p-1'>
                   {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
@@ -43,14 +41,14 @@ export default function Header() {
             <li>
               <Link to='/'>
                 Admin
-                <i className='fa-solid fa-angle-down ms-1 fs-6'></i>
+                <AiOutlineCaretDown />
               </Link>
               <ul>
                 <li>
                   <Link to='/productManager'>Product</Link>
                 </li>
                 <li>
-                  <Link to='/'>Category</Link>
+                  <Link to='/categoryManager'>Category</Link>
                 </li>
                 <li>
                   <Link to='/'>Order</Link>

@@ -1,19 +1,17 @@
+@import '../scss//variables.scss';
 .layout {
-  display: flex;
-  flex-direction: column;
-
-  .content {
-    margin-top: 5rem;
-    padding: 0 2rem;
+  .children {
+    margin-top: $headerHeight;
+    padding: 1rem 2rem;
+    min-height: calc(100vh - $headerHeight - $footerHeight);
   }
 }
 
 //mobile
 @media (max-width: 740px) {
   .layout {
-    .content {
-      margin-top: 5rem;
-      padding: 0 1rem;
+    .children {
+      padding: 1rem;
     }
   }
 }

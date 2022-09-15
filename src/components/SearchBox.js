@@ -5,6 +5,8 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import { useNavigate } from 'react-router-dom'
 
+import { FiSearch } from 'react-icons/fi'
+
 export default function SearchBox() {
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
@@ -25,7 +27,7 @@ export default function SearchBox() {
           aria-describedby='button-search'
         ></FormControl>
         <Button variant='outline-warning' type='submit' id='button-search'>
-          <i className='fas fa-search'></i>
+          <FiSearch />
         </Button>
       </InputGroup>
     </Form>

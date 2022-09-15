@@ -3,9 +3,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
 import AdminRoute from './components/AdminRoute'
 
+import ProductManager from './screens/admin/ProductManager'
+import CategoryManager from './screens/admin/CategoryManager'
+
 import HomeScreen from './screens/HomeScreen'
 import ProductScreen from './screens/ProductScreen'
-import ProductManager from './screens/admin/ProductManager'
 import LoginScreen from './screens/LoginScreen'
 import SignupScreen from './screens/SignupScreen'
 import UserInfoScreen from './screens/UserInfoScreen'
@@ -28,7 +30,15 @@ function App() {
               <ProductManager />
             </AdminRoute>
           }
-        ></Route>
+        />
+        <Route
+          path='/categoryManager'
+          element={
+            <AdminRoute>
+              <CategoryManager />
+            </AdminRoute>
+          }
+        />
         <Route
           path='/userInfo'
           element={

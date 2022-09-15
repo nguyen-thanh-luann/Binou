@@ -1,63 +1,45 @@
+import { BsStarFill, BsStar, BsStarHalf } from 'react-icons/bs'
+
 import '../scss/App.scss'
 export default function Rating(props) {
   const { rating, numReviews, caption } = props
   return (
     <div className='rating'>
-      <span>
-        <i
-          className={
-            rating >= 1
-              ? 'fas fa-star'
-              : rating >= 0.5
-              ? 'fas fa-star-half-alt'
-              : 'far fa-star'
-          }
-        />
-      </span>
-      <span>
-        <i
-          className={
-            rating >= 2
-              ? 'fas fa-star'
-              : rating >= 1.5
-              ? 'fas fa-star-half-alt'
-              : 'far fa-star'
-          }
-        />
-      </span>
-      <span>
-        <i
-          className={
-            rating >= 3
-              ? 'fas fa-star'
-              : rating >= 2.5
-              ? 'fas fa-star-half-alt'
-              : 'far fa-star'
-          }
-        />
-      </span>
-      <span>
-        <i
-          className={
-            rating >= 4
-              ? 'fas fa-star'
-              : rating >= 3.5
-              ? 'fas fa-star-half-alt'
-              : 'far fa-star'
-          }
-        />
-      </span>
-      <span>
-        <i
-          className={
-            rating >= 5
-              ? 'fas fa-star'
-              : rating >= 4.5
-              ? 'fas fa-star-half-alt'
-              : 'far fa-star'
-          }
-        />
-      </span>
+      {rating >= 1 ? (
+        <BsStarFill className='start' />
+      ) : rating >= 0.5 ? (
+        <BsStarHalf className='start' />
+      ) : (
+        <BsStar className='start' />
+      )}
+      {rating >= 2 ? (
+        <BsStarFill className='start' />
+      ) : rating >= 1.5 ? (
+        <BsStarHalf className='start' />
+      ) : (
+        <BsStar className='start' />
+      )}
+      {rating >= 3 ? (
+        <BsStarFill className='start' />
+      ) : rating >= 2.5 ? (
+        <BsStarHalf className='start' />
+      ) : (
+        <BsStar className='start' />
+      )}
+      {rating >= 4 ? (
+        <BsStarFill className='start' />
+      ) : rating >= 3.5 ? (
+        <BsStarHalf className='start' />
+      ) : (
+        <BsStar className='start' />
+      )}
+      {rating >= 5 ? (
+        <BsStarFill className='start' />
+      ) : rating >= 4.5 ? (
+        <BsStarHalf className='start' />
+      ) : (
+        <BsStar className='start' />
+      )}
       {caption ? (
         <span>{caption}</span>
       ) : (

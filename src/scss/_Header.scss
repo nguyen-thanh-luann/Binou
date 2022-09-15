@@ -1,8 +1,9 @@
-@import 'Mycolor';
+@import './variables.scss';
 #header {
   position: fixed;
   background-color: $background-color;
   width: 100%;
+  height: $headerHeight;
   padding: 0.4rem 4rem;
   z-index: 1;
   top: 0;
