@@ -2,6 +2,9 @@ import React, { useContext } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 
+import { AiFillPlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
+import { BiTrashAlt } from 'react-icons/bi'
+
 import Layout from './Layout'
 import { Store } from '../Store'
 import { getProductById } from '../services/ProductService'
@@ -70,65 +73,48 @@ export default function CartScreen() {
                     </thead>
                     <tbody>
                       {cartItems.map((item) => (
-                        <tr key={item._id}>
+                        <tr key={item._id} className='justify-content-center'>
                           <td>{item.name}</td>
                           <td>
                             <img src={item.image} alt='img' />
                           </td>
                           <td>
-                            {item.quantity === 1 ? (
-                              <i
-                                className='fa-solid fa-minus'
-                                style={{
-                                  border: '1px solid black',
-                                  borderRadius: '50%',
-                                  padding: '1px',
-                                }}
-                              ></i>
+                            {item.quantity <= 1 ? (
+                              <AiOutlineMinusCircle
+                                role='button'
+                                style={{ cursor: 'not-allowed' }}
+                              />
                             ) : (
-                              <i
-                                className='fa-solid fa-minus'
+                              <AiOutlineMinusCircle
+                                role='button'
                                 onClick={() =>
                                   updateCartHandler(item, item.quantity - 1)
                                 }
-                                style={{
-                                  border: '1px solid black',
-                                  borderRadius: '50%',
-                                  padding: '1px',
-                                }}
-                              ></i>
+                              />
                             )}{' '}
                             {item.quantity}{' '}
-                            {item.quantity === item.countInStock ? (
-                              <i
-                                className='fa-solid fa-plus'
-                                style={{
-                                  border: '1px solid black',
-                                  borderRadius: '50%',
-                                  padding: '1px',
-                                }}
-                              ></i>
+                            {item.quantity >= item.countInStock ? (
+                              <AiFillPlusCircle
+                                role='button'
+                                style={{ cursor: 'not-allowed' }}
+                              />
                             ) : (
-                              <i
-                                className='fa-solid fa-plus'
+                              <AiFillPlusCircle
+                                role='button'
                                 onClick={() =>
                                   updateCartHandler(item, item.quantity + 1)
                                 }
-                                style={{
-                                  border: '1px solid black',
-                                  borderRadius: '50%',
-                                  padding: '1px',
-                                }}
-                              ></i>
+                              />
                             )}
                           </td>
                           <td>${item.price}</td>
                           <td>${item.price * item.quantity}</td>
                           <td>
-                            <i
-                              className='fa-solid fa-trash text-danger'
+                            <BiTrashAlt
+                              className='text-danger'
+                              role={'button'}
                               onClick={() => removeItemHandler(item)}
-                            ></i>
+                            />
                           </td>
                         </tr>
                       ))}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getAllProducts, getProductByPage } from '../services/ProductService'
+import { getProductOnPage } from '../services/ProductService'
 import { Helmet } from 'react-helmet-async'
 
 import Pagination from '../components/Pagination'
@@ -18,7 +18,7 @@ export default function HomeScreen() {
 
   const loadProducts = () => {
     setIsLoadMore(true)
-    getProductByPage(pagination.limit, pagination.page)
+    getProductOnPage(pagination.limit, pagination.page)
       .then((res) => {
         setProducts(res.data.products)
         setPagination({

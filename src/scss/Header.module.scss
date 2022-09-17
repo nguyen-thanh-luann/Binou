@@ -1,0 +1,26 @@
+.header {
+  border: 1px solid #ccc;
+  box-shadow: 5px 5px 5px #ccc;
+
+  &__logo {
+    text-transform: capitalize;
+  }
+
+  &__icon {
+    color: black;
+    font-size: 1.2rem;
+    transition: 0.3s;
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+
+  &__link {
+    text-decoration: none;
+    color: black;
+
+    &:hover {
+      color: black;
+    }
+  }
+}

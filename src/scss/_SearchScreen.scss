@@ -1,7 +1,7 @@
 .search-screen {
   display: flex;
+
   .left-side {
-    flex: 20%;
     .option-group {
       padding: 0.2rem 0;
       &:not(:last-child) {
@@ -32,21 +32,9 @@
   }
 
   .right-side {
-    flex: 80%;
+    height: 70vh;
     padding: 0 2rem;
-  }
-}
-
-//mobile
-@media (max-width: 740px) {
-  .search-screen {
-    .left-side {
-      display: none;
-    }
-
-    .right-side {
-      padding: 0.5rem;
-      flex: 100%;
-    }
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 }

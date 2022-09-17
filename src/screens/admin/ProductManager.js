@@ -10,7 +10,7 @@ import LoadingBox from '../../components/LoadingBox'
 import Layout from '../Layout'
 import Pagination from '../../components/Pagination'
 import {
-  getProductByPage,
+  getProductOnPage,
   addNewProduct,
   deleteProductById,
   updateProduct,
@@ -55,7 +55,7 @@ export default function ProductManager() {
 
   const loadProducts = () => {
     setIsLoadMore(true)
-    getProductByPage(pagination.limit, pagination.page)
+    getProductOnPage(pagination.limit, pagination.page)
       .then((res) => {
         setProducts(res.data.products)
         setPagination({
