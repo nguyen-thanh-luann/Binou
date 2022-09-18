@@ -1,25 +1,31 @@
 import React, { useState, useContext } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { login } from '../services/UserService'
+import LoadingBox from '../components/LoadingBox'
 import { Store } from '../Store'
 import Layout from './Layout'
 import '../scss/App.scss'
 export default function LoginScreen() {
   const { dispatch: ctxDispatch } = useContext(Store)
 
+  let navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errMessage, setErrMessage] = useState()
 
   const submitHandler = async (e) => {
     e.preventDefault()
+    setLoading(true)
     try {
       const { data } = await login({ email, password })
       ctxDispatch({ type: 'USER_LOGIN', payload: data })
       localStorage.setItem('userInfo', JSON.stringify(data))
-      window.location.href = '/userInfo'
+      setLoading(false)
+      // window.location.href = '/userInfo'
+      navigate('/userInfo')
     } catch (err) {
       setErrMessage('Wrong email or password')
     }
@@ -70,6 +76,7 @@ export default function LoginScreen() {
                   New customer?
                   <Link to='/signup'> Create your account</Link>
                 </div>
+                <div className='text-center'>{loading && <LoadingBox />}</div>
               </div>
             </form>
           </div>

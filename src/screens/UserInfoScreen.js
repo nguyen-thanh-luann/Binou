@@ -1,9 +1,12 @@
 import React, { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import Layout from './Layout'
 import { Store } from '../Store'
 import '../scss/App.scss'
+import Swal from 'sweetalert2'
 export default function UserInfoScreen() {
+  let navigate = useNavigate()
   const { state, dispatch: ctxDispatch } = useContext(Store)
   const { userInfo } = state
 
@@ -11,13 +14,22 @@ export default function UserInfoScreen() {
   const [email, setEmail] = useState(userInfo.email)
 
   const logoutHandler = () => {
-    if (window.confirm('You want logout?')) {
-      ctxDispatch({ type: 'USER_LOGOUT' })
-      localStorage.removeItem('userInfo')
-      window.location.href = '/login'
-    } else {
-      return
-    }
+    Swal.fire({
+      icon: 'warning',
+      title: 'You want to logout?',
+      showCancelButton: true,
+      cancelButtonColor: 'red',
+      cancelButtonText: 'Cancel',
+      confirmButtonColor: 'rgba(0,0,0,0.6)',
+      confirmButtonText: 'Logout',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        ctxDispatch({ type: 'USER_LOGOUT' })
+        localStorage.removeItem('userInfo')
+        // window.location.href = '/login'
+        navigate('/login')
+      }
+    })
   }
 
   return (

@@ -9,6 +9,7 @@ import Layout from './Layout'
 import { Store } from '../Store'
 import { getProductById } from '../services/ProductService'
 import '../scss/App.scss'
+import Swal from 'sweetalert2'
 export default function CartScreen() {
   const { state, dispatch: ctxDispatch } = useContext(Store)
   const {
@@ -23,7 +24,14 @@ export default function CartScreen() {
   const updateCartHandler = async (item, quantity) => {
     const { data } = await getProductById(item._id)
     if (data.countInStock < quantity) {
-      window.alert('Sorry! Product is out of stock')
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Sorry! Product is out of stock',
+        showDenyButton: false,
+        showConfirmButton: false,
+        timer: 1200,
+      })
       return
     }
     ctxDispatch({
@@ -113,7 +121,22 @@ export default function CartScreen() {
                             <BiTrashAlt
                               className='text-danger'
                               role={'button'}
-                              onClick={() => removeItemHandler(item)}
+                              onClick={() => {
+                                Swal.fire({
+                                  position: 'center',
+                                  title: 'Are you sure remove the product?',
+                                  icon: 'warning',
+                                  showCancelButton: true,
+                                  cancelButtonColor: 'red',
+                                  cancelButtonText: 'Cancel',
+                                  confirmButtonColor: 'rgba(0,0,0,0.6)',
+                                  confirmButtonText: 'Remove',
+                                }).then((result) => {
+                                  if (result.isConfirmed) {
+                                    removeItemHandler(item)
+                                  }
+                                })
+                              }}
                             />
                           </td>
                         </tr>

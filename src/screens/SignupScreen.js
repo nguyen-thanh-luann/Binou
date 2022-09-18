@@ -1,13 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 
 import Layout from './Layout'
+import LoadingBox from '../components/LoadingBox'
 import { signup } from '../services/UserService'
 
 import '../scss/App.scss'
+import Swal from 'sweetalert2'
 export default function SignupScreen() {
+  const [loading, setLoading] = useState(false)
+  let navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -15,6 +19,7 @@ export default function SignupScreen() {
   } = useForm()
 
   const onSubmit = (data) => {
+    setLoading(true)
     const user = {
       name: data.name,
       email: data.email,
@@ -23,9 +28,14 @@ export default function SignupScreen() {
     console.log(user)
     signup(user)
       .then(() => {
-        if (window.confirm('create your account success!!')) {
-          window.location.href = '/login'
-        }
+        setLoading(false)
+        Swal.fire({
+          icon: 'success',
+          title: 'Create account success!!!',
+          showConfirmButton: false,
+          timer: 1000,
+        })
+        navigate('/login')
       })
       .catch((err) => {
         console.log(err)
@@ -117,6 +127,7 @@ export default function SignupScreen() {
                   <Link to='/login'> Login</Link>
                 </div>
               </div>
+              <div className='text-center'>{loading && <LoadingBox />}</div>
             </form>
           </div>
         </div>

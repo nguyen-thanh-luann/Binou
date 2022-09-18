@@ -11,6 +11,7 @@ import { getProductById } from '../services/ProductService'
 import Rating from './Rating'
 
 import '../scss/App.scss'
+import Swal from 'sweetalert2'
 export default function Product({ product }) {
   const { state, dispatch: ctxDispatch } = useContext(Store)
   const {
@@ -22,12 +23,25 @@ export default function Product({ product }) {
     const quantity = existItem ? existItem.quantity + 1 : 1
     const { data } = await getProductById(item._id)
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock')
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Sorry! Product is out of stock',
+        showDenyButton: false,
+        showConfirmButton: false,
+        timer: 1200,
+      })
       return
     }
     ctxDispatch({
       type: 'CART_ADD_ITEM',
       payload: { ...item, quantity },
+    })
+    Swal.fire({
+      icon: 'success',
+      showConfirmButton: false,
+      title: 'Product added to cart!',
+      timer: 1200,
     })
   }
 
