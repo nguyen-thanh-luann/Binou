@@ -1,5 +1,5 @@
 @import './variables.scss';
-.user-info-page {
+.profilePage {
   width: 70%;
   margin: auto;
   border: 1px solid #ccc;
@@ -7,37 +7,54 @@
   padding: 1rem;
   box-shadow: 5px 5px 8px #ccc;
 
-  .page-title {
+  &__title {
     text-align: center;
     color: $link-color;
   }
 
-  .info-area {
+  .infoArea {
     width: 50%;
     margin: auto;
 
     .form-group {
-      margin-top: 1rem;
+      margin-top: 2rem;
       input {
         margin-top: 0.2rem;
       }
     }
 
-    .logout-btn {
+    .logoutBtn,
+    .updateBtn {
+      margin-top: 1rem;
+      width: 100%;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      padding: 0.5rem 0;
+      border-radius: 10px;
+      opacity: 0.3;
       &:hover {
-        cursor: pointer;
+        opacity: 1;
       }
+    }
+
+    .logoutBtn {
+      background-color: red;
+    }
+
+    .updateBtn {
+      background-color: rgb(12, 164, 247);
     }
   }
 }
 
 //mobile
 @media (max-width: 740px) {
-  .user-info-page {
+  .profilePage {
     width: 100%;
     border: none;
     padding: 0.5rem;
-    .info-area {
+    .infoArea {
       width: 100%;
     }
   }

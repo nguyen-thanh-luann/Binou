@@ -3,14 +3,14 @@ import React from 'react'
 import {
   FaFacebookF,
   FaTelegramPlane,
-  FaTiktok,
   FaTwitter,
+  FaLinkedinIn,
 } from 'react-icons/fa'
 
-import '../scss/App.scss'
+import Style from '../scss/Footer.module.scss'
 export default function Footer() {
   return (
-    <div className='footer'>
+    <div className={Style.footer}>
       <h2 className='mb-4'>Follow Me!</h2>
       <div>
         <a
@@ -31,11 +31,11 @@ export default function Footer() {
           <FaTwitter />
         </a>
         <a
-          href='https://www.facebook.com/imthanhluann'
+          href='https://www.linkedin.com/in/imthanhluann'
           target='_blank'
           rel='noreferrer'
         >
-          <FaTiktok />
+          <FaLinkedinIn />
         </a>
       </div>
       <h6 className='mt-3'>Made by Nguyen Thanh Luan</h6>

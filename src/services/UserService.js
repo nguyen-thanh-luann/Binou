@@ -8,4 +8,10 @@ const signup = (user) => {
   return api.post(`/user/signup`, user)
 }
 
-export { login, signup }
+const update = (updateInfo) => {
+  return api.put(
+    `/user/update?id=${updateInfo.id}&name=${updateInfo.name}&password=${updateInfo.password}`
+  )
+}
+
+export { login, signup, update }

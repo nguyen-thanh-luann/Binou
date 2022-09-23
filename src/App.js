@@ -7,10 +7,10 @@ import ProductManager from './screens/admin/ProductManager'
 import CategoryManager from './screens/admin/CategoryManager'
 
 import HomeScreen from './screens/HomeScreen'
-import ProductScreen from './screens/ProductScreen'
+import ProductDetail from './screens/ProductDetail'
 import LoginScreen from './screens/LoginScreen'
 import SignupScreen from './screens/SignupScreen'
-import UserInfoScreen from './screens/UserInfoScreen'
+import ProfileScreen from './screens/ProfileScreen'
 import CartScreen from './screens/CartScreen'
 import SearchScreen from './screens/SearchScreen'
 function App() {
@@ -18,7 +18,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<HomeScreen />} />
-        <Route path='/product/:id' element={<ProductScreen />} />
+        <Route path='/product/:id' element={<ProductDetail />} />
         <Route path='/login' element={<LoginScreen />} />
         <Route path='/signup' element={<SignupScreen />} />
         <Route path='/cart' element={<CartScreen />} />
@@ -43,7 +43,7 @@ function App() {
           path='/userInfo'
           element={
             <ProtectedRoute>
-              <UserInfoScreen />
+              <ProfileScreen />
             </ProtectedRoute>
           }
         />

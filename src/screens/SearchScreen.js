@@ -123,10 +123,12 @@ export default function SearchScreen() {
                 </div>
               )}
               <div className='text-center'>
-                <Pagination
-                  pagination={pagination}
-                  onPageChange={handlePageChange}
-                />
+                {foundProduct >= 1 && (
+                  <Pagination
+                    pagination={pagination}
+                    onPageChange={handlePageChange}
+                  />
+                )}
               </div>
             </div>
           </div>

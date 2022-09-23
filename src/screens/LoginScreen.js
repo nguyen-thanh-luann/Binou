@@ -24,10 +24,11 @@ export default function LoginScreen() {
       ctxDispatch({ type: 'USER_LOGIN', payload: data })
       localStorage.setItem('userInfo', JSON.stringify(data))
       setLoading(false)
-      // window.location.href = '/userInfo'
+
       navigate('/userInfo')
     } catch (err) {
       setErrMessage('Wrong email or password')
+      setLoading(false)
     }
   }
   return (

@@ -1,9 +1,16 @@
-.product-area {
+@import '../scss/variables.scss';
+
+.productPage {
   padding: 1rem;
   display: flex;
-  .product-img {
+  @include breakpoint(md) {
+    flex-direction: column;
+  }
+  .productImage {
     flex: 30%;
-
+    @include breakpoint(md) {
+      flex: 100%;
+    }
     img {
       border: 1px solid #ccc;
       border-radius: 10px;
@@ -11,31 +18,20 @@
     }
   }
 
-  .product-info {
+  .productInfo {
     flex: 60%;
     margin-left: 2rem;
     padding: 1rem;
-
-    .product-description {
+    @include breakpoint(md) {
+      flex: 100%;
+      padding: 1rem 0 0 0;
+      margin: 0;
+    }
+    .productDescr {
       border: 1px solid #ccc;
       border-radius: 10px;
       width: fit-content;
       padding: 0.5rem;
-    }
-  }
-}
-//mobile
-@media (max-width: 740px) {
-  .product-page {
-    flex-direction: column;
-    .product-img {
-      flex: 100%;
-    }
-
-    .product-info {
-      flex: 100%;
-      padding: 1rem 0 0 0;
-      margin: 0;
     }
   }
 }

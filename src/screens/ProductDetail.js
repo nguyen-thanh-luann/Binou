@@ -8,7 +8,8 @@ import Layout from './Layout'
 import Rating from '../components/Rating'
 import LoadingBox from '../components/LoadingBox'
 import { getProductById } from '../services/ProductService'
-import '../scss/App.scss'
+import Style from '../scss/ProductDetail.module.scss'
+import Swal from 'sweetalert2'
 export default function ProductScreen() {
   const param = useParams()
   const productId = param.id
@@ -37,12 +38,25 @@ export default function ProductScreen() {
     const quantity = existItem ? existItem.quantity + 1 : 1
     const { data } = await getProductById(item._id)
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock')
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Sorry! Product is out of stock',
+        showDenyButton: false,
+        showConfirmButton: false,
+        timer: 1200,
+      })
       return
     }
     ctxDispatch({
       type: 'CART_ADD_ITEM',
       payload: { ...item, quantity },
+    })
+    Swal.fire({
+      icon: 'success',
+      showConfirmButton: false,
+      title: 'Product added to cart!',
+      timer: 1200,
     })
   }
 
@@ -61,21 +75,21 @@ export default function ProductScreen() {
           ) : (
             product && (
               <>
-                <div className='product-area'>
+                <div className={Style.productPage}>
                   <Helmet>
                     <title>{product.name}</title>
                   </Helmet>
-                  <div className='product-img'>
+                  <div className={Style.productImage}>
                     <img src={product.image} alt='' className='img-fluid' />
                   </div>
-                  <div className='product-info'>
+                  <div className={Style.productInfo}>
                     <h3>{product.name}</h3>
                     <Rating
                       rating={product.rating}
                       numReviews={product.numReviews}
                     />
                     <h4 className='mt-2'>${product.price}</h4>
-                    <div className='product-description'>
+                    <div className={Style.productDescr}>
                       <p>{product.description}</p>
                     </div>
                     {product.countInStock === 0 ? (
