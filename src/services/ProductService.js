@@ -28,6 +28,10 @@ const updateProduct = async (id, updatePro) => {
   return await api.put(`/product/${id}`, updatePro)
 }
 
+const reviewProduct = async (id, data) => {
+  return await api.post(`/product/${id}/review`, data)
+}
+
 export {
   getAllProducts,
   getProductOnPage,
@@ -36,4 +40,5 @@ export {
   deleteProductById,
   updateProduct,
   getProductUseQuery,
+  reviewProduct,
 }

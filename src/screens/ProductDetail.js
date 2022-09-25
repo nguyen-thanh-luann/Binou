@@ -1,37 +1,75 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useReducer } from 'react'
 import { useParams } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import { Helmet } from 'react-helmet-async'
+import { useForm } from 'react-hook-form'
 
 import { Store } from '../Store'
 import Layout from './Layout'
 import Rating from '../components/Rating'
 import LoadingBox from '../components/LoadingBox'
-import { getProductById } from '../services/ProductService'
+import { getProductById, reviewProduct } from '../services/ProductService'
 import Style from '../scss/ProductDetail.module.scss'
 import Swal from 'sweetalert2'
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'REFRESH':
+      return { ...state, product: action.payload }
+    case 'REVIEW_REQUEST':
+      return { ...state, loadingReview: true }
+    case 'REVIEW_SUCCESS':
+      return { ...state, loadingReview: false }
+    case 'REVIEW_FAIL':
+      return { ...state, loadingReview: false }
+    case 'FETCH_REQUEST':
+      return { ...state, loading: true }
+    case 'FETCH_SUCCESS':
+      return { ...state, product: action.payload, loading: false }
+    case 'FETCH_FAIL':
+      return { ...state, loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
 export default function ProductScreen() {
   const param = useParams()
   const productId = param.id
 
-  const [product, setProduct] = useState()
-  const [isLoading, setIsLoading] = useState(true)
-
   const { state, dispatch: ctxDispatch } = useContext(Store)
   const {
     cart: { cartItems },
+    userInfo,
   } = state
 
-  const loadProduct = () => {
-    getProductById(productId)
-      .then((res) => {
-        setProduct(res.data)
-        setIsLoading(false)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
+  const [{ loading, error, product, loadingCreateReview }, dispatch] =
+    useReducer(reducer, {
+      product: [],
+      loading: true,
+      error: '',
+    })
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch({ type: 'FETCH_REQUEST' })
+      getProductById(productId)
+        .then((res) => {
+          dispatch({ type: 'FETCH_SUCCESS', payload: res.data })
+        })
+        .catch((err) => {
+          dispatch({ type: 'FETCH_FAIL', payload: err })
+        })
+    }
+    fetchData()
+  }, [productId])
 
   const addToCartHandler = async (item) => {
     const existItem = cartItems.find((x) => x._id === product._id)
@@ -60,15 +98,40 @@ export default function ProductScreen() {
     })
   }
 
-  useEffect(() => {
-    loadProduct()
-  }, [])
+  const onSubmit = (data) => {
+    dispatch({
+      type: 'REVIEW_REQUEST',
+    })
 
+    const dataReview = {
+      name: userInfo.name,
+      comment: data.comment.trim(),
+      rating: data.rating,
+    }
+
+    reviewProduct(productId, dataReview)
+      .then((res) => {
+        dispatch({
+          type: 'REVIEW_SUCCESS',
+        })
+        // product.reviews.push()
+        product.reviews.push(res.data.review)
+        product.numReviews = res.data.numReviews
+        product.rating = res.data.rating
+        dispatch({ type: 'REFRESH', payload: product })
+      })
+      .catch((err) => {
+        dispatch({ type: 'REVIEW_FAIL' })
+        console.log(err)
+      })
+
+    reset()
+  }
   return (
     <Layout
       children={
         <div>
-          {isLoading ? (
+          {loading ? (
             <div className='text-center'>
               <LoadingBox />
             </div>
@@ -112,7 +175,44 @@ export default function ProductScreen() {
                 </div>
                 <div>
                   <h2>Reviews</h2>
-                  <p>dell ai preview</p>
+                  {product.reviews.length === 0 && <p>There is no review</p>}
+                  {product.reviews.map((rev) => (
+                    <div>
+                      <p>{rev.name}</p>
+                      <p>{rev.comment}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className={Style.writeReviewArea}>
+                  <h2>Write a review</h2>
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <label htmlFor='rating' className={Style.label}>
+                      Rating
+                    </label>
+                    <select
+                      id='rating'
+                      {...register('rating', { required: true })}
+                    >
+                      <option value=''>select</option>
+                      <option value='1'>1 - poor</option>
+                      <option value='2'>2 - Fair</option>
+                      <option value='3'>3 - Good</option>
+                      <option value='4'>4 - Very good</option>
+                      <option value='5'>5 - Excelent</option>
+                    </select>
+                    <label htmlFor='comment' className={Style.label}>
+                      Comment
+                    </label>
+                    <textarea
+                      id='comment'
+                      placeholder='write your comment'
+                      style={{ width: '100%' }}
+                      {...register('comment', { required: true })}
+                    ></textarea>
+                    <button className={Style.submitBtn} type='submit'>
+                      Submit
+                    </button>
+                  </form>
                 </div>
               </>
             )
