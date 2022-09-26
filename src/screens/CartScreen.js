@@ -8,7 +8,7 @@ import { BiTrashAlt } from 'react-icons/bi'
 import Layout from './Layout'
 import { Store } from '../Store'
 import { getProductById } from '../services/ProductService'
-import '../scss/App.scss'
+import Style from '../scss/CartScreen.module.scss'
 import Swal from 'sweetalert2'
 export default function CartScreen() {
   const { state, dispatch: ctxDispatch } = useContext(Store)
@@ -55,7 +55,7 @@ export default function CartScreen() {
             <title>Shopping Cart</title>
           </Helmet>
           {cartItems.length === 0 ? (
-            <div className='cart-noti'>
+            <div className={Style.cartNoti}>
               <p>
                 Cart is empty.
                 <Link to='/'> Let's Shopping now!</Link>
@@ -63,11 +63,11 @@ export default function CartScreen() {
             </div>
           ) : (
             <>
-              <h2 className='cart-title'>
+              <h2 className={Style.cartTitle}>
                 Cool! Let's checkout to get new clothes
               </h2>
-              <div className='cart-screen'>
-                <div className='cart-item-table'>
+              <div className={Style.cartScreen}>
+                <div className={Style.cartItemTable}>
                   <table className='table table-hover border text-center align-middle'>
                     <thead>
                       <tr>
@@ -144,7 +144,7 @@ export default function CartScreen() {
                     </tbody>
                   </table>
                 </div>
-                <div className='cart-bill'>
+                <div className={Style.cartBill}>
                   <h4 className='text-center'>Bill</h4>
                   <h5>
                     Invoice Total:{' '}

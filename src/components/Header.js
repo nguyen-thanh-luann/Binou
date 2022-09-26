@@ -70,7 +70,12 @@ function Header() {
                   </Link>
                 </Nav.Link>
                 {userInfo && userInfo.isAdmin && (
-                  <DropdownButton align='end' title='Admin' variant='secondary'>
+                  <DropdownButton
+                    style={{ marginLeft: '1rem' }}
+                    align='end'
+                    title='Admin'
+                    variant='secondary'
+                  >
                     <Dropdown.Item>
                       <Link
                         className={Style.header__link}
@@ -80,8 +85,7 @@ function Header() {
                         Product
                       </Link>
                     </Dropdown.Item>
-                    <Dropdown.Item>Another action</Dropdown.Item>
-                    <Dropdown.Item>Something else here</Dropdown.Item>
+                    <Dropdown.Item>Category</Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item>Logout</Dropdown.Item>
                   </DropdownButton>

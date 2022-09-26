@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useContext, useReducer } from 'react'
+import React, { useEffect, useContext, useReducer } from 'react'
 import { useParams } from 'react-router-dom'
-import Button from 'react-bootstrap/Button'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
 
@@ -8,6 +7,7 @@ import { Store } from '../Store'
 import Layout from './Layout'
 import Rating from '../components/Rating'
 import LoadingBox from '../components/LoadingBox'
+import AddToCartBtn from '../components/AddToCartBtn'
 import { getProductById, reviewProduct } from '../services/ProductService'
 import Style from '../scss/ProductDetail.module.scss'
 import Swal from 'sweetalert2'
@@ -38,10 +38,7 @@ export default function ProductScreen() {
   const productId = param.id
 
   const { state, dispatch: ctxDispatch } = useContext(Store)
-  const {
-    cart: { cartItems },
-    userInfo,
-  } = state
+  const { userInfo } = state
 
   const [
     { loading, loadingReview, error, product, loadingCreateReview },
@@ -72,33 +69,6 @@ export default function ProductScreen() {
     }
     fetchData()
   }, [productId])
-
-  const addToCartHandler = async (item) => {
-    const existItem = cartItems.find((x) => x._id === product._id)
-    const quantity = existItem ? existItem.quantity + 1 : 1
-    const { data } = await getProductById(item._id)
-    if (data.countInStock < quantity) {
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: 'Sorry! Product is out of stock',
-        showDenyButton: false,
-        showConfirmButton: false,
-        timer: 1200,
-      })
-      return
-    }
-    ctxDispatch({
-      type: 'CART_ADD_ITEM',
-      payload: { ...item, quantity },
-    })
-    Swal.fire({
-      icon: 'success',
-      showConfirmButton: false,
-      title: 'Product added to cart!',
-      timer: 1200,
-    })
-  }
 
   const onSubmit = (data) => {
     dispatch({
@@ -153,7 +123,7 @@ export default function ProductScreen() {
                     <img src={product.image} alt='' className='img-fluid' />
                   </div>
                   <div className={Style.productInfo}>
-                    <h3>{product.name}</h3>
+                    <h3 className={Style.productInfo__name}>{product.name}</h3>
                     <Rating
                       rating={product.rating}
                       numReviews={product.numReviews}
@@ -162,43 +132,28 @@ export default function ProductScreen() {
                     <div className={Style.productDescr}>
                       <p>{product.description}</p>
                     </div>
-                    {product.countInStock === 0 ? (
-                      <Button variant='danger' className='mt-2' disabled>
-                        Out of stock
-                      </Button>
-                    ) : (
-                      <Button
-                        variant='warning'
-                        className='mt-2'
-                        onClick={() => {
-                          addToCartHandler(product)
-                        }}
-                      >
-                        <i className='fa-solid fa-plus me-2'></i>
-                        Add to cart
-                      </Button>
-                    )}
+                    <AddToCartBtn product={product} />
                   </div>
                 </div>
                 <h2>Reviews</h2>
 
-                <div className={Style.commentArea}>
+                <div className={Style.reviewArea}>
                   {product.reviews.length === 0 && (
                     <h4 className='text-center text-warning'>
                       There is no review
                     </h4>
                   )}
                   {product.reviews.map((rev, index) => (
-                    <div key={index} className={Style.comment}>
+                    <div key={index} className={Style.review}>
                       <div>
-                        <span className={Style.comment__name}>{rev.name}</span>
-                        <span className={Style.comment__date}>
+                        <span className={Style.review__name}>{rev.name}</span>
+                        <span className={Style.review__date}>
                           {new Date(rev.updatedAt).toLocaleDateString()}
                         </span>
                       </div>
                       <Rating rating={rev.rating} />
 
-                      <span className={Style.comment__content}>
+                      <span className={Style.review__content}>
                         {rev.comment}
                       </span>
                     </div>

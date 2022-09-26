@@ -6,7 +6,7 @@ import { login } from '../services/UserService'
 import LoadingBox from '../components/LoadingBox'
 import { Store } from '../Store'
 import Layout from './Layout'
-import '../scss/App.scss'
+import Style from '../scss/RegisterScreen.module.scss'
 export default function LoginScreen() {
   const { dispatch: ctxDispatch } = useContext(Store)
 
@@ -38,10 +38,10 @@ export default function LoginScreen() {
           <Helmet>
             <title>Login</title>
           </Helmet>
-          <div className='login-page'>
-            <form className='form' onSubmit={submitHandler}>
+          <div className={Style.page}>
+            <form className={Style.form} onSubmit={submitHandler}>
               <h1 className='text-center'>Login</h1>
-              <div className='form-group'>
+              <div className={Style.formGroup}>
                 <label htmlFor='email'>Email</label>
                 <input
                   id='email'
@@ -51,7 +51,7 @@ export default function LoginScreen() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className='form-group'>
+              <div className={Style.formGroup}>
                 <label htmlFor='password'>Password</label>
                 <input
                   id='password'
@@ -61,7 +61,7 @@ export default function LoginScreen() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <div className='form-group'>
+              <div className={Style.formGroup}>
                 {errMessage && (
                   <p className='text-danger'>
                     {` * `}
@@ -70,10 +70,10 @@ export default function LoginScreen() {
                 )}
                 <input
                   type='submit'
-                  className='form-control btn btn-success'
+                  className='form-control btn btn-success mt-4'
                   value='Login'
                 />
-                <div className='mt-2'>
+                <div className='mt-4 text-center'>
                   New customer?
                   <Link to='/signup'> Create your account</Link>
                 </div>

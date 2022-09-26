@@ -7,7 +7,7 @@ import Layout from './Layout'
 import LoadingBox from '../components/LoadingBox'
 import { signup } from '../services/UserService'
 
-import '../scss/App.scss'
+import Style from '../scss/RegisterScreen.module.scss'
 import Swal from 'sweetalert2'
 export default function SignupScreen() {
   const [loading, setLoading] = useState(false)
@@ -49,10 +49,10 @@ export default function SignupScreen() {
           <Helmet>
             <title>Signup</title>
           </Helmet>
-          <div className='signup-page'>
-            <form className='form' onSubmit={handleSubmit(onSubmit)}>
+          <div className={Style.page}>
+            <form className={Style.form} onSubmit={handleSubmit(onSubmit)}>
               <h1 className='text-center'>Signup</h1>
-              <div className='form-group'>
+              <div className={Style.formGroup}>
                 <label htmlFor='email'>
                   Name{' '}
                   {errors.name && (
@@ -78,7 +78,7 @@ export default function SignupScreen() {
                   })}
                 />
               </div>
-              <div className='form-group'>
+              <div className={Style.formGroup}>
                 <label htmlFor='email'>
                   Email{' '}
                   {errors.email && (
@@ -96,7 +96,7 @@ export default function SignupScreen() {
                   {...register('email', { required: true })}
                 />
               </div>
-              <div className='form-group'>
+              <div className={Style.formGroup}>
                 <label htmlFor='password'>
                   Password{' '}
                   {errors.password && (
@@ -116,13 +116,13 @@ export default function SignupScreen() {
                   {...register('password', { required: true, minLength: 6 })}
                 />
               </div>
-              <div className='form-group'>
+              <div className={Style.formGroup}>
                 <input
                   type='submit'
-                  className='form-control btn btn-success'
+                  className='form-control btn btn-success mt-4'
                   value='Signup'
                 />
-                <div>
+                <div className='mt-4 text-center'>
                   you already have account?
                   <Link to='/login'> Login</Link>
                 </div>

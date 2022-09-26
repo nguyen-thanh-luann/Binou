@@ -1,0 +1,19 @@
+@import './variables.scss';
+.page {
+  .form {
+    width: 50%;
+    margin: 0 auto;
+    @include breakpoint(md) {
+      width: 100%;
+    }
+    .formGroup {
+      &:not(:first-child) {
+        margin-top: 1rem;
+      }
+    }
+  }
+  a {
+    text-decoration: none;
+    color: $link-color;
+  }
+}

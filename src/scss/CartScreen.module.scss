@@ -1,10 +1,13 @@
 @import './variables.scss';
 
-.cart-noti {
+.cartNoti {
   display: flex;
   justify-content: center;
   font-size: 2rem;
   margin: 15vh 0;
+  @include breakpoint(md) {
+    font-size: 1rem;
+  }
 
   a {
     text-decoration: none;
@@ -12,16 +15,25 @@
   }
 }
 
-.cart-title {
+.cartTitle {
   text-align: center;
   color: $link-color;
   margin-bottom: 2rem;
 }
 
-.cart-screen {
+.cartScreen {
   display: flex;
-  .cart-item-table {
+  @include breakpoint(md) {
+    flex-direction: column;
+    width: 100%;
+  }
+  .cartItemTable {
     flex: 60%;
+    @include breakpoint(md) {
+      flex: 100%;
+      width: 100%;
+      overflow: scroll;
+    }
     img {
       width: 3rem;
       border-radius: 30px;
@@ -33,29 +45,13 @@
     }
   }
 
-  .cart-bill {
+  .cartBill {
     flex: 30%;
     margin-left: 1rem;
     padding: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
-  }
-}
-
-//mobile
-@media (max-width: 740px) {
-  .cart-noti {
-    font-size: 1rem;
-  }
-  .cart-screen {
-    flex-direction: column;
-    width: 100%;
-    .cart-item-table {
-      flex: 100%;
-      width: 100%;
-      overflow: scroll;
-    }
-    .cart-bill {
+    @include breakpoint(md) {
       width: 100%;
       flex: 100%;
       margin-left: 0;

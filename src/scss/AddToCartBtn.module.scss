@@ -1,0 +1,30 @@
+.outStockBtn,
+.addBtn {
+  width: 8rem;
+  border: none;
+}
+
+.outStockBtn {
+  color: #fff;
+  background-color: red;
+  opacity: 0.5;
+
+  &:hover {
+    cursor: not-allowed;
+    background-color: red;
+  }
+}
+
+.addBtn {
+  background-color: orange;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: 0.2s;
+
+  &:hover {
+    background-color: orange;
+    box-shadow: 8px 8px 8px #ccc;
+    transform: scale(1.1);
+  }
+}

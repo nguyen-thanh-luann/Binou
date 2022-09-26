@@ -1,81 +1,29 @@
-import React, { useContext } from 'react'
-import Button from 'react-bootstrap/Button'
-import Card from 'react-bootstrap/Card'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { AiOutlinePlus } from 'react-icons/ai'
-import { BsCart } from 'react-icons/bs'
-
-import { Store } from '../Store'
-import { getProductById } from '../services/ProductService'
 import Rating from './Rating'
+import AddToCartBtn from './AddToCartBtn'
 
-import '../scss/App.scss'
-import Swal from 'sweetalert2'
+import Style from '../scss/Product.module.scss'
 export default function Product({ product }) {
-  const { state, dispatch: ctxDispatch } = useContext(Store)
-  const {
-    cart: { cartItems },
-  } = state
-
-  const addToCartHandler = async (item) => {
-    const existItem = cartItems.find((x) => x._id === product._id)
-    const quantity = existItem ? existItem.quantity + 1 : 1
-    const { data } = await getProductById(item._id)
-    if (data.countInStock < quantity) {
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: 'Sorry! Product is out of stock',
-        showDenyButton: false,
-        showConfirmButton: false,
-        timer: 1200,
-      })
-      return
-    }
-    ctxDispatch({
-      type: 'CART_ADD_ITEM',
-      payload: { ...item, quantity },
-    })
-    Swal.fire({
-      icon: 'success',
-      showConfirmButton: false,
-      title: 'Product added to cart!',
-      timer: 1200,
-    })
-  }
-
   return (
-    <Card className='cart product'>
-      <Link to={`/product/${product._id}`}>
-        <img src={product.image} className='card-img-top img-fluid' alt='' />
-      </Link>
-      <Card.Body>
-        <Link
-          style={{ textDecoration: 'none', color: '#000' }}
-          to={`/product/${product._id}`}
-        >
-          <h5 className='name'>{product.name}</h5>
-          <Rating rating={product.rating} numReviews={product.numReviews} />
-          <p className='price'>${product.price}</p>
+    <div className={Style.product}>
+      <div className={Style.product__image}>
+        <Link to={`/product/${product._id}`}>
+          <img src={product.image} className='card-img-top img-fluid' alt='' />
         </Link>
-        {product.countInStock === 0 ? (
-          <Button variant='danger' disabled>
-            Out of stock
-          </Button>
-        ) : (
-          <Button
-            variant='warning'
-            onClick={() => {
-              addToCartHandler(product)
-            }}
-            className='d-flex  align-items-center'
-          >
-            <BsCart className='me-1' />
-            Add to cart
-          </Button>
-        )}
-      </Card.Body>
-    </Card>
+      </div>
+      <div className={Style.product__body}>
+        <div className={Style.titleGroup}>
+          <span className={Style.product__name}>{product.name}</span>
+          <span className={Style.product__numreview}>
+            {product.numReviews} reviews
+          </span>
+        </div>
+        <Rating rating={product.rating} />
+        <p className='price'>${product.price}</p>
+        <AddToCartBtn product={product} />
+      </div>
+    </div>
   )
 }
