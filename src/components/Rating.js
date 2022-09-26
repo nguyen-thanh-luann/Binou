@@ -40,11 +40,11 @@ export default function Rating(props) {
       ) : (
         <BsStar className='start' />
       )}
-      {caption ? (
+      {/* {caption ? (
         <span>{caption}</span>
       ) : (
         <span>{' ' + numReviews + ' reviews'}</span>
-      )}
+      )} */}
     </div>
   )
 }

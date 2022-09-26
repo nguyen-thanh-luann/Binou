@@ -43,12 +43,14 @@ export default function ProductScreen() {
     userInfo,
   } = state
 
-  const [{ loading, error, product, loadingCreateReview }, dispatch] =
-    useReducer(reducer, {
-      product: [],
-      loading: true,
-      error: '',
-    })
+  const [
+    { loading, loadingReview, error, product, loadingCreateReview },
+    dispatch,
+  ] = useReducer(reducer, {
+    product: [],
+    loading: true,
+    error: '',
+  })
 
   const {
     register,
@@ -114,11 +116,16 @@ export default function ProductScreen() {
         dispatch({
           type: 'REVIEW_SUCCESS',
         })
-        // product.reviews.push()
         product.reviews.push(res.data.review)
         product.numReviews = res.data.numReviews
         product.rating = res.data.rating
         dispatch({ type: 'REFRESH', payload: product })
+        Swal.fire({
+          icon: 'success',
+          title: 'Review Success!',
+          showConfirmButton: false,
+          timer: 1500,
+        })
       })
       .catch((err) => {
         dispatch({ type: 'REVIEW_FAIL' })
@@ -173,13 +180,27 @@ export default function ProductScreen() {
                     )}
                   </div>
                 </div>
-                <div>
-                  <h2>Reviews</h2>
-                  {product.reviews.length === 0 && <p>There is no review</p>}
-                  {product.reviews.map((rev) => (
-                    <div>
-                      <p>{rev.name}</p>
-                      <p>{rev.comment}</p>
+                <h2>Reviews</h2>
+
+                <div className={Style.commentArea}>
+                  {product.reviews.length === 0 && (
+                    <h4 className='text-center text-warning'>
+                      There is no review
+                    </h4>
+                  )}
+                  {product.reviews.map((rev, index) => (
+                    <div key={index} className={Style.comment}>
+                      <div>
+                        <span className={Style.comment__name}>{rev.name}</span>
+                        <span className={Style.comment__date}>
+                          {new Date(rev.updatedAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                      <Rating rating={rev.rating} />
+
+                      <span className={Style.comment__content}>
+                        {rev.comment}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -191,6 +212,7 @@ export default function ProductScreen() {
                     </label>
                     <select
                       id='rating'
+                      className={Style.ratingBox}
                       {...register('rating', { required: true })}
                     >
                       <option value=''>select</option>
@@ -200,15 +222,28 @@ export default function ProductScreen() {
                       <option value='4'>4 - Very good</option>
                       <option value='5'>5 - Excelent</option>
                     </select>
+                    {errors.rating && (
+                      <p className='text-danger'>Please leave your rate</p>
+                    )}
                     <label htmlFor='comment' className={Style.label}>
                       Comment
                     </label>
                     <textarea
                       id='comment'
                       placeholder='write your comment'
-                      style={{ width: '100%' }}
+                      className={Style.commentBox}
                       {...register('comment', { required: true })}
                     ></textarea>
+                    {errors.comment && (
+                      <p>
+                        {errors.comment?.type === 'required' && (
+                          <span className='text-danger'>
+                            Please leave your comment
+                          </span>
+                        )}
+                      </p>
+                    )}
+                    {loadingReview && <LoadingBox />}
                     <button className={Style.submitBtn} type='submit'>
                       Submit
                     </button>
