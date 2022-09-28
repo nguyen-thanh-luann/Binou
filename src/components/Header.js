@@ -85,7 +85,7 @@ function Header() {
                         Product
                       </Link>
                     </Dropdown.Item>
-                    <Dropdown.Item>Category</Dropdown.Item>
+                    <Dropdown.Item>Customer</Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item>Logout</Dropdown.Item>
                   </DropdownButton>

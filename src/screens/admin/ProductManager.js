@@ -15,6 +15,7 @@ import {
   deleteProductById,
   updateProduct,
 } from '../../services/ProductService'
+
 import { objectEqual } from '../../utils'
 
 export default function ProductManager() {
@@ -27,10 +28,11 @@ export default function ProductManager() {
   const [showModal, setShowModal] = useState(false)
   const [pagination, setPagination] = useState({
     page: 1,
-    limit: 4,
+    limit: 5,
     pages: 1,
   })
   const [products, setProducts] = useState()
+
   const [productId, setProductId] = useState('')
   const [previewImage, setPreviewImage] = useState()
   const DEFAULT_PRODUCT_IMAGE =
@@ -40,6 +42,7 @@ export default function ProductManager() {
     name: '',
     category: '',
     brand: '',
+    gender: '',
     price: '',
     countInStock: '',
     description: '',
@@ -91,6 +94,7 @@ export default function ProductManager() {
       category: product.category,
       brand: product.brand,
       price: product.price,
+      gender: product.gender,
       countInStock: product.countInStock,
       description: product.description,
       image: product.image,
@@ -104,6 +108,7 @@ export default function ProductManager() {
       category: product.category,
       brand: product.brand,
       price: product.price,
+      gender: product.gender,
       countInStock: product.countInStock,
       description: product.description,
       image: product.image,
@@ -122,6 +127,7 @@ export default function ProductManager() {
       category: '',
       brand: '',
       price: '',
+      gender: '',
       countInStock: '',
       description: '',
       image: null,
@@ -135,6 +141,7 @@ export default function ProductManager() {
       category: '',
       brand: '',
       price: '',
+      gender: '',
       countInStock: '',
       description: '',
       image: null,
@@ -397,7 +404,7 @@ export default function ProductManager() {
                 {/* product modal */}
 
                 <Modal show={showModal}>
-                  <Modal.Header closeButton>
+                  <Modal.Header>
                     <Modal.Title>
                       {isUpdatePro ? 'Update product' : 'Add new product'}
                     </Modal.Title>
@@ -445,6 +452,26 @@ export default function ProductManager() {
                           }}
                           required
                         />
+                      </div>
+                      <div>
+                        <label htmlFor='gender'>Gender</label>
+
+                        <select
+                          id='gender'
+                          name='gender'
+                          className='form-control'
+                          required
+                          defaultValue={formData.gender}
+                          onChange={(e) => {
+                            handleFormChange(e)
+                          }}
+                        >
+                          <option value=''>---Select gender---</option>
+                          <option value='male'>Male</option>
+                          <option value='female'>Female</option>
+                          <option value='kids'>Kids</option>
+                          <option value='baby'>Baby</option>
+                        </select>
                       </div>
                       <div>
                         <label htmlFor='price'>Price</label>

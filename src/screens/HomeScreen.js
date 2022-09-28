@@ -12,7 +12,7 @@ export default function HomeScreen() {
   const [isLoadMore, setIsLoadMore] = useState(false)
   const [pagination, setPagination] = useState({
     page: 1,
-    limit: 4,
+    limit: 8,
     pages: 1,
   })
 
