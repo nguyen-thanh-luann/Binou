@@ -1,18 +1,6 @@
-.outStockBtn,
 .addBtn {
   width: 8rem;
   border: none;
-}
-
-.outStockBtn {
-  color: #fff;
-  background-color: red;
-  opacity: 0.5;
-
-  &:hover {
-    cursor: not-allowed;
-    background-color: red;
-  }
 }
 
 .addBtn {

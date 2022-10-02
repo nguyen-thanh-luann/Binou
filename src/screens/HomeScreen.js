@@ -6,6 +6,7 @@ import Pagination from '../components/Pagination'
 import Layout from './Layout'
 import Product from '../components/Product'
 import LoadingBox from '../components/LoadingBox'
+import BannerCarousel from '../components/BannerCarousel'
 export default function HomeScreen() {
   const [products, setProducts] = useState()
   const [isLoadingPage, setIsLoadingPage] = useState(true)
@@ -47,8 +48,11 @@ export default function HomeScreen() {
       children={
         <div className='row px-5'>
           <Helmet>
-            <title>Shopping now</title>
+            <title>Binou</title>
           </Helmet>
+          <div style={{ maxHeight: '10%' }}>
+            <BannerCarousel />
+          </div>
           {isLoadingPage ? (
             <div className='text-center'>
               <LoadingBox />

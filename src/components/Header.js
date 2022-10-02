@@ -30,7 +30,7 @@ function Header() {
         <Container fluid>
           <Navbar.Brand>
             <Link to='/' className={(Style.header__logo, Style.header__link)}>
-              Shopping now
+              Binou
             </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
@@ -41,7 +41,7 @@ function Header() {
           >
             <Offcanvas.Header closeButton>
               <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
-                Shopping_now
+                Binou
               </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>

@@ -43,7 +43,9 @@ export default function AddToCartBtn({ product }) {
   return (
     <div>
       {product.countInStock === 0 ? (
-        <Button className={Style.outStockBtn}>Out of stock</Button>
+        <Button className='btn btn-danger' disabled>
+          Out of stock
+        </Button>
       ) : (
         <Button
           onClick={() => {
