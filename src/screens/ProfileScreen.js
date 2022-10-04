@@ -2,6 +2,9 @@ import React, { useContext, useState, useReducer } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 
+import { FaSignOutAlt } from 'react-icons/fa'
+import { MdUpdate } from 'react-icons/md'
+
 import { update } from '../services/UserService'
 import Layout from './Layout'
 import LoadingBox from '../components/LoadingBox'
@@ -198,6 +201,7 @@ export default function UserInfoScreen() {
               </div>
               {loadingUpdate && <LoadingBox />}
               <button className={Style.updateBtn} type='submit'>
+                <MdUpdate className={Style.updateBtn__icon} />
                 Update
               </button>
             </form>
@@ -206,6 +210,7 @@ export default function UserInfoScreen() {
               onClick={() => logoutHandler()}
               style={{ marginRight: '1rem' }}
             >
+              <FaSignOutAlt className={Style.logoutBtn__icon} />
               Logout
             </button>
           </div>

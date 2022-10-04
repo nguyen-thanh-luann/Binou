@@ -33,10 +33,16 @@ function reducer(state, action) {
       localStorage.setItem('cartItems', JSON.stringify(cartItems))
       return { ...state, cart: { ...state.cart, cartItems } }
     case 'CART_REMOVE_ITEM': {
-      const cartItems = state.cart.cartItems.filter(
-        (item) => item._id !== action.payload._id
-      )
+      let cartItems = [...state.cart.cartItems]
+      action.payload.forEach((id) => {
+        console.log(`store id: ${id}`)
+        cartItems = cartItems.filter((item) => item._id !== id)
+      })
+
+      console.log('items after: ')
+      console.log(cartItems)
       localStorage.setItem('cartItems', JSON.stringify(cartItems))
+
       return { ...state, cart: { ...state.cart, cartItems } }
     }
     case 'CART_CLEAR':

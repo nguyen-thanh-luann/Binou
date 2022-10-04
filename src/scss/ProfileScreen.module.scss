@@ -27,23 +27,40 @@
     .updateBtn {
       margin-top: 1rem;
       width: 100%;
-      color: #fff;
       font-weight: bold;
       border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
       padding: 0.5rem 0;
       border-radius: 10px;
-      opacity: 0.3;
-      &:hover {
-        opacity: 1;
-      }
+      background-color: #fff;
+      transition: 0.5s;
     }
 
     .logoutBtn {
-      background-color: red;
+      border: 1px solid red;
+      color: red;
+
+      &:hover {
+        background-color: red;
+        color: #fff;
+      }
     }
 
     .updateBtn {
-      background-color: rgb(12, 164, 247);
+      border: 1px solid skyblue;
+      color: rgb(31, 172, 227);
+
+      &__icon {
+        font-size: 1.2rem;
+      }
+
+      &:hover {
+        background-color: skyblue;
+        color: #fff;
+      }
     }
   }
 }

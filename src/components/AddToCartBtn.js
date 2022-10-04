@@ -37,17 +37,17 @@ export default function AddToCartBtn({ product }) {
       icon: 'success',
       showConfirmButton: false,
       title: 'Product added to cart!',
-      timer: 1200,
+      timer: 500,
     })
   }
   return (
     <div>
       {product.countInStock === 0 ? (
-        <Button className='btn btn-danger' disabled>
+        <button className={Style.outStockBtn} disabled>
           Out of stock
-        </Button>
+        </button>
       ) : (
-        <Button
+        <button
           onClick={() => {
             addToCartHandler(product)
           }}
@@ -55,7 +55,7 @@ export default function AddToCartBtn({ product }) {
         >
           <BsCart />
           <span>Add to cart</span>
-        </Button>
+        </button>
       )}
     </div>
   )
