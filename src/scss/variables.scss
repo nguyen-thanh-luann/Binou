@@ -13,7 +13,7 @@ $bg: rgb(244, 244, 255);
 @mixin breakpoint($point) {
   @if $point == md {
     // 740px
-    @media (max-width: 740px) {
+    @media (max-width: 800px) {
       @content;
     }
   }

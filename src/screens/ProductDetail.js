@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { Store } from '../Store'
 import Layout from './Layout'
 import Rating from '../components/Rating'
+import VerticalLine from '../components/VerticalLine'
 import LoadingBox from '../components/LoadingBox'
 import AddToCartBtn from '../components/AddToCartBtn'
 import { getProductById, reviewProduct } from '../services/ProductService'
@@ -120,14 +121,26 @@ export default function ProductScreen() {
                     <title>{product.name}</title>
                   </Helmet>
                   <div className={Style.productImage}>
-                    <img src={product.image} alt='' className='img-fluid' />
+                    <div className={Style.mainImage}>
+                      <img src={product.image} alt='' className='img-fluid' />
+                    </div>
+                    <div className={Style.listImage}>
+                      <div className={Style.imageItem}>
+                        <img src={product.image} alt='' className='img-fluid' />
+                      </div>
+                    </div>
                   </div>
                   <div className={Style.productInfo}>
                     <h3 className={Style.productInfo__name}>{product.name}</h3>
-                    <Rating
-                      rating={product.rating}
-                      numReviews={product.numReviews}
-                    />
+                    <div className='d-flex'>
+                      <Rating
+                        rating={product.rating}
+                        numReviews={product.numReviews}
+                      />
+                      <VerticalLine />
+                      <span>{product.numReviews} reviews</span>
+                    </div>
+
                     <h4 className='mt-2'>${product.price}</h4>
                     <div className={Style.productDescr}>
                       <p>{product.description}</p>

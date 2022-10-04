@@ -1,0 +1,14 @@
+.backToTopBtn {
+  position: fixed;
+  font-size: 2rem;
+  bottom: 10%;
+  right: 5%;
+  box-shadow: 5px 5px 5px #ccc;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 0.3s;
+  &:hover {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}

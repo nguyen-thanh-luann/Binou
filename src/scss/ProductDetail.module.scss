@@ -11,10 +11,19 @@
     @include breakpoint(md) {
       flex: 100%;
     }
-    img {
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      box-shadow: 5px 5px 8px #ccc;
+
+    .mainImage {
+      img {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 5px 5px 8px #ccc;
+      }
+    }
+    .listImage {
+      margin-top: 1rem;
+      .imageItem {
+        width: 20%;
+      }
     }
   }
 
@@ -33,6 +42,9 @@
     .productDescr {
       width: fit-content;
       margin: 1rem 0;
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      border-radius: 5px;
     }
   }
 }

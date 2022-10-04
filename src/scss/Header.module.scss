@@ -1,33 +1,62 @@
 @import '../scss/variables.scss';
-.header {
-  border: 1px solid #ccc;
-  box-shadow: 5px 5px 5px #ccc;
-  height: $headerHeight;
-  &__logo {
-    text-transform: capitalize;
-  }
 
-  &__icon {
-    color: black;
-    font-size: 1.5rem;
-    transition: 0.3s;
-    margin: 0 0.3rem;
-    &:hover {
-      transform: scale(1.2);
-    }
-  }
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5rem;
+  box-shadow: 8px 8px 8px #ccc;
 
-  &__link {
+  @include breakpoint(md) {
+    flex-direction: column;
+  }
+  &__logo,
+  &__item {
     text-decoration: none;
-    color: black;
-    font-size: 2rem;
-
+    color: #000;
     &:hover {
-      color: black;
+      color: #000;
     }
   }
+  &__logo {
+    font-size: 2rem;
+  }
+  &__link {
+    color: #000;
+    text-decoration: none;
+  }
+  &__items {
+    display: flex;
+    align-items: center;
+    @include breakpoint(md) {
+      flex-direction: column;
+    }
+  }
+  &__item {
+    font-size: 1.2rem;
+    margin-left: 1rem;
+    opacity: 0.6;
+    transition: 0.3s;
+    transform: scale(2);
+    span {
+      &:hover {
+        opacity: 1;
 
-  .menu {
-    border: 1px solid black;
+        transform: scale(1.4);
+      }
+    }
+  }
+  &__utils {
+    display: flex;
+    align-items: center;
+    @include breakpoint(md) {
+      flex-direction: column;
+      margin-top: 1rem;
+    }
+    &__icon {
+      margin: 0 0.5rem;
+      font-size: 1.2rem;
+      color: #000;
+    }
   }
 }
