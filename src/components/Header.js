@@ -9,6 +9,7 @@ import { Store } from '../Store'
 import '../scss/Header.scss'
 import { DropdownButton } from 'react-bootstrap'
 import { Dropdown } from 'react-bootstrap'
+import SearchBox from './SearchBox'
 export default function Head() {
   const { state, dispatch: ctxDispatch } = useContext(Store)
   const { cart, userInfo } = state
@@ -19,20 +20,26 @@ export default function Head() {
   }
   return (
     <header>
-      <Link to='/' className='logo'>
-        Binou
-      </Link>
-      <nav ref={navRef}>
-        <Link to='/'>Home</Link>
-        <Link to='/'>Men</Link>
-        <Link to='/'>Women</Link>
-        <Link to='/'>Kids</Link>
-        <Link to='/'>Baby</Link>
-        <button className='nav-btn nav-close-btn' onClick={showNavbar}>
-          <FaTimes />
-        </button>
-      </nav>
       <div>
+        <Link to='/' className='logo'>
+          Binou
+        </Link>
+        <nav ref={navRef}>
+          <Link to='/'>Home</Link>
+          <Link to='/'>Men</Link>
+          <Link to='/'>Women</Link>
+          <Link to='/'>Kids</Link>
+          <Link to='/'>Baby</Link>
+          <button className='nav-btn nav-close-btn' onClick={showNavbar}>
+            <FaTimes />
+          </button>
+        </nav>
+      </div>
+
+      <div>
+        <div className='webSearch'>
+          <SearchBox />
+        </div>
         <Link to='/'>
           <AiOutlineHeart className='header-icon' />
         </Link>

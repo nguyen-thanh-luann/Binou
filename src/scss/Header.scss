@@ -23,6 +23,10 @@ header {
   font-weight: 700;
 }
 
+.webSearch {
+  margin-right: 1rem;
+}
+
 nav a {
   margin: 0 1rem;
   color: #000;
@@ -56,6 +60,10 @@ nav {
   header .nav-btn {
     visibility: visible;
     opacity: 1;
+  }
+
+  .webSearch {
+    display: none;
   }
 
   header nav {
