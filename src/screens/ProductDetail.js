@@ -12,6 +12,7 @@ import AddToCartBtn from '../components/AddToCartBtn'
 import { getProductById, reviewProduct } from '../services/ProductService'
 import Style from '../scss/ProductDetail.module.scss'
 import Swal from 'sweetalert2'
+import { Divider, Stack } from '@mui/material'
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -132,6 +133,7 @@ export default function ProductScreen() {
                   </div>
                   <div className={Style.productInfo}>
                     <h3 className={Style.productInfo__name}>{product.name}</h3>
+
                     <div className='d-flex'>
                       <Rating
                         rating={product.rating}

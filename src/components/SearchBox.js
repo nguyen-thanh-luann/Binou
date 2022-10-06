@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form'
 import { useNavigate } from 'react-router-dom'
 
-import { FiSearch } from 'react-icons/fi'
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
 
 import Style from '../scss/SearchBox.module.scss'
 
@@ -26,7 +26,7 @@ export default function SearchBox() {
         id='button-search'
         className={Style.searchBox__button}
       >
-        <FiSearch />
+        <SearchOutlinedIcon />
       </button>
     </Form>
   )

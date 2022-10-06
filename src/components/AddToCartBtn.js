@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
-import { Button } from 'react-bootstrap'
 import Swal from 'sweetalert2'
+import { Button } from '@mui/material'
 
-import { BsCart } from 'react-icons/bs'
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 
 import { getProductById } from '../services/ProductService'
 import { Store } from '../Store'
-import Style from '../scss/AddToCartBtn.module.scss'
 
 export default function AddToCartBtn({ product }) {
   const { state, dispatch: ctxDispatch } = useContext(Store)
@@ -33,29 +33,30 @@ export default function AddToCartBtn({ product }) {
       type: 'CART_ADD_ITEM',
       payload: { ...item, quantity },
     })
-    Swal.fire({
-      icon: 'success',
-      showConfirmButton: false,
-      title: 'Product added to cart!',
-      timer: 500,
-    })
+    alert('success')
   }
   return (
     <div>
       {product.countInStock === 0 ? (
-        <button className={Style.outStockBtn} disabled>
+        <Button
+          variant='contained'
+          color='error'
+          startIcon={<RemoveShoppingCartIcon />}
+          disabled
+        >
           Out of stock
-        </button>
+        </Button>
       ) : (
-        <button
+        <Button
           onClick={() => {
             addToCartHandler(product)
           }}
-          className={Style.addBtn}
+          variant='outlined'
+          color='warning'
+          startIcon={<ShoppingCartIcon />}
         >
-          <BsCart />
           <span>Add to cart</span>
-        </button>
+        </Button>
       )}
     </div>
   )

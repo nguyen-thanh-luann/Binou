@@ -1,4 +1,6 @@
-import { BsStarFill, BsStar, BsStarHalf } from 'react-icons/bs'
+import StarIcon from '@mui/icons-material/Star'
+import StarHalfIcon from '@mui/icons-material/StarHalf'
+import StarBorderIcon from '@mui/icons-material/StarBorder'
 
 export default function Rating(props) {
   const { rating, numReviews, caption } = props
@@ -8,39 +10,39 @@ export default function Rating(props) {
   return (
     <div>
       {rating >= 1 ? (
-        <BsStarFill style={startStyle} />
+        <StarIcon style={startStyle} />
       ) : rating >= 0.5 ? (
-        <BsStarHalf style={startStyle} />
+        <StarHalfIcon style={startStyle} />
       ) : (
-        <BsStar style={startStyle} />
+        <StarBorderIcon style={startStyle} />
       )}
       {rating >= 2 ? (
-        <BsStarFill style={startStyle} />
+        <StarIcon style={startStyle} />
       ) : rating >= 1.5 ? (
-        <BsStarHalf style={startStyle} />
+        <StarHalfIcon style={startStyle} />
       ) : (
-        <BsStar style={startStyle} />
+        <StarBorderIcon style={startStyle} />
       )}
       {rating >= 3 ? (
-        <BsStarFill style={startStyle} />
+        <StarIcon style={startStyle} />
       ) : rating >= 2.5 ? (
-        <BsStarHalf style={startStyle} />
+        <StarHalfIcon style={startStyle} />
       ) : (
-        <BsStar style={startStyle} />
+        <StarBorderIcon style={startStyle} />
       )}
       {rating >= 4 ? (
-        <BsStarFill style={startStyle} />
+        <StarIcon style={startStyle} />
       ) : rating >= 3.5 ? (
-        <BsStarHalf style={startStyle} />
+        <StarHalfIcon style={startStyle} />
       ) : (
-        <BsStar style={startStyle} />
+        <StarBorderIcon style={startStyle} />
       )}
       {rating >= 5 ? (
-        <BsStarFill style={startStyle} />
+        <StarIcon style={startStyle} />
       ) : rating >= 4.5 ? (
-        <BsStarHalf style={startStyle} />
+        <StarHalfIcon style={startStyle} />
       ) : (
-        <BsStar style={startStyle} />
+        <StarBorderIcon style={startStyle} />
       )}
     </div>
   )

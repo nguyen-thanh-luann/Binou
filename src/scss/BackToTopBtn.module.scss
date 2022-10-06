@@ -1,14 +1,16 @@
 .backToTopBtn {
   position: fixed;
-  font-size: 2rem;
   bottom: 10%;
   right: 5%;
+  background-color: rgb(156, 156, 156);
+  scale: 1.2;
   box-shadow: 5px 5px 5px #ccc;
+  border-radius: 50%;
   cursor: pointer;
-  opacity: 0.5;
+  opacity: 0.7;
   transition: 0.3s;
   &:hover {
     opacity: 1;
-    transform: scale(1.2);
+    transform: scale(1.3);
   }
 }

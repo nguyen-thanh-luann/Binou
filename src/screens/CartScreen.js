@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { DataGrid } from '@mui/x-data-grid'
 
-import { AiFillPlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
-import { BiTrashAlt } from 'react-icons/bi'
+import AddIcon from '@mui/icons-material/Add'
+import RemoveIcon from '@mui/icons-material/Remove'
 
 import Layout from './Layout'
 import { Store } from '../Store'
@@ -42,12 +42,9 @@ export default function CartScreen() {
       renderCell: (params) => (
         <div>
           {params.row.quantity <= 1 ? (
-            <AiOutlineMinusCircle
-              role='button'
-              style={{ cursor: 'not-allowed' }}
-            />
+            <RemoveIcon role='button' style={{ cursor: 'not-allowed' }} />
           ) : (
-            <AiOutlineMinusCircle
+            <RemoveIcon
               role='button'
               onClick={() =>
                 updateCartHandler(params.row.item, params.row.quantity - 1)
@@ -56,9 +53,9 @@ export default function CartScreen() {
           )}{' '}
           {params.row.quantity}{' '}
           {params.row.quantity >= params.row.countInStock ? (
-            <AiFillPlusCircle role='button' style={{ cursor: 'not-allowed' }} />
+            <AddIcon role='button' style={{ cursor: 'not-allowed' }} />
           ) : (
-            <AiFillPlusCircle
+            <AddIcon
               role='button'
               onClick={() =>
                 updateCartHandler(params.row.item, params.row.quantity + 1)

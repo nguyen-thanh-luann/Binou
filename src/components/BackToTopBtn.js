@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { AiOutlineUpSquare } from 'react-icons/ai'
+import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined'
 
 import Style from '../scss/BackToTopBtn.module.scss'
 export default function BackToTopBtn() {
@@ -26,7 +26,7 @@ export default function BackToTopBtn() {
   return (
     <div>
       {backToTopBtn && (
-        <AiOutlineUpSquare
+        <KeyboardArrowUpOutlinedIcon
           className={Style.backToTopBtn}
           onClick={() => {
             scrollUp()

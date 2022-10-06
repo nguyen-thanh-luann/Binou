@@ -1,9 +1,11 @@
 import React, { useContext, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
-import { FaBars, FaTimes } from 'react-icons/fa'
-import { AiOutlineUser, AiOutlineHeart } from 'react-icons/ai'
-import { BsCart } from 'react-icons/bs'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import CloseIcon from '@mui/icons-material/Close'
+import MenuIcon from '@mui/icons-material/Menu'
 
 import { Store } from '../Store'
 import '../scss/Header.scss'
@@ -31,7 +33,7 @@ export default function Head() {
           <Link to='/kids'>Kids</Link>
           <Link to='/baby'>Baby</Link>
           <button className='nav-btn nav-close-btn' onClick={showNavbar}>
-            <FaTimes />
+            <CloseIcon />
           </button>
         </nav>
       </div>
@@ -40,21 +42,21 @@ export default function Head() {
         <div className='webSearch'>
           <SearchBox />
         </div>
-        <Link to='/'>
-          <AiOutlineHeart className='header-icon' />
+        <Link to='/' className='header-icon'>
+          <FavoriteBorderIcon />
         </Link>
         <Link
           className='header-icon'
           to={`${userInfo ? '/userInfo' : '/login'}`}
         >
-          <AiOutlineUser />
+          <PersonOutlineIcon />
         </Link>
         <Link
-          to='/cart'
           className='header-icon'
+          to='/cart'
           style={{ position: 'relative' }}
         >
-          <BsCart />
+          <ShoppingCartIcon />
           {cart.cartItems.length > 0 && (
             <span
               className='translate-middle bg-danger text-light rounded-circle'
@@ -88,7 +90,7 @@ export default function Head() {
           </DropdownButton>
         )}
         <button className='nav-btn' onClick={showNavbar}>
-          <FaBars />
+          <MenuIcon />
         </button>
       </div>
     </header>

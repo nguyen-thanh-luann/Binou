@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Modal } from 'react-bootstrap'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 
-import { FiTrash } from 'react-icons/fi'
-import { AiOutlineEdit } from 'react-icons/ai'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
+import AddIcon from '@mui/icons-material/Add'
 
 import LoadingBox from '../../components/LoadingBox'
 import Layout from '../Layout'
@@ -17,6 +17,39 @@ import {
 } from '../../services/ProductService'
 
 import { objectEqual } from '../../utils'
+import {
+  Box,
+  Button,
+  Grid,
+  Modal,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  TextareaAutosize,
+} from '@mui/material'
+
+const styleModal = {
+  position: 'relative',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 600,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  borderRadius: '10px',
+  boxShadow: 24,
+  p: 4,
+}
 
 export default function ProductManager() {
   const [loading, setLoading] = useState(false)
@@ -28,7 +61,7 @@ export default function ProductManager() {
   const [showModal, setShowModal] = useState(false)
   const [pagination, setPagination] = useState({
     page: 1,
-    limit: 5,
+    limit: 8,
     pages: 1,
   })
   const [products, setProducts] = useState()
@@ -300,6 +333,10 @@ export default function ProductManager() {
     })
   }
 
+  const handleShowModal = () => setShowModal(true)
+
+  const handleCloseModal = () => setShowModal(false)
+
   return (
     <Layout
       children={
@@ -314,86 +351,101 @@ export default function ProductManager() {
           ) : (
             products && (
               <div>
-                <button
-                  className='btn btn-success'
+                <Button
+                  variant='outlined'
+                  color='success'
+                  startIcon={<AddIcon />}
                   onClick={() => {
                     setUpFormInsert()
                     setShowModal(true)
                   }}
                 >
-                  <i className='fa-solid fa-plus me-1'></i>
                   New Product
-                </button>
-                <table className='table text-center table-hover align-baseline'>
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>NAME</th>
-                      <th>PHOTO</th>
-                      <th>BRAND</th>
-                      <th>CATEGORY</th>
-                      <th>PRICE</th>
-                      <th>STOCK</th>
-                      <th>ACTIONS</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {products.map((product) => (
-                      <tr key={product._id}>
-                        <td>{product._id}</td>
-                        <td>{product.name}</td>
-                        <td>
-                          <img
-                            src={product.image}
-                            alt=''
-                            className='img-fluid'
-                            style={{ width: '4rem', borderRadius: '50%' }}
-                          />
-                        </td>
-                        <td>{product.brand}</td>
-                        <td>{product.category}</td>
-                        <td>${product.price}</td>
-                        <td>{product.countInStock}</td>
-                        <td>
-                          <AiOutlineEdit
-                            className='text-warning'
-                            role='button'
-                            onClick={() => {
-                              setUpFormUpdate(product)
-                              setProductId(product._id)
-                              setShowModal(true)
-                            }}
-                          />
+                </Button>
+                <TableContainer component={Paper} sx={{ margin: '1.5rem 0' }}>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align='center'>#</TableCell>
+                        <TableCell align='center'>NAME</TableCell>
+                        <TableCell align='center'>PHOTO</TableCell>
+                        <TableCell align='center'>BRAND</TableCell>
+                        <TableCell align='center'>CATEGORY</TableCell>
+                        <TableCell align='center'>PRICE</TableCell>
+                        <TableCell align='center'>STOCK</TableCell>
+                        <TableCell align='center'>ACTIONS</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {products.map((product) => (
+                        <TableRow
+                          hover
+                          key={product._id}
+                          sx={{
+                            '&:last-child td, &:last-child th': { border: 0 },
+                          }}
+                        >
+                          <TableCell align='center'>{product._id}</TableCell>
+                          <TableCell align='center'>{product.name}</TableCell>
+                          <TableCell align='center'>
+                            <img
+                              src={product.image}
+                              alt=''
+                              className='img-fluid'
+                              style={{ width: '4rem', borderRadius: '50%' }}
+                            />
+                          </TableCell>
+                          <TableCell align='center'>{product.brand}</TableCell>
+                          <TableCell align='center'>
+                            {product.category}
+                          </TableCell>
+                          <TableCell align='center'>${product.price}</TableCell>
+                          <TableCell align='center'>
+                            {product.countInStock}
+                          </TableCell>
+                          <TableCell align='center'>
+                            <EditIcon
+                              className='text-warning'
+                              role='button'
+                              onClick={() => {
+                                setUpFormUpdate(product)
+                                setProductId(product._id)
+                                setShowModal(true)
+                              }}
+                            />
 
-                          <span
-                            style={{ content: '', border: '1px solid #ccc' }}
-                            className='mx-2'
-                          ></span>
+                            <span
+                              style={{ content: '', border: '1px solid #ccc' }}
+                              className='mx-2'
+                            ></span>
 
-                          <FiTrash
-                            className='text-danger'
-                            role='button'
-                            onClick={() => {
-                              Swal.fire({
-                                icon: 'warning',
-                                title: `Delete ${product.name}?`,
-                                showCancelButton: true,
+                            <DeleteIcon
+                              className='text-danger'
+                              role='button'
+                              onClick={() => {
+                                Swal.fire({
+                                  icon: 'warning',
+                                  title: `Delete ${product.name}?`,
+                                  showCancelButton: true,
 
-                                cancelButtonText: 'Cancel',
-                                confirmButtonColor: 'red',
-                                confirmButtonText: 'Delete',
-                              }).then((result) => {
-                                if (result.isConfirmed) {
-                                  deleteProduct(product._id)
-                                }
-                              })
-                            }}
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                                  cancelButtonText: 'Cancel',
+                                  confirmButtonColor: 'red',
+                                  confirmButtonText: 'Delete',
+                                }).then((result) => {
+                                  if (result.isConfirmed) {
+                                    deleteProduct(product._id)
+                                  }
+                                })
+                              }}
+                            />
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+
+                {/* pagination */}
                 <div className='text-center'>
                   {isLoadMore && <LoadingBox />}
                   <Pagination
@@ -403,173 +455,156 @@ export default function ProductManager() {
                 </div>
                 {/* product modal */}
 
-                <Modal show={showModal}>
-                  <Modal.Header>
-                    <Modal.Title>
+                <Modal open={showModal} onClose={handleCloseModal}>
+                  <Box sx={styleModal}>
+                    <Typography sx={{ marginBottom: '1rem' }}>
                       {isUpdatePro ? 'Update product' : 'Add new product'}
-                    </Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
+                    </Typography>
                     <form onSubmit={(e) => submitHandle(e)}>
-                      <div>
-                        <label htmlFor='name'>Name</label>
-                        <input
-                          id='name'
-                          name='name'
-                          className='form-control'
-                          type='text'
-                          value={formData.name}
-                          onChange={(e) => {
-                            handleFormChange(e)
-                          }}
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor='category'>Category</label>
-                        <input
-                          id='category'
-                          name='category'
-                          className='form-control'
-                          type='text'
-                          value={formData.category}
-                          onChange={(e) => {
-                            handleFormChange(e)
-                          }}
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor='brand'>Brand</label>
-                        <input
-                          id='brand'
-                          name='brand'
-                          className='form-control'
-                          type='text'
-                          value={formData.brand}
-                          onChange={(e) => {
-                            handleFormChange(e)
-                          }}
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor='gender'>Gender</label>
+                      <Grid container spacing={4}>
+                        <Grid item xs={6}>
+                          <TextField
+                            name='name'
+                            color='secondary'
+                            label='Name'
+                            value={formData.name}
+                            onChange={(e) => {
+                              handleFormChange(e)
+                            }}
+                            required
+                          />
+                          <TextField
+                            name='category'
+                            color='secondary'
+                            label='Category'
+                            sx={{ marginTop: '1rem' }}
+                            value={formData.category}
+                            onChange={(e) => {
+                              handleFormChange(e)
+                            }}
+                            required
+                          />
+                          <TextField
+                            name='brand'
+                            color='secondary'
+                            label='Brand'
+                            sx={{ marginTop: '1rem' }}
+                            value={formData.brand}
+                            onChange={(e) => {
+                              handleFormChange(e)
+                            }}
+                            required
+                          />
 
-                        <select
-                          id='gender'
-                          name='gender'
-                          className='form-control'
-                          required
-                          defaultValue={formData.gender}
-                          onChange={(e) => {
-                            handleFormChange(e)
-                          }}
-                        >
-                          <option value=''>---Select gender---</option>
-                          <option value='male'>Male</option>
-                          <option value='female'>Female</option>
-                          <option value='kids'>Kids</option>
-                          <option value='baby'>Baby</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label htmlFor='price'>Price</label>
-                        <input
-                          id='price'
-                          name='price'
-                          className='form-control'
-                          type='number'
-                          value={formData.price}
-                          onChange={(e) => {
-                            handleFormChange(e)
-                          }}
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor='countInStock'>Stock</label>
-                        <input
-                          id='countInStock'
-                          name='countInStock'
-                          className='form-control'
-                          type='number'
-                          value={formData.countInStock}
-                          onChange={(e) => {
-                            handleFormChange(e)
-                          }}
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor='description'>Description</label>
-                        <textarea
-                          id='description'
-                          name='description'
-                          className='form-control'
-                          type='number'
-                          value={formData.description}
-                          onChange={(e) => {
-                            handleFormChange(e)
-                          }}
-                        ></textarea>
-                      </div>
-                      <div>
-                        <label htmlFor='productImage'>Photo</label>
-                        <input
-                          id='productImage'
-                          type='file'
-                          ref={ref}
-                          className='form-control'
-                          onChange={(e) => {
-                            // xử lí cleanup function sau
-                            handleImageChange(e)
-                          }}
-                        />
-                        <div className='d-flex'>
-                          {
-                            <img
-                              src={
-                                isPreviewImgPriority && previewImage
-                                  ? previewImage
-                                  : !isPreviewImgPriority && formData.image
-                                  ? formData.image
-                                  : null
-                              }
-                              alt=''
-                              className='img-fluid'
-                              style={{
-                                width: '25%',
-                                margin: '1rem auto 0',
+                          <Select
+                            name='gender'
+                            color='secondary'
+                            label='Gender'
+                            sx={{ marginTop: '1rem' }}
+                            required
+                            defaultValue={formData.gender}
+                            onChange={(e) => {
+                              handleFormChange(e)
+                            }}
+                          >
+                            <MenuItem value='male'>Male</MenuItem>
+                            <MenuItem value='female'>Female</MenuItem>
+                            <MenuItem value='kids'>Kids</MenuItem>
+                            <MenuItem value='baby'>Baby</MenuItem>
+                          </Select>
+
+                          <TextField
+                            name='price'
+                            color='secondary'
+                            label='Price'
+                            sx={{ marginTop: '1rem' }}
+                            value={formData.price}
+                            onChange={(e) => {
+                              handleFormChange(e)
+                            }}
+                            required
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextField
+                            name='countInStock'
+                            color='secondary'
+                            label='Stock'
+                            value={formData.countInStock}
+                            onChange={(e) => {
+                              handleFormChange(e)
+                            }}
+                            required
+                          />
+                          <TextareaAutosize
+                            name='description'
+                            minRows={7}
+                            style={{ marginTop: '1rem', width: '100%' }}
+                            placeholder='write description...'
+                            value={formData.description}
+                            onChange={(e) => {
+                              handleFormChange(e)
+                            }}
+                          />
+
+                          <div>
+                            <label htmlFor='productImage'>Photo</label>
+                            <input
+                              id='productImage'
+                              type='file'
+                              ref={ref}
+                              className='form-control'
+                              onChange={(e) => {
+                                // xử lí cleanup function sau
+                                handleImageChange(e)
                               }}
                             />
-                          }
-                        </div>
-                      </div>
+                            <div className='d-flex'>
+                              {
+                                <img
+                                  src={
+                                    isPreviewImgPriority && previewImage
+                                      ? previewImage
+                                      : !isPreviewImgPriority && formData.image
+                                      ? formData.image
+                                      : null
+                                  }
+                                  alt=''
+                                  className='img-fluid'
+                                  style={{
+                                    width: '25%',
+                                    margin: '1rem auto 0',
+                                  }}
+                                />
+                              }
+                            </div>
+                          </div>
+                        </Grid>
+                      </Grid>
                       {loading && (
                         <div className='text-center my-2'>
                           <LoadingBox />
                         </div>
                       )}
-                      <div className='modal-footer'>
-                        <button
-                          className='btn btn-secondary'
+                      <Box sx={{ marginTop: '1rem', textAlign: 'end' }}>
+                        <Button
+                          variant='outlined'
+                          color='secondary'
                           onClick={() => setShowModal(false)}
+                          sx={{ marginRight: '1rem' }}
                         >
                           Close
-                        </button>
-                        {isUpdatePro ? (
-                          <button type='submit' className='btn btn-primary'>
-                            Update
-                          </button>
-                        ) : (
-                          <button type='submit' className='btn btn-success'>
-                            Add
-                          </button>
-                        )}
-                      </div>
+                        </Button>
+                        <Button
+                          type='submit'
+                          variant='outlined'
+                          color='success'
+                        >
+                          {isUpdatePro ? 'Update' : 'Add'}
+                        </Button>
+                      </Box>
                     </form>
-                  </Modal.Body>
+                  </Box>
                 </Modal>
               </div>
             )

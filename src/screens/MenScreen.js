@@ -7,6 +7,7 @@ import Layout from './Layout'
 import Product from '../components/Product'
 import LoadingBox from '../components/LoadingBox'
 import BannerCarousel from '../components/BannerCarousel'
+import { Grid } from '@mui/material'
 
 export default function MenScreen() {
   const [products, setProducts] = useState()
@@ -63,15 +64,15 @@ export default function MenScreen() {
           ) : (
             <>
               <h2 className='py-2'>Featured products</h2>
-              {products &&
-                products.map((product) => (
-                  <div
-                    key={product._id}
-                    className='col-sm-12 col-md-6 col-lg-3'
-                  >
-                    <Product product={product} />
-                  </div>
-                ))}
+              <Grid container spacing={4}>
+                {products &&
+                  products.map((product) => (
+                    <Grid item xs={12} sm={6} md={6} lg={3}>
+                      <Product product={product} />
+                    </Grid>
+                  ))}
+              </Grid>
+
               {/* pagination */}
               <div className='text-center'>
                 {isLoadMore && <LoadingBox />}

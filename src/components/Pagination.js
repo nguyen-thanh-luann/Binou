@@ -1,6 +1,8 @@
 import React from 'react'
 
-import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from 'react-icons/ai'
+// import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from 'react-icons/ai'
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft'
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 
 import Style from '../scss/Pagination.module.scss'
 export default function Pagination(props) {
@@ -26,7 +28,7 @@ export default function Pagination(props) {
           }
         }}
       >
-        <AiOutlineDoubleLeft />
+        <KeyboardDoubleArrowLeftIcon />
       </button>
       {[...Array(pages).keys()].map((x) => (
         <button
@@ -51,7 +53,7 @@ export default function Pagination(props) {
           }
         }}
       >
-        <AiOutlineDoubleRight />
+        <KeyboardDoubleArrowRightIcon />
       </button>
     </div>
   )
