@@ -2,6 +2,7 @@ import React from 'react'
 
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from 'react-icons/ai'
 
+import Style from '../scss/Pagination.module.scss'
 export default function Pagination(props) {
   const { pagination, onPageChange } = props
   const { page, pages } = pagination
@@ -16,7 +17,7 @@ export default function Pagination(props) {
   return (
     <div>
       <button
-        className={`pagination-btn ${page <= 1 ? 'disable' : ''}`}
+        className={`${Style.paginationBtn} ${page <= 1 ? Style.disable : ''}`}
         onClick={() => {
           if (page > 1) {
             handlePageChange(page - 1)
@@ -29,7 +30,9 @@ export default function Pagination(props) {
       </button>
       {[...Array(pages).keys()].map((x) => (
         <button
-          className={`pagination-btn ${x + 1 === page ? 'active' : ''}`}
+          className={`${Style.paginationBtn} ${
+            x + 1 === page ? Style.active : ''
+          }`}
           key={x}
           onClick={() => handlePageChange(x + 1)}
         >
@@ -37,7 +40,9 @@ export default function Pagination(props) {
         </button>
       ))}
       <button
-        className={`pagination-btn ${page >= pages ? 'disable' : ''}`}
+        className={`${Style.paginationBtn} ${
+          page >= pages ? Style.disable : ''
+        }`}
         onClick={() => {
           if (page < pages) {
             handlePageChange(page + 1)

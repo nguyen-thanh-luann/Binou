@@ -1,6 +1,6 @@
-@import '../scss//variables.scss';
+@import '../scss/variables.scss';
 .layout {
-  .children {
+  &__children {
     padding: 2rem;
     min-height: calc(100vh - $headerHeight - $footerHeight);
   }
@@ -9,7 +9,7 @@
 //mobile
 @media (max-width: 740px) {
   .layout {
-    .children {
+    &__children {
       padding: 1rem;
     }
   }

@@ -26,10 +26,10 @@ export default function Head() {
         </Link>
         <nav ref={navRef}>
           <Link to='/'>Home</Link>
-          <Link to='/'>Men</Link>
-          <Link to='/'>Women</Link>
-          <Link to='/'>Kids</Link>
-          <Link to='/'>Baby</Link>
+          <Link to='/men'>Men</Link>
+          <Link to='/women'>Women</Link>
+          <Link to='/kids'>Kids</Link>
+          <Link to='/baby'>Baby</Link>
           <button className='nav-btn nav-close-btn' onClick={showNavbar}>
             <FaTimes />
           </button>

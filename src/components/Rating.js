@@ -1,50 +1,47 @@
 import { BsStarFill, BsStar, BsStarHalf } from 'react-icons/bs'
 
-import '../scss/App.scss'
 export default function Rating(props) {
   const { rating, numReviews, caption } = props
+  const startStyle = {
+    color: 'orange',
+  }
   return (
-    <div className='rating'>
+    <div>
       {rating >= 1 ? (
-        <BsStarFill className='start' />
+        <BsStarFill style={startStyle} />
       ) : rating >= 0.5 ? (
-        <BsStarHalf className='start' />
+        <BsStarHalf style={startStyle} />
       ) : (
-        <BsStar className='start' />
+        <BsStar style={startStyle} />
       )}
       {rating >= 2 ? (
-        <BsStarFill className='start' />
+        <BsStarFill style={startStyle} />
       ) : rating >= 1.5 ? (
-        <BsStarHalf className='start' />
+        <BsStarHalf style={startStyle} />
       ) : (
-        <BsStar className='start' />
+        <BsStar style={startStyle} />
       )}
       {rating >= 3 ? (
-        <BsStarFill className='start' />
+        <BsStarFill style={startStyle} />
       ) : rating >= 2.5 ? (
-        <BsStarHalf className='start' />
+        <BsStarHalf style={startStyle} />
       ) : (
-        <BsStar className='start' />
+        <BsStar style={startStyle} />
       )}
       {rating >= 4 ? (
-        <BsStarFill className='start' />
+        <BsStarFill style={startStyle} />
       ) : rating >= 3.5 ? (
-        <BsStarHalf className='start' />
+        <BsStarHalf style={startStyle} />
       ) : (
-        <BsStar className='start' />
+        <BsStar style={startStyle} />
       )}
       {rating >= 5 ? (
-        <BsStarFill className='start' />
+        <BsStarFill style={startStyle} />
       ) : rating >= 4.5 ? (
-        <BsStarHalf className='start' />
+        <BsStarHalf style={startStyle} />
       ) : (
-        <BsStar className='start' />
+        <BsStar style={startStyle} />
       )}
-      {/* {caption ? (
-        <span>{caption}</span>
-      ) : (
-        <span>{' ' + numReviews + ' reviews'}</span>
-      )} */}
     </div>
   )
 }

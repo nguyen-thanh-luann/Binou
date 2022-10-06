@@ -3,15 +3,14 @@ import { Helmet } from 'react-helmet-async'
 import { useLocation } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 
-import { BsFillCaretDownFill } from 'react-icons/bs'
-
 import Layout from './Layout'
 import Product from '../components/Product'
 import LoadingBox from '../components/LoadingBox'
 import Pagination from '../components/Pagination'
 import { getProductUseQuery } from '../services/ProductService'
 import { getAllCategory } from '../services/CategoryService'
-import '../scss/App.scss'
+import Style from '../scss/SearchScreen.module.scss'
+
 export default function SearchScreen() {
   const { search } = useLocation()
   const sp = new URLSearchParams(search)
@@ -21,7 +20,8 @@ export default function SearchScreen() {
   const [order, setOrder] = useState(`${sp.get('name') || ''}`)
   const [query, setQuery] = useState(`name=${name}`)
   const [products, setProducts] = useState([])
-  const [categorys, setCategorys] = useState()
+  const [categorys, setCategorys] = useState('')
+  const [gender, setGender] = useState('')
   const [price, setPrice] = useState('')
   const [rating, setRating] = useState('')
   const [isLoading, setIsLoading] = useState(true)
@@ -106,9 +106,9 @@ export default function SearchScreen() {
 
   useEffect(() => {
     setQuery(
-      `name=${name}&category=${category}&price=${price}&rating=${rating}&order=${order}&limit=${pagination.limit}&page=${pagination.page}`
+      `name=${name}&gender=${gender}&category=${category}&price=${price}&rating=${rating}&order=${order}&limit=${pagination.limit}&page=${pagination.page}`
     )
-  }, [name, order, category, price, rating, pagination.page])
+  }, [name, order, category, price, rating, gender, pagination.page])
 
   const handlePageChange = (newPage) => {
     setPagination({
@@ -124,9 +124,9 @@ export default function SearchScreen() {
           <Helmet>
             <title>Search screen</title>
           </Helmet>
-          <div className='search-screen'>
-            <div className='left-side'>
-              <div className='option-group'>
+          <div className={Style.searchScreen}>
+            <div className={Style.searchScreen__leftSide}>
+              <div className={Style.optionGroup}>
                 <h5>Quick sort</h5>
                 <Form.Select
                   value={order}
@@ -141,64 +141,78 @@ export default function SearchScreen() {
                   <option value='toprating'>Most Reviews</option>
                 </Form.Select>
               </div>
-              <div className='option-group mt-3'>
-                <div>
-                  <h5>Category</h5>
-                  <Form.Select
-                    value={category}
-                    onChange={(e) => {
-                      setCategory(e.target.value)
-                    }}
-                    style={{ width: '100%' }}
-                  >
-                    <option value=''>Any</option>
-                    {categorys &&
-                      categorys.map((cate, index) => (
-                        <option key={index} value={cate}>
-                          {cate}
-                        </option>
-                      ))}
-                  </Form.Select>
-                </div>
-                <div className='mt-2'>
-                  <h5>Price</h5>
-                  <Form.Select
-                    value={price}
-                    onChange={(e) => {
-                      setPrice(e.target.value)
-                    }}
-                    style={{ width: '100%' }}
-                  >
-                    <option value=''>Any</option>
-                    {priceRange &&
-                      priceRange.map((p, index) => (
-                        <option key={index} value={p.value}>
-                          {p.range}
-                        </option>
-                      ))}
-                  </Form.Select>
-                </div>
-                <div className='mt-2'>
-                  <h5>Rating</h5>
-                  <Form.Select
-                    value={rating}
-                    onChange={(e) => {
-                      setRating(e.target.value)
-                    }}
-                    style={{ width: '100%' }}
-                  >
-                    <option value=''>Any</option>
-                    {rateRange &&
-                      rateRange.map((r, index) => (
-                        <option key={index} value={r.rate}>
-                          {r.range}
-                        </option>
-                      ))}
-                  </Form.Select>
-                </div>
+              <div className={Style.optionGroup}>
+                <h5>Category</h5>
+                <Form.Select
+                  value={category}
+                  onChange={(e) => {
+                    setCategory(e.target.value)
+                  }}
+                  style={{ width: '100%' }}
+                >
+                  <option value=''>Any</option>
+                  {categorys &&
+                    categorys.map((cate, index) => (
+                      <option key={index} value={cate}>
+                        {cate}
+                      </option>
+                    ))}
+                </Form.Select>
+              </div>
+              <div className={Style.optionGroup}>
+                <h5>Price</h5>
+                <Form.Select
+                  value={price}
+                  onChange={(e) => {
+                    setPrice(e.target.value)
+                  }}
+                  style={{ width: '100%' }}
+                >
+                  <option value=''>Any</option>
+                  {priceRange &&
+                    priceRange.map((p, index) => (
+                      <option key={index} value={p.value}>
+                        {p.range}
+                      </option>
+                    ))}
+                </Form.Select>
+              </div>
+              <div className={Style.optionGroup}>
+                <h5>Rating</h5>
+                <Form.Select
+                  value={rating}
+                  onChange={(e) => {
+                    setRating(e.target.value)
+                  }}
+                  style={{ width: '100%' }}
+                >
+                  <option value=''>Any</option>
+                  {rateRange &&
+                    rateRange.map((r, index) => (
+                      <option key={index} value={r.rate}>
+                        {r.range}
+                      </option>
+                    ))}
+                </Form.Select>
+              </div>
+              <div className={Style.optionGroup}>
+                <h5>Gender</h5>
+                <Form.Select
+                  value={gender}
+                  onChange={(e) => {
+                    setGender(e.target.value)
+                  }}
+                  style={{ width: '100%' }}
+                >
+                  <option value=''>Any</option>
+                  <option value='male'>Men</option>
+                  <option value='female'>Women</option>
+                  <option value='kids'>Kids</option>
+                  <option value='baby'>Baby</option>
+                </Form.Select>
               </div>
             </div>
-            <div className='right-side'>
+            <div className={Style.searchScreen__rightSide}>
               <p className='fw-bold'>
                 {foundProduct} {foundProduct <= 1 ? 'product' : 'products'}{' '}
                 Found

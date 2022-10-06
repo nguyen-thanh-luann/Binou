@@ -1,11 +1,13 @@
+import Style from '../scss/LoadingBox.module.scss'
+
 export default function LoadingBox() {
   return (
-    <div className='loadingBox'>
-      <div className='loadingDot'></div>
-      <div className='loadingDot'></div>
-      <div className='loadingDot'></div>
-      <div className='loadingDot'></div>
-      <div className='loadingDot'></div>
+    <div className={Style.loadingBox}>
+      <div className={Style.loadingDot}></div>
+      <div className={Style.loadingDot}></div>
+      <div className={Style.loadingDot}></div>
+      <div className={Style.loadingDot}></div>
+      <div className={Style.loadingDot}></div>
     </div>
   )
 }
