@@ -5,10 +5,10 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import AddIcon from '@mui/icons-material/Add'
+import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 
 import LoadingBox from '../../components/LoadingBox'
 import Layout from '../Layout'
-import Pagination from '../../components/Pagination'
 import {
   getProductOnPage,
   addNewProduct,
@@ -33,9 +33,11 @@ import {
   TextField,
   Select,
   MenuItem,
-  FormControl,
-  InputLabel,
   TextareaAutosize,
+  Stack,
+  Pagination,
+  InputLabel,
+  FormControl,
 } from '@mui/material'
 
 const styleModal = {
@@ -326,10 +328,10 @@ export default function ProductManager() {
     }
   }
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = (event, value) => {
     setPagination({
       ...pagination,
-      page: newPage,
+      page: value,
     })
   }
 
@@ -446,13 +448,14 @@ export default function ProductManager() {
                 </TableContainer>
 
                 {/* pagination */}
-                <div className='text-center'>
+                <Stack sx={{ alignItems: 'center' }}>
                   {isLoadMore && <LoadingBox />}
                   <Pagination
-                    pagination={pagination}
-                    onPageChange={handlePageChange}
+                    count={pagination.pages}
+                    page={pagination.page}
+                    onChange={handlePageChange}
                   />
-                </div>
+                </Stack>
                 {/* product modal */}
 
                 <Modal open={showModal} onClose={handleCloseModal}>
@@ -463,102 +466,144 @@ export default function ProductManager() {
                     <form onSubmit={(e) => submitHandle(e)}>
                       <Grid container spacing={4}>
                         <Grid item xs={6}>
-                          <TextField
-                            name='name'
-                            color='secondary'
-                            label='Name'
-                            value={formData.name}
-                            onChange={(e) => {
-                              handleFormChange(e)
-                            }}
-                            required
-                          />
-                          <TextField
-                            name='category'
-                            color='secondary'
-                            label='Category'
-                            sx={{ marginTop: '1rem' }}
-                            value={formData.category}
-                            onChange={(e) => {
-                              handleFormChange(e)
-                            }}
-                            required
-                          />
-                          <TextField
-                            name='brand'
-                            color='secondary'
-                            label='Brand'
-                            sx={{ marginTop: '1rem' }}
-                            value={formData.brand}
-                            onChange={(e) => {
-                              handleFormChange(e)
-                            }}
-                            required
-                          />
+                          <Box>
+                            <FormControl fullWidth>
+                              <TextField
+                                name='name'
+                                color='secondary'
+                                label='Name'
+                                value={formData.name}
+                                onChange={(e) => {
+                                  handleFormChange(e)
+                                }}
+                                required
+                              />
+                            </FormControl>
+                          </Box>
 
-                          <Select
-                            name='gender'
-                            color='secondary'
-                            label='Gender'
-                            sx={{ marginTop: '1rem' }}
-                            required
-                            defaultValue={formData.gender}
-                            onChange={(e) => {
-                              handleFormChange(e)
-                            }}
-                          >
-                            <MenuItem value='male'>Male</MenuItem>
-                            <MenuItem value='female'>Female</MenuItem>
-                            <MenuItem value='kids'>Kids</MenuItem>
-                            <MenuItem value='baby'>Baby</MenuItem>
-                          </Select>
+                          <Box mt={2}>
+                            <FormControl fullWidth>
+                              <TextField
+                                name='category'
+                                color='secondary'
+                                label='Category'
+                                value={formData.category}
+                                onChange={(e) => {
+                                  handleFormChange(e)
+                                }}
+                                required
+                              />
+                            </FormControl>
+                          </Box>
 
-                          <TextField
-                            name='price'
-                            color='secondary'
-                            label='Price'
-                            sx={{ marginTop: '1rem' }}
-                            value={formData.price}
-                            onChange={(e) => {
-                              handleFormChange(e)
-                            }}
-                            required
-                          />
+                          <Box mt={2}>
+                            <FormControl fullWidth>
+                              <TextField
+                                name='brand'
+                                color='secondary'
+                                label='Brand'
+                                value={formData.brand}
+                                onChange={(e) => {
+                                  handleFormChange(e)
+                                }}
+                                required
+                              />
+                            </FormControl>
+                          </Box>
+
+                          <Box mt={2}>
+                            <FormControl fullWidth>
+                              <InputLabel id='gender'>Gender</InputLabel>
+                              <Select
+                                labelId='gender'
+                                name='gender'
+                                color='secondary'
+                                required
+                                defaultValue={formData.gender}
+                                onChange={(e) => {
+                                  handleFormChange(e)
+                                }}
+                              >
+                                <MenuItem value='male'>Male</MenuItem>
+                                <MenuItem value='female'>Female</MenuItem>
+                                <MenuItem value='kids'>Kids</MenuItem>
+                                <MenuItem value='baby'>Baby</MenuItem>
+                              </Select>
+                            </FormControl>
+                          </Box>
+
+                          <Box mt={2}>
+                            <FormControl fullWidth>
+                              <TextField
+                                name='price'
+                                color='secondary'
+                                label='Price'
+                                value={formData.price}
+                                onChange={(e) => {
+                                  handleFormChange(e)
+                                }}
+                                required
+                              />
+                            </FormControl>
+                          </Box>
                         </Grid>
                         <Grid item xs={6}>
-                          <TextField
-                            name='countInStock'
-                            color='secondary'
-                            label='Stock'
-                            value={formData.countInStock}
-                            onChange={(e) => {
-                              handleFormChange(e)
-                            }}
-                            required
-                          />
-                          <TextareaAutosize
-                            name='description'
-                            minRows={7}
-                            style={{ marginTop: '1rem', width: '100%' }}
-                            placeholder='write description...'
-                            value={formData.description}
-                            onChange={(e) => {
-                              handleFormChange(e)
-                            }}
-                          />
+                          <Box>
+                            <FormControl fullWidth>
+                              <TextField
+                                name='countInStock'
+                                color='secondary'
+                                label='Stock'
+                                value={formData.countInStock}
+                                onChange={(e) => {
+                                  handleFormChange(e)
+                                }}
+                                required
+                              />
+                            </FormControl>
+                          </Box>
 
-                          <div>
-                            <label htmlFor='productImage'>Photo</label>
-                            <input
-                              id='productImage'
-                              type='file'
-                              ref={ref}
-                              className='form-control'
-                              onChange={(e) => {
-                                // xử lí cleanup function sau
-                                handleImageChange(e)
-                              }}
-                            />
+                          <Box mt={2}>
+                            <FormControl fullWidth>
+                              <TextareaAutosize
+                                name='description'
+                                minRows={5}
+                                placeholder='write description...'
+                                value={formData.description}
+                                onChange={(e) => {
+                                  handleFormChange(e)
+                                }}
+                              />
+                            </FormControl>
+                          </Box>
+
+                          <Box mt={2}>
+                            <FormControl fullWidth>
+                              <label
+                                htmlFor='productImage'
+                                style={{
+                                  border: '1px solid purple',
+                                  textAlign: 'center',
+                                  padding: '0.5rem 0',
+                                  borderRadius: '10px',
+                                  color: 'purple',
+                                  alignContent: 'center',
+                                }}
+                              >
+                                <TextField
+                                  id='productImage'
+                                  type='file'
+                                  sx={{ display: 'none' }}
+                                  ref={ref}
+                                  onChange={(e) => {
+                                    // xử lí cleanup function sau
+                                    handleImageChange(e)
+                                  }}
+                                />
+                                <CloudUploadIcon /> Upload Photo
+                              </label>
+                            </FormControl>
+
                             <div className='d-flex'>
                               {
                                 <img
@@ -578,7 +623,7 @@ export default function ProductManager() {
                                 />
                               }
                             </div>
-                          </div>
+                          </Box>
                         </Grid>
                       </Grid>
                       {loading && (

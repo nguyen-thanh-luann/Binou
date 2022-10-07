@@ -6,10 +6,10 @@ import Form from 'react-bootstrap/Form'
 import Layout from './Layout'
 import Product from '../components/Product'
 import LoadingBox from '../components/LoadingBox'
-import Pagination from '../components/Pagination'
 import { getProductUseQuery } from '../services/ProductService'
 import { getAllCategory } from '../services/CategoryService'
 import Style from '../scss/SearchScreen.module.scss'
+import { Pagination, Stack } from '@mui/material'
 
 export default function SearchScreen() {
   const { search } = useLocation()
@@ -110,10 +110,10 @@ export default function SearchScreen() {
     )
   }, [name, order, category, price, rating, gender, pagination.page])
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = (event, value) => {
     setPagination({
       ...pagination,
-      page: newPage,
+      page: value,
     })
   }
 
@@ -234,14 +234,16 @@ export default function SearchScreen() {
                     ))}
                 </div>
               )}
-              <div className='text-center'>
+
+              <Stack sx={{ alignItems: 'center' }}>
                 {foundProduct >= 1 && (
                   <Pagination
-                    pagination={pagination}
-                    onPageChange={handlePageChange}
+                    count={pagination.pages}
+                    page={pagination.page}
+                    onChange={handlePageChange}
                   />
                 )}
-              </div>
+              </Stack>
             </div>
           </div>
         </>

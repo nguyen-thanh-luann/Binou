@@ -11,6 +11,7 @@ import LoadingBox from '../components/LoadingBox'
 import { Store } from '../Store'
 import Style from '../scss/ProfileScreen.module.scss'
 import Swal from 'sweetalert2'
+import { Helmet } from 'react-helmet-async'
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -103,6 +104,9 @@ export default function UserInfoScreen() {
     <Layout
       children={
         <div className={Style.profilePage}>
+          <Helmet>
+            <title>Profile</title>
+          </Helmet>
           <h2 className={Style.profilePage__title}>Account Infomation</h2>
           <div className='text-center'>
             <div>

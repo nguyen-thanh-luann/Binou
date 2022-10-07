@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { getProductUseQuery } from '../services/ProductService'
 import { Helmet } from 'react-helmet-async'
 
-import Pagination from '../components/Pagination'
 import Layout from './Layout'
 import Product from '../components/Product'
 import LoadingBox from '../components/LoadingBox'
 import BannerCarousel from '../components/BannerCarousel'
-import { Grid } from '@mui/material'
+import { Grid, Pagination, Stack } from '@mui/material'
 
 export default function MenScreen() {
   const [products, setProducts] = useState()
@@ -42,10 +41,10 @@ export default function MenScreen() {
     loadProducts()
   }, [pagination.page])
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = (event, value) => {
     setPagination({
       ...pagination,
-      page: newPage,
+      page: value,
     })
   }
   return (
@@ -75,13 +74,14 @@ export default function MenScreen() {
               </Grid>
 
               {/* pagination */}
-              <div className='text-center'>
+              <Stack sx={{ alignItems: 'center' }}>
                 {isLoadMore && <LoadingBox />}
                 <Pagination
-                  pagination={pagination}
-                  onPageChange={handlePageChange}
+                  count={pagination.pages}
+                  page={pagination.page}
+                  onChange={handlePageChange}
                 />
-              </div>
+              </Stack>
             </>
           )}
         </div>
