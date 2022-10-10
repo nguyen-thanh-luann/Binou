@@ -66,8 +66,8 @@ export default function MenScreen() {
               <h2 className='py-2'>Featured products</h2>
               <Grid container spacing={4}>
                 {products &&
-                  products.map((product) => (
-                    <Grid item xs={12} sm={6} md={6} lg={3}>
+                  products.map((product, index) => (
+                    <Grid key={index} item xs={12} sm={6} md={6} lg={3}>
                       <Product product={product} />
                     </Grid>
                   ))}

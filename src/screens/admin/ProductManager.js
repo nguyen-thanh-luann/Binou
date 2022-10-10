@@ -335,10 +335,6 @@ export default function ProductManager() {
     })
   }
 
-  const handleShowModal = () => setShowModal(true)
-
-  const handleCloseModal = () => setShowModal(false)
-
   return (
     <Layout
       children={
@@ -458,7 +454,7 @@ export default function ProductManager() {
                 </Stack>
                 {/* product modal */}
 
-                <Modal open={showModal} onClose={handleCloseModal}>
+                <Modal open={showModal} onClose={() => setShowModal(false)}>
                   <Box sx={styleModal}>
                     <Typography sx={{ marginBottom: '1rem' }}>
                       {isUpdatePro ? 'Update product' : 'Add new product'}

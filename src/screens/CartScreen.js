@@ -24,9 +24,14 @@ export default function CartScreen() {
     {
       field: 'photo',
       headerName: 'Photo',
-      width: 200,
+      width: 150,
+      textAlign: 'center',
       renderCell: (params) => (
-        <img src={params.row.photo} style={{ width: '50%' }} alt='' />
+        <img
+          src={params.row.photo}
+          style={{ width: '80%', textAlign: 'center' }}
+          alt=''
+        />
       ),
     },
     {
@@ -164,11 +169,17 @@ export default function CartScreen() {
               >
                 delete
               </button>
-              <div style={{ height: '30rem', width: '100%' }}>
+              <div
+                style={{
+                  height: 500,
+                  width: '70%',
+                }}
+              >
                 <DataGrid
                   rows={rows}
                   columns={columns}
                   pageSize={5}
+                  disableSelectionOnClick
                   rowsPerPageOptions={[5]}
                   getRowHeight={({ id, densityFactor }) => {
                     return 120 * densityFactor

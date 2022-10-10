@@ -1,5 +1,9 @@
 @import './variables.scss';
 
+.DataGrid-cell:focus-within {
+  outline: none !important;
+}
+
 .cartNoti {
   display: flex;
   justify-content: center;

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import Swal from 'sweetalert2'
 import { Button } from '@mui/material'
+import { toast } from 'react-toastify'
 
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
@@ -33,7 +34,11 @@ export default function AddToCartBtn({ product }) {
       type: 'CART_ADD_ITEM',
       payload: { ...item, quantity },
     })
-    alert('success')
+    toast.success('Added to cart!', {
+      position: 'bottom-left',
+      closeOnClick: true,
+      autoClose: 2000,
+    })
   }
   return (
     <div>
