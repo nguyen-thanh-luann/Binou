@@ -10,9 +10,6 @@ const initialState = {
     cartItems: localStorage.getItem('cartItems')
       ? JSON.parse(localStorage.getItem('cartItems'))
       : [],
-    cartSelectItems: localStorage.getItem('cartSelectItems')
-      ? JSON.parse(localStorage.getItem('cartSelectItems'))
-      : [],
   },
 }
 
@@ -45,11 +42,6 @@ function reducer(state, action) {
     }
     case 'CART_CLEAR':
       return { ...state, cart: { ...state.cart, cartItems: [] } }
-    case 'CART_SELECT_ITEM':
-      // when user select product from cart to checkout
-      const cartSelectItems = action.payload
-      localStorage.setItem('cartSelectItems', JSON.stringify(cartSelectItems))
-      return { ...state, cart: { ...state.cart, cartSelectItems } }
     default:
       return state
   }

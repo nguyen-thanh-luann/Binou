@@ -3,8 +3,6 @@ import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { DataGrid } from '@mui/x-data-grid'
 
-import AddIcon from '@mui/icons-material/Add'
-import RemoveIcon from '@mui/icons-material/Remove'
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout'
 
 import Layout from './Layout'
@@ -17,8 +15,9 @@ import VerticalLine from '../components/VerticalLine'
 
 export default function CartScreen() {
   const { state, dispatch: ctxDispatch } = useContext(Store)
+  const [selectedItems, setSelectedItems] = useState([])
   const {
-    cart: { cartItems, cartSelectItems },
+    cart: { cartItems },
     userInfo,
   } = state
 
@@ -74,37 +73,7 @@ export default function CartScreen() {
       headerAlign: 'center',
       width: 200,
       renderCell: (params) => (
-        <Box sx={{ margin: '0 auto' }}>
-          {params.row.quantity <= 1 ? (
-            <Button disabled>
-              <RemoveIcon />
-            </Button>
-          ) : (
-            <Button
-              onClick={() =>
-                updateCartHandler(params.row.item, params.row.quantity - 1)
-              }
-              color='secondary'
-            >
-              <RemoveIcon />
-            </Button>
-          )}{' '}
-          {params.row.quantity}{' '}
-          {params.row.quantity >= params.row.countInStock ? (
-            <Button disabled>
-              <AddIcon />
-            </Button>
-          ) : (
-            <Button
-              onClick={() =>
-                updateCartHandler(params.row.item, params.row.quantity + 1)
-              }
-              color='secondary'
-            >
-              <AddIcon />
-            </Button>
-          )}
-        </Box>
+        <Box sx={{ margin: '0 auto' }}>{params.row.quantity}</Box>
       ),
     },
 
@@ -135,30 +104,8 @@ export default function CartScreen() {
     ctxDispatch({ type: 'CART_REMOVE_ITEM', payload: item })
   }
 
-  const updateCartHandler = async (item, quantity) => {
-    const { data } = await getProductById(item._id)
-    if (data.countInStock < quantity) {
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: 'Sorry! Product is out of stock',
-        showDenyButton: false,
-        showConfirmButton: false,
-        timer: 1200,
-      })
-      return
-    }
-    ctxDispatch({
-      type: 'CART_ADD_ITEM',
-      payload: { ...item, quantity },
-    })
-  }
-
   const selectItemHandler = (selectItem) => {
-    ctxDispatch({
-      type: 'CART_SELECT_ITEM',
-      payload: selectItem,
-    })
+    setSelectedItems(selectItem)
   }
 
   const checkoutHandler = () => {
@@ -224,13 +171,13 @@ export default function CartScreen() {
                 </Grid>
                 <Grid item xs={12} md={12} lg={3}>
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    {cartSelectItems && cartSelectItems.length > 0 ? (
+                    {selectedItems && selectedItems.length > 0 ? (
                       <Button
                         variant='outlined'
                         color='error'
                         onClick={() => {
                           if (window.confirm('delete item?')) {
-                            // removeItemHandler(selectedItem)
+                            removeItemHandler(selectedItems)
                           }
                         }}
                       >
@@ -243,7 +190,7 @@ export default function CartScreen() {
                     )}
 
                     <Typography sx={{ marginLeft: '1rem' }}>
-                      {cartSelectItems.length} items
+                      {selectedItems.length} items
                     </Typography>
                   </Box>
                   {/*Address  */}
@@ -290,8 +237,8 @@ export default function CartScreen() {
                       <Typography>Subtotal</Typography>
                       <Typography>
                         $
-                        {cartSelectItems &&
-                          cartSelectItems.reduce(
+                        {selectedItems &&
+                          selectedItems.reduce(
                             (a, c) => a + c.price * c.quantity,
                             0
                           )}
@@ -306,7 +253,9 @@ export default function CartScreen() {
                       }}
                     >
                       <Typography>Discount</Typography>
-                      <Typography>$0</Typography>
+                      <Typography color='error'>
+                        {selectedItems.length !== 0 ? '5%' : 0}
+                      </Typography>
                     </Box>
                     <Box
                       sx={{
@@ -319,11 +268,13 @@ export default function CartScreen() {
                       <Typography>Total</Typography>
                       <Typography color='error'>
                         $
-                        {/* {cartSelectItems &&
-                          cartSelectItems.reduce(
-                            (a, c) => a + c.price * c.quantity,
-                            0
-                          )} */}
+                        {selectedItems &&
+                          Math.floor(
+                            selectedItems.reduce(
+                              (a, c) => a + c.price * c.quantity,
+                              0
+                            ) * 0.95
+                          )}
                       </Typography>
                     </Box>
                   </Box>

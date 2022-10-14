@@ -9,15 +9,15 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { getProductById } from '../services/ProductService'
 import { Store } from '../Store'
 
-export default function AddToCartBtn({ product }) {
+export default function AddToCartBtn({ product, orderNumber }) {
   const { state, dispatch: ctxDispatch } = useContext(Store)
   const {
     cart: { cartItems },
   } = state
 
-  const addToCartHandler = async (item) => {
+  const addToCartHandler = async (item, orderNumber) => {
     const existItem = cartItems.find((x) => x._id === product._id)
-    const quantity = existItem ? existItem.quantity + 1 : 1
+    const quantity = existItem ? existItem.quantity + orderNumber : orderNumber
     const { data } = await getProductById(item._id)
     if (data.countInStock < quantity) {
       Swal.fire({
@@ -55,7 +55,7 @@ export default function AddToCartBtn({ product }) {
       ) : (
         <Button
           onClick={() => {
-            addToCartHandler(product)
+            addToCartHandler(product, orderNumber)
           }}
           variant='outlined'
           color='success'

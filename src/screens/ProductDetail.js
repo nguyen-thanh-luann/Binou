@@ -1,7 +1,10 @@
-import React, { useEffect, useContext, useReducer } from 'react'
+import React, { useEffect, useContext, useReducer, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
+
+import AddIcon from '@mui/icons-material/Add'
+import RemoveIcon from '@mui/icons-material/Remove'
 
 import { Store } from '../Store'
 import Layout from './Layout'
@@ -12,6 +15,7 @@ import AddToCartBtn from '../components/AddToCartBtn'
 import { getProductById, reviewProduct } from '../services/ProductService'
 import Style from '../scss/ProductDetail.module.scss'
 import Swal from 'sweetalert2'
+import { Box, Button, Typography } from '@mui/material'
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -38,13 +42,11 @@ export default function ProductScreen() {
   const param = useParams()
   const productId = param.id
 
+  let [orderNumber, setOrderNumber] = useState(1)
   const { state, dispatch: ctxDispatch } = useContext(Store)
   const { userInfo } = state
 
-  const [
-    { loading, loadingReview, error, product, loadingCreateReview },
-    dispatch,
-  ] = useReducer(reducer, {
+  const [{ loading, loadingReview, product }, dispatch] = useReducer(reducer, {
     product: [],
     loading: true,
     error: '',
@@ -146,7 +148,43 @@ export default function ProductScreen() {
                     <div className={Style.productDescr}>
                       <p>{product.description}</p>
                     </div>
-                    <AddToCartBtn product={product} />
+                    <Box mb={2}>
+                      <Typography>Quantity</Typography>
+                      {orderNumber <= 1 ? (
+                        <Button disabled variant='outlined'>
+                          <RemoveIcon />
+                        </Button>
+                      ) : (
+                        <Button
+                          color='success'
+                          variant='outlined'
+                          onClick={() => {
+                            setOrderNumber(--orderNumber)
+                          }}
+                        >
+                          <RemoveIcon />
+                        </Button>
+                      )}
+                      <Button disabled variant='outlined'>
+                        {orderNumber}
+                      </Button>
+                      {orderNumber >= product.countInStock ? (
+                        <Button disabled variant='outlined'>
+                          <AddIcon />
+                        </Button>
+                      ) : (
+                        <Button
+                          color='success'
+                          variant='outlined'
+                          onClick={() => {
+                            setOrderNumber(++orderNumber)
+                          }}
+                        >
+                          <AddIcon />
+                        </Button>
+                      )}
+                    </Box>
+                    <AddToCartBtn product={product} orderNumber={orderNumber} />
                   </div>
                 </div>
                 <h2>Reviews</h2>

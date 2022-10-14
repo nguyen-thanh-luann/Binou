@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import Rating from './Rating'
@@ -6,6 +6,7 @@ import AddToCartBtn from './AddToCartBtn'
 
 import Style from '../scss/Product.module.scss'
 export default function Product({ product }) {
+  let [orderNumber] = useState(1)
   return (
     <div className={Style.product}>
       <div className={Style.product__image}>
@@ -22,7 +23,7 @@ export default function Product({ product }) {
         </div>
         <Rating rating={product.rating} />
         <p className='price'>${product.price}</p>
-        <AddToCartBtn product={product} />
+        <AddToCartBtn product={product} orderNumber={orderNumber} />
       </div>
     </div>
   )
