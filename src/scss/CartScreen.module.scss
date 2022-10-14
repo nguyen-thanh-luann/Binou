@@ -1,9 +1,5 @@
 @import './variables.scss';
 
-.DataGrid-cell:focus-within {
-  outline: none !important;
-}
-
 .cartNoti {
   display: flex;
   justify-content: center;
@@ -17,12 +13,6 @@
     text-decoration: none;
     color: $link-color;
   }
-}
-
-.cartTitle {
-  text-align: center;
-  color: $link-color;
-  margin-bottom: 2rem;
 }
 
 .cartScreen {

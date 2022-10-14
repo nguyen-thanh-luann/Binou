@@ -34,6 +34,7 @@ export default function AddToCartBtn({ product }) {
       type: 'CART_ADD_ITEM',
       payload: { ...item, quantity },
     })
+
     toast.success('Added to cart!', {
       position: 'bottom-left',
       closeOnClick: true,
@@ -57,7 +58,7 @@ export default function AddToCartBtn({ product }) {
             addToCartHandler(product)
           }}
           variant='outlined'
-          color='warning'
+          color='success'
           startIcon={<ShoppingCartIcon />}
         >
           <span>Add to cart</span>

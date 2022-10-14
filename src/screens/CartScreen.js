@@ -5,18 +5,20 @@ import { DataGrid } from '@mui/x-data-grid'
 
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout'
 
 import Layout from './Layout'
 import { Store } from '../Store'
 import { getProductById } from '../services/ProductService'
 import Style from '../scss/CartScreen.module.scss'
 import Swal from 'sweetalert2'
+import { Box, Button, Grid, Typography } from '@mui/material'
+import VerticalLine from '../components/VerticalLine'
 
 export default function CartScreen() {
   const { state, dispatch: ctxDispatch } = useContext(Store)
-  const [selectedItem, setSelectedItem] = useState()
   const {
-    cart: { cartItems },
+    cart: { cartItems, cartSelectItems },
     userInfo,
   } = state
 
@@ -25,66 +27,103 @@ export default function CartScreen() {
       field: 'photo',
       headerName: 'Photo',
       width: 150,
-      textAlign: 'center',
+      headerAlign: 'center',
       renderCell: (params) => (
-        <img
-          src={params.row.photo}
-          style={{ width: '80%', textAlign: 'center' }}
-          alt=''
-        />
+        <Box sx={{ margin: '0 auto' }}>
+          <img
+            src={params.row.photo}
+            style={{ width: '80%', textAlign: 'center' }}
+            alt=''
+          />
+        </Box>
       ),
     },
     {
       field: 'name',
       headerName: 'Name',
-      width: 200,
-    },
-
-    {
-      field: 'quantity',
-      headerName: 'Quantity',
+      headerAlign: 'center',
       width: 200,
       renderCell: (params) => (
-        <div>
-          {params.row.quantity <= 1 ? (
-            <RemoveIcon role='button' style={{ cursor: 'not-allowed' }} />
-          ) : (
-            <RemoveIcon
-              role='button'
-              onClick={() =>
-                updateCartHandler(params.row.item, params.row.quantity - 1)
-              }
-            />
-          )}{' '}
-          {params.row.quantity}{' '}
-          {params.row.quantity >= params.row.countInStock ? (
-            <AddIcon role='button' style={{ cursor: 'not-allowed' }} />
-          ) : (
-            <AddIcon
-              role='button'
-              onClick={() =>
-                updateCartHandler(params.row.item, params.row.quantity + 1)
-              }
-            />
-          )}
-        </div>
+        <Box
+          sx={{
+            margin: '0 auto',
+          }}
+        >
+          {params.row.name}
+        </Box>
       ),
     },
     {
       field: 'price',
       headerName: 'Price',
+      headerAlign: 'center',
       width: 200,
+      renderCell: (params) => (
+        <Box
+          sx={{
+            margin: '0 auto',
+          }}
+        >
+          ${params.row.price}
+        </Box>
+      ),
     },
+    {
+      field: 'quantity',
+      headerName: 'Quantity',
+      headerAlign: 'center',
+      width: 200,
+      renderCell: (params) => (
+        <Box sx={{ margin: '0 auto' }}>
+          {params.row.quantity <= 1 ? (
+            <Button disabled>
+              <RemoveIcon />
+            </Button>
+          ) : (
+            <Button
+              onClick={() =>
+                updateCartHandler(params.row.item, params.row.quantity - 1)
+              }
+              color='secondary'
+            >
+              <RemoveIcon />
+            </Button>
+          )}{' '}
+          {params.row.quantity}{' '}
+          {params.row.quantity >= params.row.countInStock ? (
+            <Button disabled>
+              <AddIcon />
+            </Button>
+          ) : (
+            <Button
+              onClick={() =>
+                updateCartHandler(params.row.item, params.row.quantity + 1)
+              }
+              color='secondary'
+            >
+              <AddIcon />
+            </Button>
+          )}
+        </Box>
+      ),
+    },
+
     {
       field: 'total',
       headerName: 'Total',
+      headerAlign: 'center',
       width: 200,
+      renderCell: (params) => (
+        <Box sx={{ margin: '0 auto', color: 'purple' }}>
+          ${params.row.total}
+        </Box>
+      ),
     },
   ]
 
   const rows = cartItems.map((item) => ({
-    id: item._id,
     item,
+    id: item._id,
     name: item.name,
     photo: item.image,
     quantity: item.quantity,
@@ -115,6 +154,13 @@ export default function CartScreen() {
     })
   }
 
+  const selectItemHandler = (selectItem) => {
+    ctxDispatch({
+      type: 'CART_SELECT_ITEM',
+      payload: selectItem,
+    })
+  }
+
   const checkoutHandler = () => {
     if (userInfo) {
       window.alert('comming soon')
@@ -138,58 +184,160 @@ export default function CartScreen() {
             </div>
           ) : (
             <>
-              <h2 className={Style.cartTitle}>
+              <Typography
+                sx={{
+                  textAlign: 'center',
+                  color: 'purple',
+                  fontSize: '2rem',
+                  marginBottom: '1rem',
+                }}
+              >
                 Cool! Let's checkout to get new clothes
-              </h2>
-              {/*
-       
-                <div className={Style.cartBill}>
-                  <h4 className='text-center'>Bill</h4>
-                  <h5>
-                    Invoice Total:{' '}
-                    {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
-                  </h5>
-                  <button
-                    className='btn btn-success'
-                    onClick={() => {
-                      checkoutHandler()
+              </Typography>
+
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={12} lg={9}>
+                  <Box
+                    sx={{
+                      height: 500,
                     }}
                   >
+                    <DataGrid
+                      rows={rows}
+                      columns={columns}
+                      pageSize={5}
+                      disableSelectionOnClick
+                      rowsPerPageOptions={[5]}
+                      getRowHeight={({ id, densityFactor }) => {
+                        return 120 * densityFactor
+                      }}
+                      checkboxSelection
+                      hideFooterSelectedRowCount={true}
+                      onSelectionModelChange={(ids) => {
+                        const selectedRowData = ids.map((id) =>
+                          rows.find((row) => row.id === id)
+                        )
+                        selectItemHandler(selectedRowData)
+                      }}
+                    />
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={12} lg={3}>
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    {cartSelectItems && cartSelectItems.length > 0 ? (
+                      <Button
+                        variant='outlined'
+                        color='error'
+                        onClick={() => {
+                          if (window.confirm('delete item?')) {
+                            // removeItemHandler(selectedItem)
+                          }
+                        }}
+                      >
+                        delete
+                      </Button>
+                    ) : (
+                      <Button variant='outlined' disabled>
+                        Delete
+                      </Button>
+                    )}
+
+                    <Typography sx={{ marginLeft: '1rem' }}>
+                      {cartSelectItems.length} items
+                    </Typography>
+                  </Box>
+                  {/*Address  */}
+                  <Box
+                    p={1}
+                    mt={1}
+                    sx={{ border: '1px solid #ccc', borderRadius: '5px' }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Typography>Address</Typography>
+                      <Button color='secondary'>Change</Button>
+                    </Box>
+
+                    <Typography sx={{ display: 'flex', fontWeight: 'bold' }}>
+                      Thanh Luan
+                      <VerticalLine />
+                      070 6431 927
+                    </Typography>
+
+                    <Typography sx={{ fontSize: '0.8rem' }}>
+                      Công viên phần mềm Quang Trung, Phường Trung Mĩ Tây Quận
+                      12, Hồ Chí Minh.
+                    </Typography>
+                  </Box>
+                  {/*Bill  */}
+                  <Box
+                    p={1}
+                    mt={1}
+                    sx={{ border: '1px solid #ccc', borderRadius: '5px' }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Typography>Subtotal</Typography>
+                      <Typography>
+                        $
+                        {cartSelectItems &&
+                          cartSelectItems.reduce(
+                            (a, c) => a + c.price * c.quantity,
+                            0
+                          )}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginTop: '1rem',
+                      }}
+                    >
+                      <Typography>Discount</Typography>
+                      <Typography>$0</Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginTop: '1rem',
+                      }}
+                    >
+                      <Typography>Total</Typography>
+                      <Typography color='error'>
+                        $
+                        {/* {cartSelectItems &&
+                          cartSelectItems.reduce(
+                            (a, c) => a + c.price * c.quantity,
+                            0
+                          )} */}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Button
+                    color='secondary'
+                    variant='outlined'
+                    fullWidth
+                    sx={{ marginTop: '1rem' }}
+                    startIcon={<ShoppingCartCheckoutIcon />}
+                  >
                     Checkout
-                  </button>
-                </div>
-              </div> */}
-              <button
-                className='text-danger mb-2'
-                onClick={() => {
-                  if (window.confirm('delete item?')) {
-                    removeItemHandler(selectedItem)
-                  }
-                }}
-              >
-                delete
-              </button>
-              <div
-                style={{
-                  height: 500,
-                  width: '70%',
-                }}
-              >
-                <DataGrid
-                  rows={rows}
-                  columns={columns}
-                  pageSize={5}
-                  disableSelectionOnClick
-                  rowsPerPageOptions={[5]}
-                  getRowHeight={({ id, densityFactor }) => {
-                    return 120 * densityFactor
-                  }}
-                  checkboxSelection
-                  onSelectionModelChange={(id) => {
-                    setSelectedItem(id)
-                  }}
-                />
-              </div>
+                  </Button>
+                </Grid>
+              </Grid>
             </>
           )}
         </>

@@ -360,7 +360,11 @@ export default function ProductManager() {
                 >
                   New Product
                 </Button>
-                <TableContainer component={Paper} sx={{ margin: '1.5rem 0' }}>
+                <TableContainer
+                  component={Paper}
+                  elevation={6}
+                  sx={{ margin: '1.5rem 0' }}
+                >
                   <Table>
                     <TableHead>
                       <TableRow>

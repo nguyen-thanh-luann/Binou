@@ -69,15 +69,12 @@ export default function Head() {
         <Link className={Style.headerIcon} to='/cart'>
           <Badge
             badgeContent={cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-            color='warning'
+            color='error'
           >
             <ShoppingCartIcon />
           </Badge>
         </Link>
         {userInfo && userInfo.isAdmin && (
-          // <Link className={Style.headerIcon} to='/productManager'>
-          //   <AdminPanelSettingsIcon />
-          // </Link>
           <>
             <Button
               id='adminMenuBtn'

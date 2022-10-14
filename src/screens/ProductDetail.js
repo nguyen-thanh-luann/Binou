@@ -12,7 +12,6 @@ import AddToCartBtn from '../components/AddToCartBtn'
 import { getProductById, reviewProduct } from '../services/ProductService'
 import Style from '../scss/ProductDetail.module.scss'
 import Swal from 'sweetalert2'
-import { Divider, Stack } from '@mui/material'
 
 const reducer = (state, action) => {
   switch (action.type) {

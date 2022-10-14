@@ -10,6 +10,9 @@ const initialState = {
     cartItems: localStorage.getItem('cartItems')
       ? JSON.parse(localStorage.getItem('cartItems'))
       : [],
+    cartSelectItems: localStorage.getItem('cartSelectItems')
+      ? JSON.parse(localStorage.getItem('cartSelectItems'))
+      : [],
   },
 }
 
@@ -20,7 +23,7 @@ function reducer(state, action) {
     case 'USER_LOGOUT':
       return { ...state, userInfo: null }
     case 'CART_ADD_ITEM':
-      // add to cart
+      // when user add a product to cart
       const newItem = action.payload
       const existItem = state.cart.cartItems.find(
         (item) => item._id === newItem._id
@@ -34,19 +37,19 @@ function reducer(state, action) {
       return { ...state, cart: { ...state.cart, cartItems } }
     case 'CART_REMOVE_ITEM': {
       let cartItems = [...state.cart.cartItems]
-      action.payload.forEach((id) => {
-        console.log(`store id: ${id}`)
-        cartItems = cartItems.filter((item) => item._id !== id)
+      action.payload.forEach((item) => {
+        cartItems = cartItems.filter((cardItem) => cardItem._id !== item.id)
       })
-
-      console.log('items after: ')
-      console.log(cartItems)
       localStorage.setItem('cartItems', JSON.stringify(cartItems))
-
       return { ...state, cart: { ...state.cart, cartItems } }
     }
     case 'CART_CLEAR':
       return { ...state, cart: { ...state.cart, cartItems: [] } }
+    case 'CART_SELECT_ITEM':
+      // when user select product from cart to checkout
+      const cartSelectItems = action.payload
+      localStorage.setItem('cartSelectItems', JSON.stringify(cartSelectItems))
+      return { ...state, cart: { ...state.cart, cartSelectItems } }
     default:
       return state
   }
