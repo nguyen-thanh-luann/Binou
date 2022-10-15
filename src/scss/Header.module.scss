@@ -4,10 +4,14 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: #fff;
   height: 80px;
   padding: 0 2rem;
-  box-shadow: 8px 8px 8px #ccc;
+  border-bottom: 1px solid rgb(222, 219, 219);
   color: #000;
+  position: sticky;
+  top: 0;
+  z-index: 999;
 
   div,
   nav {

@@ -1,87 +1,270 @@
-import React, { useEffect, useState } from 'react'
-import { getProductOnPage } from '../services/ProductService'
+import { Box, Typography } from '@mui/material'
+import React from 'react'
+import Carousel from 'react-bootstrap/Carousel'
+
 import { Helmet } from 'react-helmet-async'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+import Style from '../scss/Home.module.scss'
+import { Link } from 'react-router-dom'
 
-import Layout from './Layout'
-import Product from '../components/Product'
-import LoadingBox from '../components/LoadingBox'
-import BannerCarousel from '../components/BannerCarousel'
-import { Grid, Pagination, Stack } from '@mui/material'
 export default function HomeScreen() {
-  const [products, setProducts] = useState()
-  const [isLoadingPage, setIsLoadingPage] = useState(true)
-  const [isLoadMore, setIsLoadMore] = useState(false)
-  const [pagination, setPagination] = useState({
-    page: 1,
-    limit: 8,
-    pages: 1,
-  })
-
-  const loadProducts = () => {
-    setIsLoadMore(true)
-    getProductOnPage(pagination.limit, pagination.page)
-      .then((res) => {
-        setProducts(res.data.products)
-        setPagination({
-          ...pagination,
-          pages: res.data.pages,
-        })
-        setIsLoadingPage(false)
-        setIsLoadMore(false)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-  useEffect(() => {
-    loadProducts()
-  }, [pagination.page])
-
-  const handlePageChange = (event, value) => {
-    setPagination({
-      ...pagination,
-      page: value,
-    })
-  }
   return (
-    <Layout
-      children={
-        <div className='row px-5'>
-          <Helmet>
-            <title>Binou</title>
-          </Helmet>
-          <div style={{ maxHeight: '10%' }}>
-            <BannerCarousel />
-          </div>
-          {isLoadingPage ? (
-            <div className='text-center'>
-              <LoadingBox />
-            </div>
-          ) : (
-            <>
-              <h2 className='py-2'>Featured products</h2>
-              <Grid container spacing={4}>
-                {products &&
-                  products.map((product, index) => (
-                    <Grid key={index} item xs={12} sm={6} md={6} lg={3}>
-                      <Product product={product} />
-                    </Grid>
-                  ))}
-              </Grid>
-
-              {/* pagination */}
-              <Stack sx={{ alignItems: 'center' }}>
-                {isLoadMore && <LoadingBox />}
-                <Pagination
-                  count={pagination.pages}
-                  page={pagination.page}
-                  onChange={handlePageChange}
-                />
-              </Stack>
-            </>
-          )}
-        </div>
-      }
-    />
+    <>
+      <Helmet>
+        <title>Binou</title>
+      </Helmet>
+      <Header />
+      <Box>
+        {/*  */}
+        <Carousel fade variant='dark'>
+          <Carousel.Item className={Style.banner}>
+            <Link to='/men'>
+              <img
+                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665825199/banner_ilgqqv.jpg'
+                alt='Men'
+                style={{ objectFit: 'fill', width: '100%' }}
+              />
+            </Link>
+            <Carousel.Caption className={Style.banner__caption}>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f1}`}
+              >
+                Men's 3D Cut Seamless Down Parkas
+              </Typography>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f2}`}
+              >
+                Designed widt roomy shoulders and a defined hood.
+              </Typography>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f1}`}
+              >
+                $129.90
+              </Typography>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item className={Style.banner}>
+            <Link to='/women'>
+              <img
+                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665825202/banner1_oylnds.jpg'
+                alt='Men'
+                style={{ objectFit: 'fill', width: '100%' }}
+              />
+            </Link>
+            <Carousel.Caption className={Style.banner__caption}>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f1}`}
+              >
+                Women's Hybrid Down Parkas
+              </Typography>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f2}`}
+              >
+                A combination of lightweight down with insulating padding for
+                supreme warmth
+              </Typography>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f1}`}
+              >
+                $119.90
+              </Typography>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item className={Style.banner}>
+            <Link to='/kids'>
+              <img
+                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665825205/banner2_upccsb.jpg'
+                alt='Men'
+                style={{ objectFit: 'fill', width: '100%' }}
+              />
+            </Link>
+            <Carousel.Caption className={Style.banner__caption}>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f1}`}
+              >
+                Kids' Down Parkas
+              </Typography>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f2}`}
+              >
+                Big warmth for little ones that won't weigh them down
+              </Typography>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f1}`}
+              >
+                $79.90
+              </Typography>
+            </Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
+        {/*  */}
+        <Carousel fade variant='dark'>
+          <Carousel.Item className={Style.banner}>
+            <Link to='/men'>
+              <img
+                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665848388/b2_inxbt6.jpg'
+                alt='Men'
+                style={{ objectFit: 'fill', width: '100%' }}
+              />
+            </Link>
+            <Carousel.Caption className={Style.banner__caption}>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f1}`}
+              >
+                Men's 3D Cut Seamless Down Parkas
+              </Typography>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f2}`}
+              >
+                Designed widt roomy shoulders and a defined hood.
+              </Typography>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f1}`}
+              >
+                $129.90
+              </Typography>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item className={Style.banner}>
+            <Link to='/men'>
+              <img
+                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665848388/b4_hygcei.jpg'
+                alt='Men'
+                style={{ objectFit: 'fill', width: '100%' }}
+              />
+            </Link>
+            <Carousel.Caption className={Style.banner__caption}>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f1}`}
+              >
+                Women's Hybrid Down Parkas
+              </Typography>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f2}`}
+              >
+                A combination of lightweight down with insulating padding for
+                supreme warmth
+              </Typography>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f1}`}
+              >
+                $119.90
+              </Typography>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item className={Style.banner}>
+            <Link to='/men'>
+              <img
+                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665848388/b3_ybs80e.jpg'
+                alt='Men'
+                style={{ objectFit: 'fill', width: '100%' }}
+              />
+            </Link>
+            <Carousel.Caption className={Style.banner__caption}>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f1}`}
+              >
+                Kids' Down Parkas
+              </Typography>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f2}`}
+              >
+                Big warmth for little ones that won't weigh them down
+              </Typography>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f1}`}
+              >
+                $79.90
+              </Typography>
+            </Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
+        {/*  */}
+        <Carousel fade variant='dark'>
+          <Carousel.Item className={Style.banner}>
+            <Link to='/women'>
+              <img
+                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665848391/b6_gdp4hd.jpg'
+                alt='Men'
+                style={{ objectFit: 'fill', width: '100%' }}
+              />
+            </Link>
+            <Carousel.Caption className={Style.banner__caption}>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f1}`}
+              >
+                Men's 3D Cut Seamless Down Parkas
+              </Typography>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f2}`}
+              >
+                Designed widt roomy shoulders and a defined hood.
+              </Typography>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f1}`}
+              >
+                $129.90
+              </Typography>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item className={Style.banner}>
+            <Link to='/men'>
+              <img
+                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665848389/b1_mtysrp.jpg'
+                alt='Men'
+                style={{ objectFit: 'fill', width: '100%' }}
+              />
+            </Link>
+            <Carousel.Caption className={Style.banner__caption}>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f1}`}
+              >
+                Women's Hybrid Down Parkas
+              </Typography>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f2}`}
+              >
+                A combination of lightweight down with insulating padding for
+                supreme warmth
+              </Typography>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f1}`}
+              >
+                $119.90
+              </Typography>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item className={Style.banner}>
+            <Link to='/men'>
+              <img
+                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665848388/b5_zj2csa.jpg'
+                alt='Men'
+                style={{ objectFit: 'fill', width: '100%' }}
+              />
+            </Link>
+            <Carousel.Caption className={Style.banner__caption}>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f1}`}
+              >
+                Kids' Down Parkas
+              </Typography>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f2}`}
+              >
+                Big warmth for little ones that won't weigh them down
+              </Typography>
+              <Typography
+                className={`${Style.banner__caption__text} ${Style.banner__caption__text__f1}`}
+              >
+                $79.90
+              </Typography>
+            </Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
+        {/*  */}
+      </Box>
+      <Footer />
+    </>
   )
 }

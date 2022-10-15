@@ -13,7 +13,7 @@ import SearchBox from './SearchBox'
 import { Badge, Button, Menu, MenuItem } from '@mui/material'
 import Style from '../scss/Header.module.scss'
 
-export default function Head() {
+export default function Header() {
   const { state, dispatch: ctxDispatch } = useContext(Store)
   const { cart, userInfo } = state
   const [showNavbar, setShowNavbar] = useState(false)
@@ -39,10 +39,10 @@ export default function Head() {
           Binou
         </Link>
         <nav className={showNavbar ? Style.responsiveHeader : ''}>
-          <Link to='/men'>Men</Link>
-          <Link to='/women'>Women</Link>
-          <Link to='/kids'>Kids</Link>
-          <Link to='/baby'>Baby</Link>
+          <Link to='/men'>MEN</Link>
+          <Link to='/women'>WOMEN</Link>
+          <Link to='/kids'>KIDS</Link>
+          <Link to='/baby'>BABY</Link>
           <button
             className={`${Style.navBtn} ${Style.navBtnClose}`}
             onClick={handleShowNavbar}
