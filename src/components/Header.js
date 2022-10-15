@@ -39,7 +39,6 @@ export default function Head() {
           Binou
         </Link>
         <nav className={showNavbar ? Style.responsiveHeader : ''}>
-          <Link to='/'>Home</Link>
           <Link to='/men'>Men</Link>
           <Link to='/women'>Women</Link>
           <Link to='/kids'>Kids</Link>
@@ -67,10 +66,7 @@ export default function Head() {
           <PersonOutlineIcon />
         </Link>
         <Link className={Style.headerIcon} to='/cart'>
-          <Badge
-            badgeContent={cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-            color='error'
-          >
+          <Badge badgeContent={cart.cartItems.length} color='error'>
             <ShoppingCartIcon />
           </Badge>
         </Link>

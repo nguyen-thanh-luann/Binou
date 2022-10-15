@@ -12,6 +12,7 @@ import Style from '../scss/CartScreen.module.scss'
 import Swal from 'sweetalert2'
 import { Box, Button, Grid, Typography } from '@mui/material'
 import VerticalLine from '../components/VerticalLine'
+import { toast } from 'react-toastify'
 
 export default function CartScreen() {
   const { state, dispatch: ctxDispatch } = useContext(Store)
@@ -110,7 +111,9 @@ export default function CartScreen() {
 
   const checkoutHandler = () => {
     if (userInfo) {
-      window.alert('comming soon')
+      toast('Comming soon!', {
+        position: 'top-right',
+      })
     } else {
       window.location.href = '/login'
     }
@@ -284,6 +287,7 @@ export default function CartScreen() {
                     fullWidth
                     sx={{ marginTop: '1rem' }}
                     startIcon={<ShoppingCartCheckoutIcon />}
+                    onClick={() => checkoutHandler()}
                   >
                     Checkout
                   </Button>
