@@ -2,8 +2,8 @@ import StarIcon from '@mui/icons-material/Star'
 import StarHalfIcon from '@mui/icons-material/StarHalf'
 import StarBorderIcon from '@mui/icons-material/StarBorder'
 
-export default function Rating(props) {
-  const { rating, numReviews, caption } = props
+export default function ProductRate(props) {
+  const { rating } = props
   const startStyle = {
     color: 'orange',
   }

@@ -2,13 +2,14 @@ import React, { useEffect, useContext, useReducer, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
+import Rating from '@mui/material/Rating'
 
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 
 import { Store } from '../Store'
 import Layout from './Layout'
-import Rating from '../components/Rating'
+import ProductRate from '../components/ProductRate'
 import VerticalLine from '../components/VerticalLine'
 import LoadingBox from '../components/LoadingBox'
 import AddToCartBtn from '../components/AddToCartBtn'
@@ -43,7 +44,8 @@ export default function ProductScreen() {
   const productId = param.id
 
   let [orderNumber, setOrderNumber] = useState(1)
-  const { state, dispatch: ctxDispatch } = useContext(Store)
+  const [star, setStar] = useState(1)
+  const { state } = useContext(Store)
   const { userInfo } = state
 
   const [{ loading, loadingReview, product }, dispatch] = useReducer(reducer, {
@@ -81,7 +83,7 @@ export default function ProductScreen() {
     const dataReview = {
       name: userInfo.name,
       comment: data.comment.trim(),
-      rating: data.rating,
+      rating: star,
     }
 
     reviewProduct(productId, dataReview)
@@ -136,7 +138,7 @@ export default function ProductScreen() {
                     <h3 className={Style.productInfo__name}>{product.name}</h3>
 
                     <div className='d-flex'>
-                      <Rating
+                      <ProductRate
                         rating={product.rating}
                         numReviews={product.numReviews}
                       />
@@ -165,9 +167,7 @@ export default function ProductScreen() {
                           <RemoveIcon />
                         </Button>
                       )}
-                      <Button disabled variant='outlined'>
-                        {orderNumber}
-                      </Button>
+                      <Button color='success'>{orderNumber}</Button>
                       {orderNumber >= product.countInStock ? (
                         <Button disabled variant='outlined'>
                           <AddIcon />
@@ -203,7 +203,7 @@ export default function ProductScreen() {
                           {new Date(rev.updatedAt).toLocaleDateString()}
                         </span>
                       </div>
-                      <Rating rating={rev.rating} />
+                      <ProductRate rating={rev.rating} />
 
                       <span className={Style.review__content}>
                         {rev.comment}
@@ -217,7 +217,7 @@ export default function ProductScreen() {
                     <label htmlFor='rating' className={Style.label}>
                       Rating
                     </label>
-                    <select
+                    {/* <select
                       id='rating'
                       className={Style.ratingBox}
                       {...register('rating', { required: true })}
@@ -228,10 +228,14 @@ export default function ProductScreen() {
                       <option value='3'>3 - Good</option>
                       <option value='4'>4 - Very good</option>
                       <option value='5'>5 - Excelent</option>
-                    </select>
-                    {errors.rating && (
-                      <p className='text-danger'>Please leave your rate</p>
-                    )}
+                    </select> */}
+                    <Rating
+                      value={star}
+                      onChange={(e, value) => {
+                        setStar(value)
+                      }}
+                    />
+
                     <label htmlFor='comment' className={Style.label}>
                       Comment
                     </label>
@@ -251,9 +255,14 @@ export default function ProductScreen() {
                       </p>
                     )}
                     {loadingReview && <LoadingBox />}
-                    <button className={Style.submitBtn} type='submit'>
+                    <Button
+                      variant='outlined'
+                      color='warning'
+                      sx={{ marginTop: '1rem' }}
+                      type='submit'
+                    >
                       Submit
-                    </button>
+                    </Button>
                   </form>
                 </div>
               </>

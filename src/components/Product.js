@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import Rating from './Rating'
+import ProductRate from './ProductRate'
 import AddToCartBtn from './AddToCartBtn'
 
 import Style from '../scss/Product.module.scss'
@@ -21,7 +21,7 @@ export default function Product({ product }) {
             {product.numReviews} reviews
           </span>
         </div>
-        <Rating rating={product.rating} />
+        <ProductRate rating={product.rating} />
         <p className='price'>${product.price}</p>
         <AddToCartBtn product={product} orderNumber={orderNumber} />
       </div>
