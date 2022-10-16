@@ -2,20 +2,22 @@
 
 .banner {
   position: relative;
+}
 
-  &__caption {
-    position: absolute;
-    left: 10%;
-    bottom: 25%;
-    width: 30%;
-    text-align: start;
-    &__f1 {
-      color: #fff;
-      font-size: 2rem;
-    }
-    &__f2 {
-      color: #fff;
-      font-size: 1.2rem;
-    }
-  }
+.bannerCaption {
+  position: absolute;
+  left: 10%;
+  bottom: 25%;
+  width: 30%;
+  text-align: start;
+}
+
+.captionF1 {
+  color: #fff;
+  font-size: 2rem;
+}
+
+.captionF2 {
+  color: #fff;
+  font-size: 1.2rem;
 }

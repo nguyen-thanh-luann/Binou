@@ -130,9 +130,19 @@ export default function ProductScreen() {
                   <img src={product.image} alt='' className='img-fluid' />
                 </div>
                 <div className={Style.listImage}>
-                  <div className={Style.imageItem}>
-                    <img src={product.image} alt='' className='img-fluid' />
-                  </div>
+                  {product.images.length <= 0 ? (
+                    <div className={Style.imageItem}>
+                      <img src={product.image} alt='' className='img-fluid' />
+                    </div>
+                  ) : (
+                    <>
+                      {product.images.map((image, index) => (
+                        <div key={index} className={Style.imageItem}>
+                          <img src={image} alt='' className='img-fluid' />
+                        </div>
+                      ))}
+                    </>
+                  )}
                 </div>
               </div>
               <div className={Style.productInfo}>

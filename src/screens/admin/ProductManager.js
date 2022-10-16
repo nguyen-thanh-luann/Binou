@@ -5,10 +5,11 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import AddIcon from '@mui/icons-material/Add'
+import CloseIcon from '@mui/icons-material/Close'
+import UpdateIcon from '@mui/icons-material/Update'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 
 import LoadingBox from '../../components/LoadingBox'
-import Layout from '../Layout'
 import {
   getProductOnPage,
   addNewProduct,
@@ -636,12 +637,29 @@ export default function ProductManager() {
                       color='secondary'
                       onClick={() => setShowModal(false)}
                       sx={{ marginRight: '1rem' }}
+                      startIcon={<CloseIcon />}
                     >
                       Close
                     </Button>
-                    <Button type='submit' variant='outlined' color='success'>
-                      {isUpdatePro ? 'Update' : 'Add'}
-                    </Button>
+                    {isUpdatePro ? (
+                      <Button
+                        type='submit'
+                        variant='outlined'
+                        color='success'
+                        startIcon={<UpdateIcon />}
+                      >
+                        Update
+                      </Button>
+                    ) : (
+                      <Button
+                        type='submit'
+                        variant='outlined'
+                        color='success'
+                        startIcon={<AddIcon />}
+                      >
+                        Add
+                      </Button>
+                    )}
                   </Box>
                 </form>
               </Box>

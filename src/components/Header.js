@@ -6,6 +6,7 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import CloseIcon from '@mui/icons-material/Close'
 import MenuIcon from '@mui/icons-material/Menu'
+import CheckroomIcon from '@mui/icons-material/Checkroom'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 
 import { Store } from '../Store'
@@ -92,6 +93,7 @@ export default function Header() {
             >
               <MenuItem onClick={handleCloseAdminMenu}>
                 <Link className={Style.link} to='/productManager'>
+                  <CheckroomIcon />
                   Product Manager
                 </Link>
               </MenuItem>
