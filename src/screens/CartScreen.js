@@ -118,7 +118,7 @@ export default function CartScreen() {
   const checkoutHandler = () => {
     if (userInfo) {
       toast('Comming soon!', {
-        position: 'top-right',
+        position: 'bottom-left',
       })
     } else {
       window.location.href = '/login'
