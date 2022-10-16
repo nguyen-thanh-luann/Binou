@@ -15,14 +15,9 @@ export default function Product({ product }) {
         </Link>
       </div>
       <div className={Style.product__body}>
-        <div className={Style.titleGroup}>
-          <span className={Style.product__name}>{product.name}</span>
-          <span className={Style.product__numreview}>
-            {product.numReviews} reviews
-          </span>
-        </div>
+        <p className={Style.product__name}>{product.name}</p>
         <ProductRate rating={product.rating} />
-        <p className='price'>${product.price}</p>
+        <p className={Style.product__price}>${product.price}</p>
         <AddToCartBtn product={product} orderNumber={orderNumber} />
       </div>
     </div>

@@ -45,6 +45,7 @@ export default function ProductScreen() {
   const productId = param.id
 
   let [orderNumber, setOrderNumber] = useState(1)
+  const [proImg, setProImg] = useState('')
   const [star, setStar] = useState(3)
   const { state } = useContext(Store)
   const { userInfo } = state
@@ -126,7 +127,11 @@ export default function ProductScreen() {
               </Helmet>
               <div className={Style.productImage}>
                 <div className={Style.mainImage}>
-                  <img src={product.image} alt='' className='img-fluid' />
+                  <img
+                    src={`${proImg !== '' ? proImg : product.image}`}
+                    alt=''
+                    className='img-fluid'
+                  />
                 </div>
                 <div className={Style.listImage}>
                   {product.images.length <= 0 ? (
@@ -136,7 +141,14 @@ export default function ProductScreen() {
                   ) : (
                     <>
                       {product.images.map((image, index) => (
-                        <div key={index} className={Style.imageItem}>
+                        <div
+                          key={index}
+                          className={Style.imageItem}
+                          onClick={() => {
+                            setProImg(image)
+                          }}
+                          style={{ cursor: 'pointer' }}
+                        >
                           <img src={image} alt='' className='img-fluid' />
                         </div>
                       ))}

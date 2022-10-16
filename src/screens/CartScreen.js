@@ -29,11 +29,13 @@ export default function CartScreen() {
       headerAlign: 'center',
       renderCell: (params) => (
         <Box sx={{ margin: '0 auto' }}>
-          <img
-            src={params.row.photo}
-            style={{ width: '80%', textAlign: 'center' }}
-            alt=''
-          />
+          <Link to={`/product/${params.row.id}`}>
+            <img
+              src={params.row.photo}
+              style={{ width: '80%', textAlign: 'center' }}
+              alt=''
+            />
+          </Link>
         </Box>
       ),
     },
@@ -48,7 +50,12 @@ export default function CartScreen() {
             margin: '0 auto',
           }}
         >
-          {params.row.name}
+          <Link
+            style={{ color: '#000', textDecoration: 'none' }}
+            to={`/product/${params.row.id}`}
+          >
+            {params.row.name}
+          </Link>
         </Box>
       ),
     },
