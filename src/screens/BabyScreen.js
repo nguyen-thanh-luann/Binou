@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { getProductUseQuery } from '../services/ProductService'
 import { Helmet } from 'react-helmet-async'
 
-import Layout from './Layout'
 import Product from '../components/Product'
 import LoadingBox from '../components/LoadingBox'
 import BannerCarousel from '../components/BannerCarousel'
@@ -54,16 +53,35 @@ export default function MenScreen() {
         <title>BABY'S CLOSTHING</title>
       </Helmet>
       <Header />
-      <div style={{ maxHeight: '10%' }}>
-        <BannerCarousel />
-      </div>
       {isLoadingPage ? (
         <div className='text-center'>
           <LoadingBox />
         </div>
       ) : (
         <Box p={4}>
-          <h2 className='py-2'>Featured products</h2>
+          <h2>BABY</h2>
+          <div style={{ position: 'relative' }}>
+            <img
+              src='https://res.cloudinary.com/imthanhluan/image/upload/v1665928207/bb_hzz1aa.jpg'
+              alt='baby banner'
+              style={{ width: '100%' }}
+            />
+            <div
+              style={{
+                color: '#fff',
+                position: 'absolute',
+                top: '25%',
+                left: '10%',
+                width: '25%',
+                fontWeight: 'bold',
+                textShadow: '8px 8px 8px #000',
+              }}
+            >
+              <h2>Fluffy Yarn Fleece Long-Sleeve Jackets</h2>
+              <h5>A super-soft feel perfect for keeping them snug</h5>
+            </div>
+          </div>
+          <h2 className='py-2'>FEATURED PRODUCTS</h2>
           <Grid container spacing={4}>
             {products &&
               products.map((product, index) => (

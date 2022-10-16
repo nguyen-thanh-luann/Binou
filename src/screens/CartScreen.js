@@ -5,11 +5,8 @@ import { DataGrid } from '@mui/x-data-grid'
 
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout'
 
-import Layout from './Layout'
 import { Store } from '../Store'
-import { getProductById } from '../services/ProductService'
 import Style from '../scss/CartScreen.module.scss'
-import Swal from 'sweetalert2'
 import { Box, Button, Grid, Typography } from '@mui/material'
 import VerticalLine from '../components/VerticalLine'
 import { toast } from 'react-toastify'

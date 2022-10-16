@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async'
 import { useLocation } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 
-import Layout from './Layout'
 import Product from '../components/Product'
 import LoadingBox from '../components/LoadingBox'
 import { getProductUseQuery } from '../services/ProductService'

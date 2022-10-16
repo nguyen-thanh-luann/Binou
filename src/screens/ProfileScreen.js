@@ -6,7 +6,6 @@ import UpdateIcon from '@mui/icons-material/Update'
 import LogoutIcon from '@mui/icons-material/Logout'
 
 import { update } from '../services/UserService'
-import Layout from './Layout'
 import LoadingBox from '../components/LoadingBox'
 import { Store } from '../Store'
 import Style from '../scss/ProfileScreen.module.scss'

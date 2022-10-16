@@ -1,6 +1,0 @@
-@import '../scss/variables.scss';
-.layout {
-  &__children {
-    min-height: calc(100vh - $headerHeight - $footerHeight);
-  }
-}

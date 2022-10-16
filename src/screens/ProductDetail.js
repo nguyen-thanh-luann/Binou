@@ -8,7 +8,6 @@ import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 
 import { Store } from '../Store'
-import Layout from './Layout'
 import ProductRate from '../components/ProductRate'
 import VerticalLine from '../components/VerticalLine'
 import LoadingBox from '../components/LoadingBox'

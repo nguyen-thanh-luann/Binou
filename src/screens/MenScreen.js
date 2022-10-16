@@ -53,16 +53,38 @@ export default function MenScreen() {
         <title>MEN'S CLOSTHING</title>
       </Helmet>
       <Header />
-      <div>
-        <BannerCarousel />
-      </div>
       {isLoadingPage ? (
         <div className='text-center'>
           <LoadingBox />
         </div>
       ) : (
         <Box p={4}>
-          <h2 className='py-2'>Featured products</h2>
+          <h2>MEN</h2>
+          <div style={{ position: 'relative' }}>
+            <img
+              src='https://res.cloudinary.com/imthanhluan/image/upload/v1665926926/m_rvvmvt.jpg'
+              alt='men banner'
+              style={{ width: '100%' }}
+            />
+            <div
+              style={{
+                color: '#fff',
+                position: 'absolute',
+                top: '25%',
+                left: '10%',
+                width: '25%',
+                fontWeight: 'bold',
+                textShadow: '8px 8px 8px #000',
+              }}
+            >
+              <h2>Windproof Outer Fleece Collection</h2>
+              <h5>
+                Beat the freeze with Windproof Technology that blocks out the
+                cold
+              </h5>
+            </div>
+          </div>
+          <h2 className='py-2'>FEATURED PRODUCTS</h2>
           <Grid container spacing={4}>
             {products &&
               products.map((product, index) => (
