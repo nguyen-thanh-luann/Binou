@@ -12,6 +12,9 @@ import { Store } from '../Store'
 import Style from '../scss/ProfileScreen.module.scss'
 import Swal from 'sweetalert2'
 import { Helmet } from 'react-helmet-async'
+import Footer from '../components/Footer'
+import Header from '../components/Header'
+import { Box } from '@mui/material'
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -101,8 +104,9 @@ export default function UserInfoScreen() {
   }
 
   return (
-    <Layout
-      children={
+    <>
+      <Header />
+      <Box p={4}>
         <div className={Style.profilePage}>
           <Helmet>
             <title>Profile</title>
@@ -219,7 +223,9 @@ export default function UserInfoScreen() {
             </button>
           </div>
         </div>
-      }
-    />
+      </Box>
+
+      <Footer />
+    </>
   )
 }

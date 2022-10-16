@@ -13,6 +13,8 @@ import Swal from 'sweetalert2'
 import { Box, Button, Grid, Typography } from '@mui/material'
 import VerticalLine from '../components/VerticalLine'
 import { toast } from 'react-toastify'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 export default function CartScreen() {
   const { state, dispatch: ctxDispatch } = useContext(Store)
@@ -119,184 +121,182 @@ export default function CartScreen() {
     }
   }
   return (
-    <Layout
-      children={
-        <>
-          <Helmet>
-            <title>Shopping Cart</title>
-          </Helmet>
-          {cartItems.length === 0 ? (
-            <div className={Style.cartNoti}>
-              <p>
-                Cart is empty.
-                <Link to='/'> Let's Shopping now!</Link>
-              </p>
-            </div>
-          ) : (
-            <>
-              <Typography
+    <>
+      <Helmet>
+        <title>Shopping Cart</title>
+      </Helmet>
+      <Header />
+      {cartItems.length === 0 ? (
+        <div className={Style.cartNoti}>
+          <p>
+            Cart is empty.
+            <Link to='/'> Let's Shopping now!</Link>
+          </p>
+        </div>
+      ) : (
+        <Box p={4}>
+          <Typography
+            sx={{
+              textAlign: 'center',
+              color: 'purple',
+              fontSize: '2rem',
+              marginBottom: '1rem',
+            }}
+          >
+            Cool! Let's checkout to get new clothes
+          </Typography>
+
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={12} lg={9}>
+              <Box
                 sx={{
-                  textAlign: 'center',
-                  color: 'purple',
-                  fontSize: '2rem',
-                  marginBottom: '1rem',
+                  height: 500,
                 }}
               >
-                Cool! Let's checkout to get new clothes
-              </Typography>
-
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={12} lg={9}>
-                  <Box
-                    sx={{
-                      height: 500,
+                <DataGrid
+                  rows={rows}
+                  columns={columns}
+                  pageSize={5}
+                  disableSelectionOnClick
+                  rowsPerPageOptions={[5]}
+                  getRowHeight={({ id, densityFactor }) => {
+                    return 120 * densityFactor
+                  }}
+                  checkboxSelection
+                  hideFooterSelectedRowCount={true}
+                  onSelectionModelChange={(ids) => {
+                    const selectedRowData = ids.map((id) =>
+                      rows.find((row) => row.id === id)
+                    )
+                    selectItemHandler(selectedRowData)
+                  }}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={12} lg={3}>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                {selectedItems && selectedItems.length > 0 ? (
+                  <Button
+                    variant='outlined'
+                    color='error'
+                    onClick={() => {
+                      if (window.confirm('delete item?')) {
+                        removeItemHandler(selectedItems)
+                      }
                     }}
                   >
-                    <DataGrid
-                      rows={rows}
-                      columns={columns}
-                      pageSize={5}
-                      disableSelectionOnClick
-                      rowsPerPageOptions={[5]}
-                      getRowHeight={({ id, densityFactor }) => {
-                        return 120 * densityFactor
-                      }}
-                      checkboxSelection
-                      hideFooterSelectedRowCount={true}
-                      onSelectionModelChange={(ids) => {
-                        const selectedRowData = ids.map((id) =>
-                          rows.find((row) => row.id === id)
-                        )
-                        selectItemHandler(selectedRowData)
-                      }}
-                    />
-                  </Box>
-                </Grid>
-                <Grid item xs={12} md={12} lg={3}>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    {selectedItems && selectedItems.length > 0 ? (
-                      <Button
-                        variant='outlined'
-                        color='error'
-                        onClick={() => {
-                          if (window.confirm('delete item?')) {
-                            removeItemHandler(selectedItems)
-                          }
-                        }}
-                      >
-                        delete
-                      </Button>
-                    ) : (
-                      <Button variant='outlined' disabled>
-                        Delete
-                      </Button>
-                    )}
-
-                    <Typography sx={{ marginLeft: '1rem' }}>
-                      {selectedItems.length} items
-                    </Typography>
-                  </Box>
-                  {/*Address  */}
-                  <Box
-                    p={1}
-                    mt={1}
-                    sx={{ border: '1px solid #ccc', borderRadius: '5px' }}
-                  >
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <Typography>Address</Typography>
-                      <Button color='secondary'>Change</Button>
-                    </Box>
-
-                    <Typography sx={{ display: 'flex', fontWeight: 'bold' }}>
-                      Thanh Luan
-                      <VerticalLine />
-                      070 6431 927
-                    </Typography>
-
-                    <Typography sx={{ fontSize: '0.8rem' }}>
-                      Công viên phần mềm Quang Trung, Phường Trung Mĩ Tây Quận
-                      12, Hồ Chí Minh.
-                    </Typography>
-                  </Box>
-                  {/*Bill  */}
-                  <Box
-                    p={1}
-                    mt={1}
-                    sx={{ border: '1px solid #ccc', borderRadius: '5px' }}
-                  >
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <Typography>Subtotal</Typography>
-                      <Typography>
-                        $
-                        {selectedItems &&
-                          selectedItems.reduce(
-                            (a, c) => a + c.price * c.quantity,
-                            0
-                          )}
-                      </Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginTop: '1rem',
-                      }}
-                    >
-                      <Typography>Discount</Typography>
-                      <Typography color='error'>
-                        {selectedItems.length !== 0 ? '5%' : 0}
-                      </Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginTop: '1rem',
-                      }}
-                    >
-                      <Typography>Total</Typography>
-                      <Typography color='error'>
-                        $
-                        {selectedItems &&
-                          Math.floor(
-                            selectedItems.reduce(
-                              (a, c) => a + c.price * c.quantity,
-                              0
-                            ) * 0.95
-                          )}
-                      </Typography>
-                    </Box>
-                  </Box>
-                  <Button
-                    color='secondary'
-                    variant='outlined'
-                    fullWidth
-                    sx={{ marginTop: '1rem' }}
-                    startIcon={<ShoppingCartCheckoutIcon />}
-                    onClick={() => checkoutHandler()}
-                  >
-                    Checkout
+                    delete
                   </Button>
-                </Grid>
-              </Grid>
-            </>
-          )}
-        </>
-      }
-    />
+                ) : (
+                  <Button variant='outlined' disabled>
+                    Delete
+                  </Button>
+                )}
+
+                <Typography sx={{ marginLeft: '1rem' }}>
+                  {selectedItems.length} items
+                </Typography>
+              </Box>
+              {/*Address  */}
+              <Box
+                p={1}
+                mt={1}
+                sx={{ border: '1px solid #ccc', borderRadius: '5px' }}
+              >
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Typography>Address</Typography>
+                  <Button color='secondary'>Change</Button>
+                </Box>
+
+                <Typography sx={{ display: 'flex', fontWeight: 'bold' }}>
+                  Thanh Luan
+                  <VerticalLine />
+                  070 6431 927
+                </Typography>
+
+                <Typography sx={{ fontSize: '0.8rem' }}>
+                  Công viên phần mềm Quang Trung, Phường Trung Mĩ Tây Quận 12,
+                  Hồ Chí Minh.
+                </Typography>
+              </Box>
+              {/*Bill  */}
+              <Box
+                p={1}
+                mt={1}
+                sx={{ border: '1px solid #ccc', borderRadius: '5px' }}
+              >
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Typography>Subtotal</Typography>
+                  <Typography>
+                    $
+                    {selectedItems &&
+                      selectedItems.reduce(
+                        (a, c) => a + c.price * c.quantity,
+                        0
+                      )}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginTop: '1rem',
+                  }}
+                >
+                  <Typography>Discount</Typography>
+                  <Typography color='error'>
+                    {selectedItems.length !== 0 ? '5%' : 0}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginTop: '1rem',
+                  }}
+                >
+                  <Typography>Total</Typography>
+                  <Typography color='error'>
+                    $
+                    {selectedItems &&
+                      Math.floor(
+                        selectedItems.reduce(
+                          (a, c) => a + c.price * c.quantity,
+                          0
+                        ) * 0.95
+                      )}
+                  </Typography>
+                </Box>
+              </Box>
+              <Button
+                color='secondary'
+                variant='outlined'
+                fullWidth
+                sx={{ marginTop: '1rem' }}
+                startIcon={<ShoppingCartCheckoutIcon />}
+                onClick={() => checkoutHandler()}
+              >
+                Checkout
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
+      )}
+      <Footer />
+    </>
   )
 }

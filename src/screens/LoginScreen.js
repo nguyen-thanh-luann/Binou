@@ -5,8 +5,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { login } from '../services/UserService'
 import LoadingBox from '../components/LoadingBox'
 import { Store } from '../Store'
-import Layout from './Layout'
 import Style from '../scss/RegisterScreen.module.scss'
+import Footer from '../components/Footer'
+import Header from '../components/Header'
+import { Button } from '@mui/material'
 export default function LoginScreen() {
   const { dispatch: ctxDispatch } = useContext(Store)
 
@@ -32,57 +34,54 @@ export default function LoginScreen() {
     }
   }
   return (
-    <Layout
-      children={
-        <div>
-          <Helmet>
-            <title>Login</title>
-          </Helmet>
-          <div className={Style.page}>
-            <form className={Style.form} onSubmit={submitHandler}>
-              <h1 className='text-center'>Login</h1>
-              <div className={Style.formGroup}>
-                <label htmlFor='email'>Email</label>
-                <input
-                  id='email'
-                  className='form-control'
-                  type='email'
-                  required
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div className={Style.formGroup}>
-                <label htmlFor='password'>Password</label>
-                <input
-                  id='password'
-                  className='form-control'
-                  type='password'
-                  required
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <div className={Style.formGroup}>
-                {errMessage && (
-                  <p className='text-danger'>
-                    {` * `}
-                    {errMessage}
-                  </p>
-                )}
-                <input
-                  type='submit'
-                  className='form-control btn btn-success mt-4'
-                  value='Login'
-                />
-                <div className='mt-4 text-center'>
-                  New customer?
-                  <Link to='/signup'> Create your account</Link>
-                </div>
-                <div className='text-center'>{loading && <LoadingBox />}</div>
-              </div>
-            </form>
+    <div>
+      <Header />
+      <Helmet>
+        <title>Login</title>
+      </Helmet>
+      <div className={Style.page}>
+        <form className={Style.form} onSubmit={submitHandler}>
+          <h1 className='text-center'>Login</h1>
+          <div className={Style.formGroup}>
+            <label htmlFor='email'>Email</label>
+            <input
+              id='email'
+              className='form-control'
+              type='email'
+              required
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
-        </div>
-      }
-    />
+          <div className={Style.formGroup}>
+            <label htmlFor='password'>Password</label>
+            <input
+              id='password'
+              className='form-control'
+              type='password'
+              required
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className={Style.formGroup}>
+            {errMessage && (
+              <p className='text-danger'>
+                {` * `}
+                {errMessage}
+              </p>
+            )}
+
+            <Button type='submit' variant='contained' color='success' fullWidth>
+              Login
+            </Button>
+            <div className='mt-4 text-center'>
+              New customer?
+              <Link to='/signup'> Create your account</Link>
+            </div>
+            <div className='text-center'>{loading && <LoadingBox />}</div>
+          </div>
+        </form>
+      </div>
+      <Footer />
+    </div>
   )
 }

@@ -17,6 +17,8 @@ import { getProductById, reviewProduct } from '../services/ProductService'
 import Style from '../scss/ProductDetail.module.scss'
 import Swal from 'sweetalert2'
 import { Box, Button, Typography } from '@mui/material'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -44,7 +46,7 @@ export default function ProductScreen() {
   const productId = param.id
 
   let [orderNumber, setOrderNumber] = useState(1)
-  const [star, setStar] = useState(1)
+  const [star, setStar] = useState(3)
   const { state } = useContext(Store)
   const { userInfo } = state
 
@@ -110,166 +112,148 @@ export default function ProductScreen() {
     reset()
   }
   return (
-    <Layout
-      children={
-        <div>
-          {loading ? (
-            <div className='text-center'>
-              <LoadingBox />
-            </div>
-          ) : (
-            product && (
-              <>
-                <div className={Style.productPage}>
-                  <Helmet>
-                    <title>{product.name}</title>
-                  </Helmet>
-                  <div className={Style.productImage}>
-                    <div className={Style.mainImage}>
-                      <img src={product.image} alt='' className='img-fluid' />
-                    </div>
-                    <div className={Style.listImage}>
-                      <div className={Style.imageItem}>
-                        <img src={product.image} alt='' className='img-fluid' />
-                      </div>
-                    </div>
-                  </div>
-                  <div className={Style.productInfo}>
-                    <h3 className={Style.productInfo__name}>{product.name}</h3>
-
-                    <div className='d-flex'>
-                      <ProductRate
-                        rating={product.rating}
-                        numReviews={product.numReviews}
-                      />
-                      <VerticalLine />
-                      <span>{product.numReviews} reviews</span>
-                    </div>
-
-                    <h4 className='mt-2'>${product.price}</h4>
-                    <div className={Style.productDescr}>
-                      <p>{product.description}</p>
-                    </div>
-                    <Box mb={2}>
-                      <Typography>Quantity</Typography>
-                      {orderNumber <= 1 ? (
-                        <Button disabled variant='outlined'>
-                          <RemoveIcon />
-                        </Button>
-                      ) : (
-                        <Button
-                          color='success'
-                          variant='outlined'
-                          onClick={() => {
-                            setOrderNumber(--orderNumber)
-                          }}
-                        >
-                          <RemoveIcon />
-                        </Button>
-                      )}
-                      <Button color='success'>{orderNumber}</Button>
-                      {orderNumber >= product.countInStock ? (
-                        <Button disabled variant='outlined'>
-                          <AddIcon />
-                        </Button>
-                      ) : (
-                        <Button
-                          color='success'
-                          variant='outlined'
-                          onClick={() => {
-                            setOrderNumber(++orderNumber)
-                          }}
-                        >
-                          <AddIcon />
-                        </Button>
-                      )}
-                    </Box>
-                    <AddToCartBtn product={product} orderNumber={orderNumber} />
-                  </div>
-                </div>
-                <h2>Reviews</h2>
-
-                <div className={Style.reviewArea}>
-                  {product.reviews.length === 0 && (
-                    <h4 className='text-center text-warning'>
-                      There is no review
-                    </h4>
-                  )}
-                  {product.reviews.map((rev, index) => (
-                    <div key={index} className={Style.review}>
-                      <div>
-                        <span className={Style.review__name}>{rev.name}</span>
-                        <span className={Style.review__date}>
-                          {new Date(rev.updatedAt).toLocaleDateString()}
-                        </span>
-                      </div>
-                      <ProductRate rating={rev.rating} />
-
-                      <span className={Style.review__content}>
-                        {rev.comment}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <div className={Style.writeReviewArea}>
-                  <h2>Write a review</h2>
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                    <label htmlFor='rating' className={Style.label}>
-                      Rating
-                    </label>
-                    {/* <select
-                      id='rating'
-                      className={Style.ratingBox}
-                      {...register('rating', { required: true })}
-                    >
-                      <option value=''>select</option>
-                      <option value='1'>1 - poor</option>
-                      <option value='2'>2 - Fair</option>
-                      <option value='3'>3 - Good</option>
-                      <option value='4'>4 - Very good</option>
-                      <option value='5'>5 - Excelent</option>
-                    </select> */}
-                    <Rating
-                      value={star}
-                      onChange={(e, value) => {
-                        setStar(value)
-                      }}
-                    />
-
-                    <label htmlFor='comment' className={Style.label}>
-                      Comment
-                    </label>
-                    <textarea
-                      id='comment'
-                      placeholder='write your comment'
-                      className={Style.commentBox}
-                      {...register('comment', { required: true })}
-                    ></textarea>
-                    {errors.comment && (
-                      <p>
-                        {errors.comment?.type === 'required' && (
-                          <span className='text-danger'>
-                            Please leave your comment
-                          </span>
-                        )}
-                      </p>
-                    )}
-                    {loadingReview && <LoadingBox />}
-                    <Button
-                      variant='outlined'
-                      color='warning'
-                      sx={{ marginTop: '1rem' }}
-                      type='submit'
-                    >
-                      Submit
-                    </Button>
-                  </form>
-                </div>
-              </>
-            )
-          )}
+    <div>
+      <Header />
+      {loading ? (
+        <div className='text-center'>
+          <LoadingBox />
         </div>
-      }
-    />
+      ) : (
+        product && (
+          <Box p={4}>
+            <div className={Style.productPage}>
+              <Helmet>
+                <title>{product.name}</title>
+              </Helmet>
+              <div className={Style.productImage}>
+                <div className={Style.mainImage}>
+                  <img src={product.image} alt='' className='img-fluid' />
+                </div>
+                <div className={Style.listImage}>
+                  <div className={Style.imageItem}>
+                    <img src={product.image} alt='' className='img-fluid' />
+                  </div>
+                </div>
+              </div>
+              <div className={Style.productInfo}>
+                <h3 className={Style.productInfo__name}>{product.name}</h3>
+
+                <div className='d-flex'>
+                  <ProductRate
+                    rating={product.rating}
+                    numReviews={product.numReviews}
+                  />
+                  <VerticalLine />
+                  <span>{product.numReviews} reviews</span>
+                </div>
+
+                <h4 className='mt-2'>${product.price}</h4>
+                <div className={Style.productDescr}>
+                  <p>{product.description}</p>
+                </div>
+                <Box mb={2}>
+                  <Typography>Quantity</Typography>
+                  {orderNumber <= 1 ? (
+                    <Button disabled variant='outlined'>
+                      <RemoveIcon />
+                    </Button>
+                  ) : (
+                    <Button
+                      color='success'
+                      variant='outlined'
+                      onClick={() => {
+                        setOrderNumber(--orderNumber)
+                      }}
+                    >
+                      <RemoveIcon />
+                    </Button>
+                  )}
+                  <Button color='success'>{orderNumber}</Button>
+                  {orderNumber >= product.countInStock ? (
+                    <Button disabled variant='outlined'>
+                      <AddIcon />
+                    </Button>
+                  ) : (
+                    <Button
+                      color='success'
+                      variant='outlined'
+                      onClick={() => {
+                        setOrderNumber(++orderNumber)
+                      }}
+                    >
+                      <AddIcon />
+                    </Button>
+                  )}
+                </Box>
+                <AddToCartBtn product={product} orderNumber={orderNumber} />
+              </div>
+            </div>
+            <h2>Reviews</h2>
+
+            <div className={Style.reviewArea}>
+              {product.reviews.length === 0 && (
+                <h4 className='text-center text-warning'>There is no review</h4>
+              )}
+              {product.reviews.map((rev, index) => (
+                <div key={index} className={Style.review}>
+                  <div>
+                    <span className={Style.review__name}>{rev.name}</span>
+                    <span className={Style.review__date}>
+                      {new Date(rev.updatedAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <ProductRate rating={rev.rating} />
+
+                  <span className={Style.review__content}>{rev.comment}</span>
+                </div>
+              ))}
+            </div>
+            <div className={Style.writeReviewArea}>
+              <h2>Write a review</h2>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <label htmlFor='rating' className={Style.label}>
+                  Rating
+                </label>
+                <Rating
+                  value={star}
+                  onChange={(e, value) => {
+                    setStar(value)
+                  }}
+                />
+
+                <label htmlFor='comment' className={Style.label}>
+                  Comment
+                </label>
+                <textarea
+                  id='comment'
+                  placeholder='write your comment'
+                  className={Style.commentBox}
+                  {...register('comment', { required: true })}
+                ></textarea>
+                {errors.comment && (
+                  <p>
+                    {errors.comment?.type === 'required' && (
+                      <span className='text-danger'>
+                        Please leave your comment
+                      </span>
+                    )}
+                  </p>
+                )}
+                {loadingReview && <LoadingBox />}
+                <Button
+                  variant='outlined'
+                  color='warning'
+                  sx={{ marginTop: '1rem' }}
+                  type='submit'
+                >
+                  Submit
+                </Button>
+              </form>
+            </div>
+          </Box>
+        )
+      )}
+      <Footer />
+    </div>
   )
 }

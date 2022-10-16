@@ -36,7 +36,7 @@ export default function Header() {
     <header>
       <div>
         <Link to='/' className={Style.logo}>
-          Binou
+          BINOU
         </Link>
         <nav className={showNavbar ? Style.responsiveHeader : ''}>
           <Link to='/men'>MEN</Link>
