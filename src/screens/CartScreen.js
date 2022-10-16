@@ -246,10 +246,12 @@ export default function CartScreen() {
                   <Typography>
                     $
                     {selectedItems &&
-                      selectedItems.reduce(
-                        (a, c) => a + c.price * c.quantity,
-                        0
-                      )}
+                      Math.round(
+                        selectedItems.reduce(
+                          (a, c) => a + c.price * c.quantity,
+                          0
+                        ) * 100
+                      ) / 100}
                   </Typography>
                 </Box>
                 <Box
@@ -277,12 +279,14 @@ export default function CartScreen() {
                   <Typography color='error'>
                     $
                     {selectedItems &&
-                      Math.floor(
+                      Math.round(
                         selectedItems.reduce(
                           (a, c) => a + c.price * c.quantity,
                           0
-                        ) * 0.95
-                      )}
+                        ) *
+                          0.95 *
+                          100
+                      ) / 100}
                   </Typography>
                 </Box>
               </Box>
