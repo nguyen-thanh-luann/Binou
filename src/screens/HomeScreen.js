@@ -27,13 +27,13 @@ export default function HomeScreen() {
               />
             </Link>
             <Carousel.Caption className={Style.bannerCaption}>
-              <Typography className={Style.captionF1}>
+              <h2 className={Style.captionF1}>
                 Men's 3D Cut Seamless Down Parkas
-              </Typography>
+              </h2>
               <Typography className={Style.captionF2}>
                 Designed widt roomy shoulders and a defined hood.
               </Typography>
-              <Typography className={Style.captionF1}>$129.90</Typography>
+              <h2 className={Style.captionF1}>$129.90</h2>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item className={Style.banner}>
@@ -45,14 +45,12 @@ export default function HomeScreen() {
               />
             </Link>
             <Carousel.Caption className={Style.bannerCaption}>
-              <Typography className={Style.captionF1}>
-                Women's Hybrid Down Parkas
-              </Typography>
+              <h2 className={Style.captionF1}>Women's Hybrid Down Parkas</h2>
               <Typography className={Style.captionF2}>
                 A combination of lightweight down with insulating padding for
                 supreme warmth
               </Typography>
-              <Typography className={Style.captionF1}>$119.90</Typography>
+              <h2 className={Style.captionF1}>$119.90</h2>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item className={Style.banner}>
@@ -64,13 +62,11 @@ export default function HomeScreen() {
               />
             </Link>
             <Carousel.Caption className={Style.bannerCaption}>
-              <Typography className={Style.captionF1}>
-                Kids' Down Parkas
-              </Typography>
+              <h2 className={Style.captionF1}>Kids' Down Parkas</h2>
               <Typography className={Style.captionF2}>
                 Big warmth for little ones that won't weigh them down
               </Typography>
-              <Typography className={Style.captionF1}>$79.90</Typography>
+              <h2 className={Style.captionF1}>$79.90</h2>
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
@@ -85,13 +81,11 @@ export default function HomeScreen() {
               />
             </Link>
             <Carousel.Caption className={Style.bannerCaption}>
-              <Typography className={Style.captionF1}>
-                Men's Sweat Pullover Hoodies
-              </Typography>
+              <h2 className={Style.captionF1}>Men's Sweat Pullover Hoodies</h2>
               <Typography className={Style.captionF2}>
                 Versatile style for at home or on the go.
               </Typography>
-              <Typography className={Style.captionF1}>$129.90</Typography>
+              <h2 className={Style.captionF1}>$129.90</h2>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item className={Style.banner}>
@@ -103,14 +97,12 @@ export default function HomeScreen() {
               />
             </Link>
             <Carousel.Caption className={Style.bannerCaption}>
-              <Typography className={Style.captionF1}>
-                Men's Slim-Fit jeans
-              </Typography>
+              <h2 className={Style.captionF1}>Men's Slim-Fit jeans</h2>
               <Typography className={Style.captionF2}>
                 The look of authentic denim but with added stretch to keep you
                 moving comfortably.
               </Typography>
-              <Typography className={Style.captionF1}>$119.90</Typography>
+              <h2 className={Style.captionF1}>$119.90</h2>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item className={Style.banner}>
@@ -122,13 +114,11 @@ export default function HomeScreen() {
               />
             </Link>
             <Carousel.Caption className={Style.bannerCaption}>
-              <Typography className={Style.captionF1}>
-                Men's Comfort Jackets
-              </Typography>
+              <h2 className={Style.captionF1}>Men's Comfort Jackets</h2>
               <Typography className={Style.captionF2}>
                 Where polished style meets all-day comfort
               </Typography>
-              <Typography className={Style.captionF1}>$79.90</Typography>
+              <h2 className={Style.captionF1}>$79.90</h2>
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
@@ -143,13 +133,11 @@ export default function HomeScreen() {
               />
             </Link>
             <Carousel.Caption className={Style.bannerCaption}>
-              <Typography className={Style.captionF1}>
-                HEATTECH Ultra Warm T-Shirts
-              </Typography>
+              <h2 className={Style.captionF1}>HEATTECH Ultra Warm T-Shirts</h2>
               <Typography className={Style.captionF2}>
                 About 2.25 times warmer than our regular HEATTECH.
               </Typography>
-              <Typography className={Style.captionF1}>$29.90</Typography>
+              <h2 className={Style.captionF1}>$29.90</h2>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item className={Style.banner}>
@@ -161,13 +149,13 @@ export default function HomeScreen() {
               />
             </Link>
             <Carousel.Caption className={Style.bannerCaption}>
-              <Typography className={Style.captionF1}>
+              <h2 className={Style.captionF1}>
                 Ultra thin windproof technology blocks harsh wind.
-              </Typography>
+              </h2>
               <Typography className={Style.captionF2}>
                 Men's Windproof Outer Fleece Jackets
               </Typography>
-              <Typography className={Style.captionF1}>$119.90</Typography>
+              <h2 className={Style.captionF1}>$119.90</h2>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item className={Style.banner}>
@@ -179,14 +167,14 @@ export default function HomeScreen() {
               />
             </Link>
             <Carousel.Caption className={Style.bannerCaption}>
-              <Typography className={Style.captionF1}>
+              <h2 className={Style.captionF1}>
                 HEATTECH Cotton Innerwear (Extra Warm)
-              </Typography>
+              </h2>
               <Typography className={Style.captionF2}>
                 Soft, brushed inside protects you from the harsher winter
                 weather.
               </Typography>
-              <Typography className={Style.captionF1}>$29.90</Typography>
+              <h2 className={Style.captionF1}>$29.90</h2>
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
@@ -201,13 +189,13 @@ export default function HomeScreen() {
               />
             </Link>
             <Carousel.Caption className={Style.bannerCaption}>
-              <Typography className={Style.captionF1}>
+              <h2 className={Style.captionF1}>
                 Warm and windproof wherever you go.
-              </Typography>
+              </h2>
               <Typography className={Style.captionF2}>
                 Windproof Outer Fleece.
               </Typography>
-              <Typography className={Style.captionF1}>$59.90</Typography>
+              <h2 className={Style.captionF1}>$59.90</h2>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item className={Style.banner}>
@@ -219,12 +207,12 @@ export default function HomeScreen() {
               />
             </Link>
             <Carousel.Caption className={Style.bannerCaption}>
-              <Typography className={Style.captionF1}>NYC POP ICONS</Typography>
+              <h2 className={Style.captionF1}>NYC POP ICONS</h2>
               <Typography className={Style.captionF2}>
                 Preview graphic tees featuring art from Keith Haring,
                 Jean-Michel Basquiat and Kenny Scharf.
               </Typography>
-              <Typography className={Style.captionF1}>$119.90</Typography>
+              <h2 className={Style.captionF1}>$119.90</h2>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item className={Style.banner}>
@@ -236,14 +224,14 @@ export default function HomeScreen() {
               />
             </Link>
             <Carousel.Caption className={Style.bannerCaption}>
-              <Typography className={Style.captionF1}>
+              <h2 className={Style.captionF1}>
                 100% recycled polyester fabric
-              </Typography>
+              </h2>
               <Typography className={Style.captionF2}>
                 ADULT/KIDS Doraemon Sustainability Mode Fluffy Fleece Full-Zip
                 Jacket is now available.
               </Typography>
-              <Typography className={Style.captionF1}>$29.90</Typography>
+              <h2 className={Style.captionF1}>$29.90</h2>
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
