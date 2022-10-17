@@ -4,11 +4,12 @@ import { useLocation } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 
 import Product from '../components/Product'
+import SearchBox from '../components/SearchBox'
 import LoadingBox from '../components/LoadingBox'
 import { getProductUseQuery } from '../services/ProductService'
 import { getAllCategory } from '../services/CategoryService'
 import Style from '../scss/SearchScreen.module.scss'
-import { Pagination, Stack } from '@mui/material'
+import { Box, Pagination, Stack } from '@mui/material'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 
@@ -213,9 +214,13 @@ export default function SearchScreen() {
           </div>
         </div>
         <div className={Style.searchScreen__rightSide}>
+          <Box className={Style.mobileSearch}>
+            <SearchBox />
+          </Box>
           <p className='fw-bold'>
             {foundProduct} {foundProduct <= 1 ? 'product' : 'products'} Found
           </p>
+
           {isLoading ? (
             <div className='text-center'>
               <LoadingBox />

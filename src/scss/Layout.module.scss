@@ -11,19 +11,28 @@
     font-weight: bold;
     text-shadow: 8px 8px 8px #000;
 
-    @include breakpoint(md) {
+    @include breakpoint(sm) {
       width: 60%;
     }
 
     &__f1 {
-      @include breakpoint(md) {
+      @include breakpoint(sm) {
         font-size: 1.2rem;
       }
     }
     &__f2 {
-      @include breakpoint(md) {
+      @include breakpoint(sm) {
         font-size: 1rem;
       }
     }
+  }
+}
+
+.mobileSearch {
+  width: 15rem;
+  margin: 1rem 0;
+  display: none;
+  @include breakpoint(md) {
+    display: flex;
   }
 }

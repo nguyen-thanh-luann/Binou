@@ -3,12 +3,12 @@
 .productPage {
   padding: 1rem;
   display: flex;
-  @include breakpoint(md) {
+  @include breakpoint(sm) {
     flex-direction: column;
   }
   .productImage {
     flex: 30%;
-    @include breakpoint(md) {
+    @include breakpoint(sm) {
       flex: 100%;
     }
 
@@ -35,7 +35,7 @@
     flex: 60%;
     margin-left: 2rem;
     padding: 1rem;
-    @include breakpoint(md) {
+    @include breakpoint(sm) {
       flex: 100%;
       padding: 1rem 0 0 0;
       margin: 0;

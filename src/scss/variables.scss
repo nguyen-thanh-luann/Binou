@@ -11,9 +11,13 @@ $primary: rgb(162, 162, 246);
 $bg: rgb(244, 244, 255);
 
 @mixin breakpoint($point) {
-  @if $point == md {
-    // 740px
+  @if $point == sm {
     @media (max-width: 800px) {
+      @content;
+    }
+  }
+  @if $point == md {
+    @media (max-width: 1200px) {
       @content;
     }
   }

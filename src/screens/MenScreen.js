@@ -3,6 +3,7 @@ import { getProductUseQuery } from '../services/ProductService'
 import { Helmet } from 'react-helmet-async'
 
 import Product from '../components/Product'
+import SearchBox from '../components/SearchBox'
 import LoadingBox from '../components/LoadingBox'
 import { Box, Grid, Pagination, Stack } from '@mui/material'
 import Header from '../components/Header'
@@ -77,6 +78,9 @@ export default function MenScreen() {
             </div>
           </div>
           <h2 className='py-2'>FEATURED PRODUCTS</h2>
+          <Box className={Style.mobileSearch}>
+            <SearchBox />
+          </Box>
           <Grid container spacing={4}>
             {products &&
               products.map((product, index) => (

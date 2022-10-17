@@ -1,3 +1,4 @@
+@import './variables.scss';
 .searchScreen {
   display: flex;
   padding: 2rem;
@@ -25,5 +26,14 @@
     padding: 0 2rem;
     overflow-y: scroll;
     overflow-x: hidden;
+  }
+}
+
+.mobileSearch {
+  width: 15rem;
+  margin: 1rem 0;
+  display: none;
+  @include breakpoint(md) {
+    display: flex;
   }
 }

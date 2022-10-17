@@ -8,6 +8,7 @@ import { Box, Grid, Pagination, Stack } from '@mui/material'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Style from '../scss/Layout.module.scss'
+import SearchBox from '../components/SearchBox'
 
 export default function MenScreen() {
   const [products, setProducts] = useState()
@@ -75,6 +76,9 @@ export default function MenScreen() {
             </div>
           </div>
           <h2 className='py-2'>FEATURED PRODUCTS</h2>
+          <Box className={Style.mobileSearch}>
+            <SearchBox />
+          </Box>
           <Grid container spacing={4}>
             {products &&
               products.map((product, index) => (

@@ -5,7 +5,7 @@
   justify-content: center;
   font-size: 2rem;
   margin: 15vh 0;
-  @include breakpoint(md) {
+  @include breakpoint(sm) {
     font-size: 1rem;
   }
 
@@ -17,13 +17,13 @@
 
 .cartScreen {
   display: flex;
-  @include breakpoint(md) {
+  @include breakpoint(sm) {
     flex-direction: column;
     width: 100%;
   }
   .cartItemTable {
     flex: 60%;
-    @include breakpoint(md) {
+    @include breakpoint(sm) {
       flex: 100%;
       width: 100%;
       overflow: scroll;
@@ -45,7 +45,7 @@
     padding: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
-    @include breakpoint(md) {
+    @include breakpoint(sm) {
       width: 100%;
       flex: 100%;
       margin-left: 0;
