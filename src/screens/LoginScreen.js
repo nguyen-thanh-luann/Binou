@@ -49,7 +49,10 @@ export default function LoginScreen() {
               className='form-control'
               type='email'
               required
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value)
+                setErrMessage()
+              }}
             />
           </div>
           <div className={Style.formGroup}>
@@ -59,11 +62,14 @@ export default function LoginScreen() {
               className='form-control'
               type='password'
               required
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value)
+                setErrMessage()
+              }}
             />
           </div>
           <div className={Style.formGroup}>
-            {errMessage && (
+            {errMessage && errMessage !== '' && (
               <p className='text-danger'>
                 {` * `}
                 {errMessage}

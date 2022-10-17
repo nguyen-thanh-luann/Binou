@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 import LoadingBox from '../components/LoadingBox'
 import { signup } from '../services/UserService'
@@ -13,10 +14,12 @@ import Header from '../components/Header'
 import { Button } from '@mui/material'
 export default function SignupScreen() {
   const [loading, setLoading] = useState(false)
+
   let navigate = useNavigate()
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm()
 
@@ -27,7 +30,6 @@ export default function SignupScreen() {
       email: data.email,
       password: data.password,
     }
-    console.log(user)
     signup(user)
       .then(() => {
         setLoading(false)
@@ -41,6 +43,11 @@ export default function SignupScreen() {
       })
       .catch((err) => {
         console.log(err)
+        setLoading(false)
+        toast.error('Account already exists!', {
+          position: 'bottom-left',
+        })
+        reset()
       })
   }
 
@@ -113,6 +120,7 @@ export default function SignupScreen() {
               {...register('password', { required: true, minLength: 6 })}
             />
           </div>
+
           <div className={Style.formGroup}>
             <Button type='submit' variant='contained' color='success' fullWidth>
               Signup
