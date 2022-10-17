@@ -7,17 +7,30 @@
 .bannerCaption {
   position: absolute;
   left: 10%;
-  bottom: 25%;
+  top: 25%;
   width: 30%;
   text-align: start;
+  @include breakpoint(md) {
+    width: 100%;
+  }
+
+  a {
+    text-decoration: none;
+  }
 }
 
 .captionF1 {
   color: #fff;
   font-size: 2rem;
+  @include breakpoint(md) {
+    font-size: 1.2rem;
+  }
 }
 
 .captionF2 {
   color: #fff;
   font-size: 1.2rem;
+  @include breakpoint(md) {
+    font-size: 1rem;
+  }
 }

@@ -4,10 +4,10 @@ import { Helmet } from 'react-helmet-async'
 
 import Product from '../components/Product'
 import LoadingBox from '../components/LoadingBox'
-import BannerCarousel from '../components/BannerCarousel'
 import { Box, Grid, Pagination, Stack } from '@mui/material'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
+import Style from '../scss/Layout.module.scss'
 
 export default function MenScreen() {
   const [products, setProducts] = useState()
@@ -60,25 +60,19 @@ export default function MenScreen() {
       ) : (
         <Box p={4}>
           <h2>BABY</h2>
-          <div style={{ position: 'relative' }}>
+          <div className={Style.layoutBanner}>
             <img
               src='https://res.cloudinary.com/imthanhluan/image/upload/v1665928207/bb_hzz1aa.jpg'
               alt='baby banner'
               style={{ width: '100%' }}
             />
-            <div
-              style={{
-                color: '#fff',
-                position: 'absolute',
-                top: '25%',
-                left: '10%',
-                width: '25%',
-                fontWeight: 'bold',
-                textShadow: '8px 8px 8px #000',
-              }}
-            >
-              <h2>Fluffy Yarn Fleece Long-Sleeve Jackets</h2>
-              <h5>A super-soft feel perfect for keeping them snug</h5>
+            <div className={Style.layoutBanner__decor}>
+              <h2 className={Style.layoutBanner__decor__f1}>
+                Fluffy Yarn Fleece Long-Sleeve Jackets
+              </h2>
+              <h5 className={Style.layoutBanner__decor__f2}>
+                A super-soft feel perfect for keeping them snug
+              </h5>
             </div>
           </div>
           <h2 className='py-2'>FEATURED PRODUCTS</h2>

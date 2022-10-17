@@ -1,0 +1,29 @@
+@import './variables.scss';
+.layoutBanner {
+  position: relative;
+
+  &__decor {
+    color: #fff;
+    position: absolute;
+    top: 25%;
+    left: 10%;
+    width: 25%;
+    font-weight: bold;
+    text-shadow: 8px 8px 8px #000;
+
+    @include breakpoint(md) {
+      width: 60%;
+    }
+
+    &__f1 {
+      @include breakpoint(md) {
+        font-size: 1.2rem;
+      }
+    }
+    &__f2 {
+      @include breakpoint(md) {
+        font-size: 1rem;
+      }
+    }
+  }
+}
