@@ -29,6 +29,8 @@ export default function SignupScreen() {
       name: data.name,
       email: data.email,
       password: data.password,
+      phone: '',
+      address: '',
     }
     signup(user)
       .then(() => {

@@ -15,6 +15,16 @@
   }
 }
 
+.cartScreenTitle {
+  text-align: center;
+  color: purple;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  @include breakpoint(md) {
+    font-size: 1.2rem;
+  }
+}
+
 .cartScreen {
   display: flex;
   @include breakpoint(sm) {

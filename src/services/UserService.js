@@ -10,7 +10,8 @@ const signup = (user) => {
 
 const update = (updateInfo) => {
   return api.put(
-    `/user/update?id=${updateInfo.id}&name=${updateInfo.name}&password=${updateInfo.password}`
+    `/user/update?id=${updateInfo.id}&name=${updateInfo.name}&password=${updateInfo.password}
+    &phone=${updateInfo.phone}&address=${updateInfo.address}`
   )
 }
 

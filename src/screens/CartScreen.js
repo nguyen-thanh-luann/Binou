@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { DataGrid } from '@mui/x-data-grid'
 
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout'
+import EditIcon from '@mui/icons-material/Edit'
 
 import { Store } from '../Store'
 import Style from '../scss/CartScreen.module.scss'
@@ -14,25 +15,30 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 export default function CartScreen() {
+  const navigate = useNavigate()
   const { state, dispatch: ctxDispatch } = useContext(Store)
+  const [screenSize, setScreenSize] = useState(window.innerWidth)
   const [selectedItems, setSelectedItems] = useState([])
   const {
     cart: { cartItems },
     userInfo,
   } = state
 
+  window.addEventListener('resize', function () {
+    setScreenSize(window.innerWidth)
+  })
   const columns = [
     {
       field: 'photo',
       headerName: 'Photo',
-      width: 150,
+      width: `${screenSize < 500 ? 70 : 100}`,
       headerAlign: 'center',
       renderCell: (params) => (
         <Box sx={{ margin: '0 auto' }}>
           <Link to={`/product/${params.row.id}`}>
             <img
               src={params.row.photo}
-              style={{ width: '80%', textAlign: 'center' }}
+              style={{ width: '100%', textAlign: 'center' }}
               alt=''
             />
           </Link>
@@ -41,9 +47,17 @@ export default function CartScreen() {
     },
     {
       field: 'name',
+      width: `${
+        screenSize < 500
+          ? 100
+          : screenSize < 800
+          ? 150
+          : screenSize < 1300
+          ? 200
+          : 200
+      }`,
       headerName: 'Name',
       headerAlign: 'center',
-      width: 200,
       renderCell: (params) => (
         <Box
           sx={{
@@ -63,7 +77,15 @@ export default function CartScreen() {
       field: 'price',
       headerName: 'Price',
       headerAlign: 'center',
-      width: 200,
+      width: `${
+        screenSize < 500
+          ? 100
+          : screenSize < 800
+          ? 150
+          : screenSize < 1300
+          ? 200
+          : 200
+      }`,
       renderCell: (params) => (
         <Box
           sx={{
@@ -78,7 +100,15 @@ export default function CartScreen() {
       field: 'quantity',
       headerName: 'Quantity',
       headerAlign: 'center',
-      width: 200,
+      width: `${
+        screenSize < 500
+          ? 100
+          : screenSize < 800
+          ? 150
+          : screenSize < 1300
+          ? 200
+          : 200
+      }`,
       renderCell: (params) => (
         <Box sx={{ margin: '0 auto' }}>{params.row.quantity}</Box>
       ),
@@ -88,7 +118,15 @@ export default function CartScreen() {
       field: 'total',
       headerName: 'Total',
       headerAlign: 'center',
-      width: 200,
+      width: `${
+        screenSize < 500
+          ? 100
+          : screenSize < 800
+          ? 150
+          : screenSize < 1300
+          ? 200
+          : 200
+      }`,
       renderCell: (params) => (
         <Box sx={{ margin: '0 auto', color: 'purple' }}>
           ${params.row.total}
@@ -117,12 +155,23 @@ export default function CartScreen() {
 
   const checkoutHandler = () => {
     if (userInfo) {
-      toast('Comming soon!', {
-        position: 'bottom-left',
-      })
+      if (isValidReceiveAddress(userInfo.phone, userInfo.address)) {
+        toast('Comming soon', {
+          position: 'bottom-left',
+        })
+      } else {
+        toast.warning('Please enter receive infomation', {
+          position: 'bottom-left',
+        })
+        window.location.href = '/login'
+      }
     } else {
       window.location.href = '/login'
     }
+  }
+
+  const isValidReceiveAddress = (phone, address) => {
+    return phone !== '' && address !== ''
   }
   return (
     <>
@@ -139,16 +188,9 @@ export default function CartScreen() {
         </div>
       ) : (
         <Box p={4}>
-          <Typography
-            sx={{
-              textAlign: 'center',
-              color: 'purple',
-              fontSize: '2rem',
-              marginBottom: '1rem',
-            }}
-          >
+          <p className={Style.cartScreenTitle}>
             Cool! Let's checkout to get new clothes
-          </Typography>
+          </p>
 
           <Grid container spacing={2}>
             <Grid item xs={12} md={12} lg={9}>
@@ -215,18 +257,45 @@ export default function CartScreen() {
                   }}
                 >
                   <Typography>Address</Typography>
-                  <Button color='secondary'>Change</Button>
+                  <Button
+                    color='secondary'
+                    onClick={() => {
+                      navigate('/userInfo')
+                    }}
+                    startIcon={<EditIcon />}
+                  >
+                    Change
+                  </Button>
                 </Box>
 
-                <Typography sx={{ display: 'flex', fontWeight: 'bold' }}>
-                  Thanh Luan
+                <Typography
+                  sx={{
+                    display: 'flex',
+                    fontWeight: 'bold',
+                    textTransform: 'capitalize',
+                  }}
+                >
+                  {userInfo.name && userInfo.name}
                   <VerticalLine />
-                  070 6431 927
+                  {userInfo.phone && userInfo.phone !== '' ? (
+                    userInfo.phone
+                  ) : (
+                    <Link to='/userInfo'>
+                      <EditIcon style={{ fontSize: '1em' }} />
+                      Add phone number
+                    </Link>
+                  )}
                 </Typography>
 
                 <Typography sx={{ fontSize: '0.8rem' }}>
-                  Công viên phần mềm Quang Trung, Phường Trung Mĩ Tây Quận 12,
-                  Hồ Chí Minh.
+                  {userInfo.address && userInfo.address !== '' ? (
+                    userInfo.address
+                  ) : (
+                    <Link to='/userInfo'>
+                      <EditIcon style={{ fontSize: '1em' }} />
+                      Add Addresss
+                    </Link>
+                  )}
                 </Typography>
               </Box>
               {/*Bill  */}
@@ -290,16 +359,28 @@ export default function CartScreen() {
                   </Typography>
                 </Box>
               </Box>
-              <Button
-                color='secondary'
-                variant='outlined'
-                fullWidth
-                sx={{ marginTop: '1rem' }}
-                startIcon={<ShoppingCartCheckoutIcon />}
-                onClick={() => checkoutHandler()}
-              >
-                Checkout
-              </Button>
+              {selectedItems.length >= 1 ? (
+                <Button
+                  color='secondary'
+                  variant='outlined'
+                  fullWidth
+                  sx={{ marginTop: '1rem' }}
+                  startIcon={<ShoppingCartCheckoutIcon />}
+                  onClick={() => checkoutHandler()}
+                >
+                  Checkout
+                </Button>
+              ) : (
+                <Button
+                  variant='outlined'
+                  fullWidth
+                  sx={{ marginTop: '1rem' }}
+                  startIcon={<ShoppingCartCheckoutIcon />}
+                  disabled
+                >
+                  Checkout
+                </Button>
+              )}
             </Grid>
           </Grid>
         </Box>

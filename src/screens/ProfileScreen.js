@@ -35,6 +35,8 @@ export default function UserInfoScreen() {
   const { userInfo } = state
 
   const [email] = useState(userInfo.email)
+  const [phone, setPhone] = useState(userInfo.phone)
+  const [address, setAddress] = useState(userInfo.address)
   const [userName, setUserName] = useState(userInfo.name)
 
   const [{ loadingUpdate }, dispatch] = useReducer(reducer, {
@@ -57,6 +59,8 @@ export default function UserInfoScreen() {
       id: userInfo._id,
       name: data.name,
       password: data.password,
+      phone: data.phone,
+      address: data.address,
     }
 
     update(updateInfo)
@@ -65,6 +69,8 @@ export default function UserInfoScreen() {
           type: 'UPDATE_SUCCESS',
         })
         setUserName(res.data.name)
+        setPhone(res.data.phone)
+        setAddress(res.data.address)
         localStorage.setItem('userInfo', JSON.stringify(res.data))
         ctxDispatch({ type: 'USER_LOGIN', payload: res.data })
         reset()
@@ -152,6 +158,7 @@ export default function UserInfoScreen() {
                 />
               </div>
 
+              {/*email  */}
               <div className='form-group'>
                 <label htmlFor='email'>Email</label>
                 <input
@@ -161,6 +168,40 @@ export default function UserInfoScreen() {
                   disabled
                 />
               </div>
+              {/* phone */}
+              <div className='form-group'>
+                <label htmlFor='phone'>
+                  Phone{' '}
+                  {errors.phone && (
+                    <span className='text-danger'>
+                      *{' '}
+                      {errors.phone?.type === 'minLength' &&
+                        'invalid phone number'}
+                    </span>
+                  )}
+                </label>
+                <input
+                  id='phone'
+                  className='form-control'
+                  type='text'
+                  defaultValue={phone}
+                  {...register('phone', {
+                    minLength: 10,
+                  })}
+                />
+              </div>
+              {/* address */}
+              <div className='form-group'>
+                <label htmlFor='address'>Address</label>
+                <input
+                  id='address'
+                  className='form-control'
+                  type='text'
+                  defaultValue={address}
+                  {...register('address')}
+                />
+              </div>
+              {/* password */}
               <div className='form-group'>
                 <label htmlFor='password'>
                   Password{' '}
