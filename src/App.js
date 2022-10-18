@@ -18,6 +18,7 @@ import SignupScreen from './screens/SignupScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import CartScreen from './screens/CartScreen'
 import SearchScreen from './screens/SearchScreen'
+import Wishlist from './screens/Wishlist'
 function App() {
   return (
     <BrowserRouter>
@@ -33,6 +34,7 @@ function App() {
         <Route path='/signup' element={<SignupScreen />} />
         <Route path='/cart' element={<CartScreen />} />
         <Route path='/search' element={<SearchScreen />} />
+        <Route path='/wishlist' element={<Wishlist />} />
         <Route
           path='/productManager'
           element={

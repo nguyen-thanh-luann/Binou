@@ -57,7 +57,7 @@ export default function Header() {
         <div className={Style.webSearch}>
           <SearchBox />
         </div>
-        <Link to='/' className={Style.headerIcon}>
+        <Link to='/wishlist' className={Style.headerIcon}>
           <FavoriteBorderIcon />
         </Link>
         <Link
