@@ -213,7 +213,7 @@ export default function ProductManager() {
       const data = new FormData()
       data.append('file', formData.image)
       data.append('upload_preset', 'clothes')
-      fetch(`https://api.cloudinary.com/v1_1/imthanhluan/upload`, {
+      fetch(`${process.env.REACT_APP_CLOUDINARY_URL}`, {
         method: 'post',
         body: data,
       })
