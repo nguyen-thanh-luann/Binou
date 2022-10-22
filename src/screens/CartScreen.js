@@ -257,46 +257,65 @@ export default function CartScreen() {
                   }}
                 >
                   <Typography>Address</Typography>
-                  <Button
-                    color='secondary'
-                    onClick={() => {
-                      navigate('/userInfo')
-                    }}
-                    startIcon={<EditIcon />}
-                  >
-                    Change
-                  </Button>
+
+                  {userInfo && (
+                    <Button
+                      color='secondary'
+                      onClick={() => {
+                        navigate('/userInfo')
+                      }}
+                      startIcon={<EditIcon />}
+                    >
+                      Change
+                    </Button>
+                  )}
                 </Box>
 
-                <Typography
-                  sx={{
-                    display: 'flex',
-                    fontWeight: 'bold',
-                    textTransform: 'capitalize',
-                  }}
-                >
-                  {userInfo.name && userInfo.name}
-                  <VerticalLine />
-                  {userInfo.phone && userInfo.phone !== '' ? (
-                    userInfo.phone
+                <Box>
+                  {userInfo ? (
+                    <>
+                      <Typography
+                        sx={{
+                          display: 'flex',
+                          fontWeight: 'bold',
+                          textTransform: 'capitalize',
+                        }}
+                      >
+                        {userInfo.name}
+                        <VerticalLine />
+                        {userInfo.phone !== '' ? (
+                          userInfo.phone
+                        ) : (
+                          <Link to='/userInfo'>
+                            <EditIcon style={{ fontSize: '1em' }} />
+                            Add phone number
+                          </Link>
+                        )}
+                      </Typography>
+                      <Typography sx={{ fontSize: '0.8rem' }}>
+                        {userInfo.address !== '' ? (
+                          userInfo.address
+                        ) : (
+                          <Link to='/userInfo'>
+                            <EditIcon style={{ fontSize: '1em' }} />
+                            Add Addresss
+                          </Link>
+                        )}
+                      </Typography>
+                    </>
                   ) : (
-                    <Link to='/userInfo'>
-                      <EditIcon style={{ fontSize: '1em' }} />
-                      Add phone number
-                    </Link>
+                    <Button
+                      fullWidth
+                      variant='outlined'
+                      color='success'
+                      onClick={() => {
+                        navigate('/login')
+                      }}
+                    >
+                      Login
+                    </Button>
                   )}
-                </Typography>
-
-                <Typography sx={{ fontSize: '0.8rem' }}>
-                  {userInfo.address && userInfo.address !== '' ? (
-                    userInfo.address
-                  ) : (
-                    <Link to='/userInfo'>
-                      <EditIcon style={{ fontSize: '1em' }} />
-                      Add Addresss
-                    </Link>
-                  )}
-                </Typography>
+                </Box>
               </Box>
               {/*Bill  */}
               <Box
