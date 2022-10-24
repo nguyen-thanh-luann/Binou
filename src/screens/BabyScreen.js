@@ -4,10 +4,9 @@ import { Helmet } from 'react-helmet-async'
 
 import Product from '../components/Product'
 import LoadingBox from '../components/LoadingBox'
-import { Box, Grid, Pagination, Stack } from '@mui/material'
+import { Box, Grid, Pagination, Stack, Typography } from '@mui/material'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
-import Style from '../scss/Layout.module.scss'
 import SearchBox from '../components/SearchBox'
 
 export default function MenScreen() {
@@ -59,45 +58,124 @@ export default function MenScreen() {
           <LoadingBox />
         </div>
       ) : (
-        <Box p={4}>
-          <h2>BABY</h2>
-          <div className={Style.layoutBanner}>
-            <img
-              src='https://res.cloudinary.com/imthanhluan/image/upload/v1665928207/bb_hzz1aa.jpg'
-              alt='baby banner'
-              style={{ width: '100%' }}
-            />
-            <div className={Style.layoutBanner__decor}>
-              <h2 className={Style.layoutBanner__decor__f1}>
-                Fluffy Yarn Fleece Long-Sleeve Jackets
-              </h2>
-              <h5 className={Style.layoutBanner__decor__f2}>
-                A super-soft feel perfect for keeping them snug
-              </h5>
-            </div>
-          </div>
-          <h2 className='py-2'>FEATURED PRODUCTS</h2>
-          <Box className={Style.mobileSearch}>
-            <SearchBox />
+        <Box>
+          {/* banner */}
+          <Typography
+            p={2}
+            sx={{
+              fontSize: {
+                xs: 20,
+                sm: 25,
+                md: 30,
+              },
+            }}
+          >
+            BABY
+          </Typography>
+          <Box>
+            <Box sx={{ position: 'relative' }}>
+              <img
+                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665928207/bb_hzz1aa.jpg'
+                alt='men banner'
+                style={{ width: '100%' }}
+              />
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: '25%',
+                  left: '10%',
+                  color: '#fff',
+                  width: {
+                    xs: '100%',
+                    sm: '50%',
+                    md: '25%',
+                  },
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontWeight: 'bold',
+                    fontSize: {
+                      xs: 15,
+                      sm: 20,
+                      md: 30,
+                    },
+                  }}
+                >
+                  Fluffy Yarn Fleece Long-Sleeve Jackets
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: {
+                      xs: 10,
+                      sm: 15,
+                      md: 20,
+                    },
+                  }}
+                >
+                  A super-soft feel perfect for keeping them snug
+                </Typography>
+              </Box>
+            </Box>
           </Box>
-          <Grid container spacing={4}>
-            {products &&
-              products.map((product, index) => (
-                <Grid key={index} item xs={12} sm={6} md={6} lg={3}>
-                  <Product product={product} />
-                </Grid>
-              ))}
-          </Grid>
+          {/* products */}
+          <Typography
+            p={2}
+            sx={{
+              fontSize: {
+                xs: 20,
+                sm: 25,
+                md: 30,
+              },
+            }}
+          >
+            FEATURED PRODUCTS
+          </Typography>
+          <Box px={4} mb={2}>
+            <Box
+              sx={{
+                display: {
+                  md: 'flex',
+                  lg: 'none',
+                },
+                width: '15rem',
+                margin: '0 0 1rem',
+              }}
+            >
+              <SearchBox />
+            </Box>
+            <Grid container spacing={4} columns={12} mb={4}>
+              {products &&
+                products.map((product, index) => (
+                  <Grid
+                    key={index}
+                    item
+                    xs={10}
+                    sm={6}
+                    md={4}
+                    lg={3}
+                    sx={{
+                      margin: {
+                        xs: '0 auto',
+                        sm: '0',
+                      },
+                    }}
+                  >
+                    <Product product={product} />
+                  </Grid>
+                ))}
+            </Grid>
 
-          {/* pagination */}
-          <Stack sx={{ alignItems: 'center' }}>
-            {isLoadMore && <LoadingBox />}
-            <Pagination
-              count={pagination.pages}
-              page={pagination.page}
-              onChange={handlePageChange}
-            />
-          </Stack>
+            {/* pagination */}
+            <Stack sx={{ alignItems: 'center' }}>
+              {isLoadMore && <LoadingBox />}
+              <Pagination
+                count={pagination.pages}
+                page={pagination.page}
+                onChange={handlePageChange}
+              />
+            </Stack>
+          </Box>
         </Box>
       )}
       <Footer />

@@ -6,12 +6,18 @@ import AddToCartBtn from './AddToCartBtn'
 import WishlistBtn from './WishlistBtn'
 
 import Style from '../scss/Product.module.scss'
+import { Box } from '@mui/material'
 
 export default function Product({ product }) {
   let [orderNumber] = useState(1)
 
   return (
-    <div className={Style.product}>
+    <Box
+      sx={{
+        boxShadow: '8px 8px 10px #ccc',
+        borderRadius: '10px',
+      }}
+    >
       <div className={Style.product__image}>
         <Link to={`/product/${product._id}`}>
           <img src={product.image} className='card-img-top img-fluid' alt='' />
@@ -26,6 +32,6 @@ export default function Product({ product }) {
         <p className={Style.product__price}>${product.price}</p>
         <AddToCartBtn product={product} orderNumber={orderNumber} />
       </div>
-    </div>
+    </Box>
   )
 }
