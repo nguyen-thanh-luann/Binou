@@ -16,7 +16,10 @@ import Style from '../scss/Header.module.scss'
 
 export default function Header() {
   const { state, dispatch: ctxDispatch } = useContext(Store)
-  const { cart, userInfo } = state
+  const {
+    cart: { cartItems },
+    userInfo,
+  } = state
   const [showNavbar, setShowNavbar] = useState(false)
   const [anchorAdminMenu, setAnchorAdminMenu] = useState(null)
   const openAdminMenu = Boolean(anchorAdminMenu)
@@ -59,9 +62,7 @@ export default function Header() {
         </div>
         <Link to='/wishlist' className={Style.headerIcon}>
           <Badge
-            badgeContent={
-              userInfo.wishlist.length ? userInfo.wishlist.length : 0
-            }
+            badgeContent={userInfo ? userInfo.wishlist.length : 0}
             color='error'
           >
             <FavoriteBorderIcon />
@@ -74,7 +75,7 @@ export default function Header() {
           <PersonOutlineIcon />
         </Link>
         <Link className={Style.headerIcon} to='/cart'>
-          <Badge badgeContent={cart.cartItems.length} color='error'>
+          <Badge badgeContent={cartItems.length} color='error'>
             <ShoppingCartIcon />
           </Badge>
         </Link>
