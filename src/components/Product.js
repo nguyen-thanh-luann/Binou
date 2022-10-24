@@ -19,11 +19,13 @@ export default function Product({ product }) {
 
   useEffect(() => {
     setIsInWishlist(false)
-    userInfo.wishlist.forEach((item) => {
-      if (item._id === product._id) {
-        setIsInWishlist(true)
-      }
-    })
+    if (userInfo) {
+      userInfo.wishlist.forEach((item) => {
+        if (item._id === product._id) {
+          setIsInWishlist(true)
+        }
+      })
+    }
   }, [userInfo, product._id])
 
   const handleWishlist = () => {
