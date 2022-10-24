@@ -7,9 +7,9 @@ import Penguin from '../components/Penguin'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import AddToCartBtn from '../components/AddToCartBtn'
-import Style from '../scss/Wishlist.module.scss'
 import { Helmet } from 'react-helmet-async'
 import ProductRate from '../components/ProductRate'
+import WishlistBtn from '../components/WishlistBtn'
 
 export default function Wishlist() {
   const { state } = useContext(Store)
@@ -45,14 +45,29 @@ export default function Wishlist() {
                         spacing={2}
                         columns={12}
                       >
-                        <Grid item xs={3} md={3}>
+                        <Grid
+                          item
+                          sx={{ position: 'relative' }}
+                          xs={12}
+                          sm={3}
+                          md={3}
+                        >
                           <img
-                            className='img-fluid'
+                            className='w-100 h-100'
                             src={product.image}
                             alt='product'
                           />
+                          <span
+                            style={{
+                              position: 'absolute',
+                              top: '30px',
+                              right: '20px',
+                            }}
+                          >
+                            <WishlistBtn product={product} />
+                          </span>
                         </Grid>
-                        <Grid item xs={9} md={6}>
+                        <Grid item xs={12} sm={9} md={6}>
                           <Typography
                             sx={{
                               fontSize: {
