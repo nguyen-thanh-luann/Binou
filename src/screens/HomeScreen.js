@@ -2,10 +2,10 @@ import { Box, Typography } from '@mui/material'
 import React from 'react'
 import Carousel from 'react-bootstrap/Carousel'
 
+import { menBanners, womenBanners, kidsBanners, babyBanners } from '../data'
 import { Helmet } from 'react-helmet-async'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import Style from '../scss/Home.module.scss'
 import { Link } from 'react-router-dom'
 
 export default function HomeScreen() {
@@ -16,250 +16,245 @@ export default function HomeScreen() {
       </Helmet>
       <Header />
       <Box>
-        {/*  */}
+        {/* Men banners  */}
         <Carousel fade variant='dark'>
-          <Carousel.Item className={Style.banner}>
-            <Link to='/men'>
-              <img
-                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665825199/banner_ilgqqv.jpg'
-                alt='Men'
-                style={{ objectFit: 'fill', width: '100%' }}
-              />
-            </Link>
-            <Carousel.Caption className={Style.bannerCaption}>
-              <Link to='/men'>
-                <h2 className={Style.captionF1}>
-                  Men's 3D Cut Seamless Down Parkas
-                </h2>
-                <p className={Style.captionF2}>
-                  Designed widt roomy shoulders and a defined hood.
-                </p>
-                <h2 className={Style.captionF1}>$129.90</h2>
-              </Link>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item className={Style.banner}>
-            <Link to='/women'>
-              <img
-                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665825202/banner1_oylnds.jpg'
-                alt='Men'
-                style={{ objectFit: 'fill', width: '100%' }}
-              />
-            </Link>
-            <Carousel.Caption className={Style.bannerCaption}>
-              <Link to='/women'>
-                <h2 className={Style.captionF1}>Women's Hybrid Down Parkas</h2>
-                <p className={Style.captionF2}>
-                  A combination of lightweight down with insulating padding for
-                  supreme warmth
-                </p>
-                <h2 className={Style.captionF1}>$119.90</h2>
-              </Link>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item className={Style.banner}>
-            <Link to='/kids'>
-              <img
-                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665825205/banner2_upccsb.jpg'
-                alt='kids'
-                style={{ objectFit: 'fill', width: '100%' }}
-              />
-            </Link>
-            <Carousel.Caption className={Style.bannerCaption}>
-              <Link to='/kids'>
-                <h2 className={Style.captionF1}>Kids' Down Parkas</h2>
-                <p className={Style.captionF2}>
-                  Big warmth for little ones that won't weigh them down
-                </p>
-                <h2 className={Style.captionF1}>$79.90</h2>
-              </Link>
-            </Carousel.Caption>
-          </Carousel.Item>
+          {menBanners &&
+            menBanners.map((item) => (
+              <Carousel.Item>
+                <Box>
+                  <Link to='/men'>
+                    <img
+                      src={item.image}
+                      alt='Men'
+                      style={{ objectFit: 'fill', width: '100%' }}
+                    />
+                  </Link>
+                  <Carousel.Caption>
+                    <Box>
+                      <Link to='/men' style={{ textDecoration: 'none' }}>
+                        <Typography
+                          sx={{
+                            color: '#fff',
+                            fontWeight: 'bold',
+                            fontSize: {
+                              xs: 15,
+                              sm: 20,
+                              md: 30,
+                            },
+                          }}
+                        >
+                          {item.title}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: '#fff',
+                            fontSize: {
+                              xs: 10,
+                              sm: 15,
+                              md: 20,
+                            },
+                          }}
+                        >
+                          {item.descr}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: '#fff',
+                            fontSize: {
+                              xs: 15,
+                              sm: 20,
+                              md: 30,
+                            },
+                          }}
+                        >
+                          ${item.price}
+                        </Typography>
+                      </Link>
+                    </Box>
+                  </Carousel.Caption>
+                </Box>
+              </Carousel.Item>
+            ))}
         </Carousel>
-        {/*  */}
+        {/*Women banner*/}
         <Carousel fade variant='dark'>
-          <Carousel.Item className={Style.banner}>
-            <Link to='/men'>
-              <img
-                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665848388/b2_inxbt6.jpg'
-                alt='Men'
-                style={{ objectFit: 'fill', width: '100%' }}
-              />
-            </Link>
-            <Carousel.Caption className={Style.bannerCaption}>
-              <Link to='/men'>
-                <h2 className={Style.captionF1}>
-                  Men's Sweat Pullover Hoodies
-                </h2>
-                <p className={Style.captionF2}>
-                  Versatile style for at home or on the go.
-                </p>
-                <h2 className={Style.captionF1}>$129.90</h2>
-              </Link>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item className={Style.banner}>
-            <Link to='/men'>
-              <img
-                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665848388/b4_hygcei.jpg'
-                alt='Men'
-                style={{ objectFit: 'fill', width: '100%' }}
-              />
-            </Link>
-            <Carousel.Caption className={Style.bannerCaption}>
-              <Link to='/men'>
-                <h2 className={Style.captionF1}>Men's Slim-Fit jeans</h2>
-                <p className={Style.captionF2}>
-                  The look of authentic denim but with added stretch to keep you
-                  moving comfortably.
-                </p>
-                <h2 className={Style.captionF1}>$119.90</h2>
-              </Link>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item className={Style.banner}>
-            <Link to='/men'>
-              <img
-                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665848388/b3_ybs80e.jpg'
-                alt='Men'
-                style={{ objectFit: 'fill', width: '100%' }}
-              />
-            </Link>
-            <Carousel.Caption className={Style.bannerCaption}>
-              <Link to='/'>
-                <h2 className={Style.captionF1}>Men's Comfort Jackets</h2>
-                <p className={Style.captionF2}>
-                  Where polished style meets all-day comfort
-                </p>
-                <h2 className={Style.captionF1}>$79.90</h2>
-              </Link>
-            </Carousel.Caption>
-          </Carousel.Item>
+          {womenBanners &&
+            womenBanners.map((item) => (
+              <Carousel.Item>
+                <Box>
+                  <Link to='/women'>
+                    <img
+                      src={item.image}
+                      alt='Women'
+                      style={{ objectFit: 'fill', width: '100%' }}
+                    />
+                  </Link>
+                  <Carousel.Caption>
+                    <Box>
+                      <Link to='/women' style={{ textDecoration: 'none' }}>
+                        <Typography
+                          sx={{
+                            color: '#fff',
+                            fontWeight: 'bold',
+                            fontSize: {
+                              xs: 15,
+                              sm: 20,
+                              md: 30,
+                            },
+                          }}
+                        >
+                          {item.title}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: '#fff',
+                            fontSize: {
+                              xs: 10,
+                              sm: 15,
+                              md: 20,
+                            },
+                          }}
+                        >
+                          {item.descr}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: '#fff',
+                            fontSize: {
+                              xs: 15,
+                              sm: 20,
+                              md: 30,
+                            },
+                          }}
+                        >
+                          ${item.price}
+                        </Typography>
+                      </Link>
+                    </Box>
+                  </Carousel.Caption>
+                </Box>
+              </Carousel.Item>
+            ))}
         </Carousel>
-        {/*  */}
+        {/*Kids banner*/}
         <Carousel fade variant='dark'>
-          <Carousel.Item className={Style.banner}>
-            <Link to='/women'>
-              <img
-                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665848391/b6_gdp4hd.jpg'
-                alt='WoMen'
-                style={{ objectFit: 'fill', width: '100%' }}
-              />
-            </Link>
-            <Carousel.Caption className={Style.bannerCaption}>
-              <Link to='/women'>
-                <h2 className={Style.captionF1}>
-                  HEATTECH Ultra Warm T-Shirts
-                </h2>
-                <p className={Style.captionF2}>
-                  About 2.25 times warmer than our regular HEATTECH.
-                </p>
-                <h2 className={Style.captionF1}>$29.90</h2>
-              </Link>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item className={Style.banner}>
-            <Link to='/men'>
-              <img
-                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665848389/b1_mtysrp.jpg'
-                alt='Men'
-                style={{ objectFit: 'fill', width: '100%' }}
-              />
-            </Link>
-            <Carousel.Caption className={Style.bannerCaption}>
-              <Link to='/men'>
-                <h2 className={Style.captionF1}>
-                  Ultra thin windproof technology blocks harsh wind.
-                </h2>
-                <p className={Style.captionF2}>
-                  Men's Windproof Outer Fleece Jackets
-                </p>
-                <h2 className={Style.captionF1}>$119.90</h2>
-              </Link>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item className={Style.banner}>
-            <Link to='/men'>
-              <img
-                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665848388/b5_zj2csa.jpg'
-                alt='Men'
-                style={{ objectFit: 'fill', width: '100%' }}
-              />
-            </Link>
-            <Carousel.Caption className={Style.bannerCaption}>
-              <Link to='/men'>
-                <h2 className={Style.captionF1}>
-                  HEATTECH Cotton Innerwear (Extra Warm)
-                </h2>
-                <p className={Style.captionF2}>
-                  Soft, brushed inside protects you from the harsher winter
-                  weather.
-                </p>
-                <h2 className={Style.captionF1}>$29.90</h2>
-              </Link>
-            </Carousel.Caption>
-          </Carousel.Item>
+          {kidsBanners &&
+            kidsBanners.map((item) => (
+              <Carousel.Item>
+                <Box>
+                  <Link to='/kids'>
+                    <img
+                      src={item.image}
+                      alt='Kids'
+                      style={{ objectFit: 'fill', width: '100%' }}
+                    />
+                  </Link>
+                  <Carousel.Caption>
+                    <Box>
+                      <Link to='/kids' style={{ textDecoration: 'none' }}>
+                        <Typography
+                          sx={{
+                            color: '#fff',
+                            fontWeight: 'bold',
+                            fontSize: {
+                              xs: 15,
+                              sm: 20,
+                              md: 30,
+                            },
+                          }}
+                        >
+                          {item.title}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: '#fff',
+                            fontSize: {
+                              xs: 10,
+                              sm: 15,
+                              md: 20,
+                            },
+                          }}
+                        >
+                          {item.descr}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: '#fff',
+                            fontSize: {
+                              xs: 15,
+                              sm: 20,
+                              md: 30,
+                            },
+                          }}
+                        >
+                          ${item.price}
+                        </Typography>
+                      </Link>
+                    </Box>
+                  </Carousel.Caption>
+                </Box>
+              </Carousel.Item>
+            ))}
         </Carousel>
-        {/*  */}
+        {/*Baby banner  */}
         <Carousel fade variant='dark'>
-          <Carousel.Item className={Style.banner}>
-            <Link to='/women'>
-              <img
-                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665848389/b_jukpid.jpg'
-                alt='Women'
-                style={{ objectFit: 'fill', width: '100%' }}
-              />
-            </Link>
-            <Carousel.Caption className={Style.bannerCaption}>
-              <Link to='/women'>
-                <h2 className={Style.captionF1}>
-                  Warm and windproof wherever you go.
-                </h2>
-                <p className={Style.captionF2}>Windproof Outer Fleece.</p>
-                <h2 className={Style.captionF1}>$59.90</h2>
-              </Link>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item className={Style.banner}>
-            <Link to='/women'>
-              <img
-                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665848390/b8_oe8z7k.jpg'
-                alt='WoMen'
-                style={{ objectFit: 'fill', width: '100%' }}
-              />
-            </Link>
-            <Carousel.Caption className={Style.bannerCaption}>
-              <Link to='/women'>
-                <h2 className={Style.captionF1}>NYC POP ICONS</h2>
-                <p className={Style.captionF2}>
-                  Preview graphic tees featuring art from Keith Haring,
-                  Jean-Michel Basquiat and Kenny Scharf.
-                </p>
-                <h2 className={Style.captionF1}>$119.90</h2>
-              </Link>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item className={Style.banner}>
-            <Link to='/women'>
-              <img
-                src='https://res.cloudinary.com/imthanhluan/image/upload/v1665894083/b_h20v4r.jpg'
-                alt='WoMen'
-                style={{ objectFit: 'fill', width: '100%' }}
-              />
-            </Link>
-            <Carousel.Caption className={Style.bannerCaption}>
-              <Link to='/women'>
-                <h2 className={Style.captionF1}>
-                  100% recycled polyester fabric
-                </h2>
-                <p className={Style.captionF2}>
-                  ADULT/KIDS Doraemon Sustainability Mode Fluffy Fleece Full-Zip
-                  Jacket is now available.
-                </p>
-                <h2 className={Style.captionF1}>$29.90</h2>
-              </Link>
-            </Carousel.Caption>
-          </Carousel.Item>
+          {babyBanners &&
+            babyBanners.map((item) => (
+              <Carousel.Item>
+                <Box>
+                  <Link to='/baby'>
+                    <img
+                      src={item.image}
+                      alt='baby'
+                      style={{ objectFit: 'fill', width: '100%' }}
+                    />
+                  </Link>
+                  <Carousel.Caption>
+                    <Box>
+                      <Link to='/baby' style={{ textDecoration: 'none' }}>
+                        <Typography
+                          sx={{
+                            color: '#fff',
+                            fontWeight: 'bold',
+                            fontSize: {
+                              xs: 15,
+                              sm: 20,
+                              md: 30,
+                            },
+                          }}
+                        >
+                          {item.title}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: '#fff',
+                            fontSize: {
+                              xs: 10,
+                              sm: 15,
+                              md: 20,
+                            },
+                          }}
+                        >
+                          {item.descr}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: '#fff',
+                            fontSize: {
+                              xs: 15,
+                              sm: 20,
+                              md: 30,
+                            },
+                          }}
+                        >
+                          ${item.price}
+                        </Typography>
+                      </Link>
+                    </Box>
+                  </Carousel.Caption>
+                </Box>
+              </Carousel.Item>
+            ))}
         </Carousel>
       </Box>
       <Footer />
