@@ -6,10 +6,12 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import { Store } from '../Store'
 import { addWishlist, removeWishlist } from '../services/UserService'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 export default function WishlistBtn({ product }) {
   const { state, dispatch: ctxDispatch } = useContext(Store)
   const { userInfo } = state
   const [isInWishlist, setIsInWishlist] = useState()
+  const navigate = useNavigate()
 
   useEffect(() => {
     setIsInWishlist(false)
@@ -48,9 +50,10 @@ export default function WishlistBtn({ product }) {
           })
       }
     } else {
-      toast.error('You should login first', {
+      toast('You should login first', {
         position: 'bottom-left',
       })
+      navigate('/login')
     }
   }
   return (

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useReducer, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
 import Rating from '@mui/material/Rating'
@@ -18,6 +18,7 @@ import Swal from 'sweetalert2'
 import { Box, Button, Typography } from '@mui/material'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { toast } from 'react-toastify'
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -43,6 +44,7 @@ const reducer = (state, action) => {
 export default function ProductScreen() {
   const param = useParams()
   const productId = param.id
+  const navigate = useNavigate()
 
   let [orderNumber, setOrderNumber] = useState(1)
   const [proImg, setProImg] = useState('')
@@ -78,38 +80,43 @@ export default function ProductScreen() {
   }, [productId])
 
   const onSubmit = (data) => {
-    dispatch({
-      type: 'REVIEW_REQUEST',
-    })
+    if (userInfo) {
+      dispatch({
+        type: 'REVIEW_REQUEST',
+      })
 
-    const dataReview = {
-      name: userInfo.name,
-      comment: data.comment.trim(),
-      rating: star,
+      const dataReview = {
+        name: userInfo.name,
+        comment: data.comment.trim(),
+        rating: star,
+      }
+
+      reviewProduct(productId, dataReview)
+        .then((res) => {
+          dispatch({
+            type: 'REVIEW_SUCCESS',
+          })
+          product.reviews.push(res.data.review)
+          product.numReviews = res.data.numReviews
+          product.rating = res.data.rating
+          dispatch({ type: 'REFRESH', payload: product })
+          Swal.fire({
+            icon: 'success',
+            title: 'Review Success!',
+            showConfirmButton: false,
+            timer: 1500,
+          })
+        })
+        .catch((err) => {
+          dispatch({ type: 'REVIEW_FAIL' })
+          console.log(err)
+        })
+
+      reset()
+    } else {
+      toast('Please login to review!', { position: 'bottom-left' })
+      navigate('/login')
     }
-
-    reviewProduct(productId, dataReview)
-      .then((res) => {
-        dispatch({
-          type: 'REVIEW_SUCCESS',
-        })
-        product.reviews.push(res.data.review)
-        product.numReviews = res.data.numReviews
-        product.rating = res.data.rating
-        dispatch({ type: 'REFRESH', payload: product })
-        Swal.fire({
-          icon: 'success',
-          title: 'Review Success!',
-          showConfirmButton: false,
-          timer: 1500,
-        })
-      })
-      .catch((err) => {
-        dispatch({ type: 'REVIEW_FAIL' })
-        console.log(err)
-      })
-
-    reset()
   }
   return (
     <div>
