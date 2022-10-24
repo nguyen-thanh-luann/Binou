@@ -68,7 +68,7 @@ export default function ProductScreen() {
       dispatch({ type: 'FETCH_REQUEST' })
       getProductById(productId)
         .then((res) => {
-          dispatch({ type: 'FETCH_SUCCESS', payload: res.data })
+          dispatch({ type: 'FETCH_SUCCESS', payload: res.data.product })
         })
         .catch((err) => {
           dispatch({ type: 'FETCH_FAIL', payload: err })

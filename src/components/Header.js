@@ -58,7 +58,9 @@ export default function Header() {
           <SearchBox />
         </div>
         <Link to='/wishlist' className={Style.headerIcon}>
-          <FavoriteBorderIcon />
+          <Badge badgeContent={userInfo.wishlist.length} color='error'>
+            <FavoriteBorderIcon />
+          </Badge>
         </Link>
         <Link
           className={Style.headerIcon}

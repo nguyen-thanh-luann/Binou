@@ -20,7 +20,6 @@ function reducer(state, action) {
     case 'USER_LOGOUT':
       return { ...state, userInfo: null }
     case 'CART_ADD_ITEM':
-      // when user add a product to cart
       const newItem = action.payload
       const existItem = state.cart.cartItems.find(
         (item) => item._id === newItem._id
@@ -42,6 +41,9 @@ function reducer(state, action) {
     }
     case 'CART_CLEAR':
       return { ...state, cart: { ...state.cart, cartItems: [] } }
+    case 'ADD_WISHLIST':
+      localStorage.setItem('userInfo', JSON.stringify(action.payload))
+      return { ...state, userInfo: action.payload }
     default:
       return state
   }

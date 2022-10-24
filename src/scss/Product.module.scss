@@ -11,9 +11,31 @@
   }
 
   &__image {
+    position: relative;
     img {
       border-radius: 10px;
       width: 100%;
+    }
+    &__heartOutline {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      transition: 0.3s;
+      &:hover {
+        color: red;
+        cursor: pointer;
+      }
+    }
+    &__heartFull {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      transition: 0.3s;
+      color: red;
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.3);
+      }
     }
   }
 
