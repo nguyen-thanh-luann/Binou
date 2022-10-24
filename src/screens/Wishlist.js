@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-import { Box, Button, Grid, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 
 import { Store } from '../Store'
 import Penguin from '../components/Penguin'
