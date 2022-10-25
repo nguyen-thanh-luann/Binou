@@ -139,11 +139,15 @@ export default function MenScreen() {
             <Box
               sx={{
                 display: {
-                  md: 'flex',
+                  xs: 'flex',
                   lg: 'none',
                 },
-                width: '15rem',
-                margin: '0 0 1rem',
+                width: {
+                  xs: '100%',
+                  md: '20rem',
+                },
+
+                marginBottom: '1rem',
               }}
             >
               <SearchBox />

@@ -127,6 +127,18 @@ export default function SearchScreen() {
       <Header />
       <div className={Style.searchScreen}>
         <div className={Style.searchScreen__leftSide}>
+          <Box
+            sx={{
+              marginBottom: 2,
+              width: '100%',
+              display: {
+                xs: 'flex',
+                sm: 'none',
+              },
+            }}
+          >
+            <SearchBox />
+          </Box>
           <div className={Style.optionGroup}>
             <h5>Quick sort</h5>
             <Form.Select
@@ -214,7 +226,17 @@ export default function SearchScreen() {
           </div>
         </div>
         <div className={Style.searchScreen__rightSide}>
-          <Box className={Style.mobileSearch}>
+          <Box
+            sx={{
+              marginBottom: 2,
+              width: '20rem',
+              display: {
+                xs: 'none',
+                sm: 'flex',
+                lg: 'none',
+              },
+            }}
+          >
             <SearchBox />
           </Box>
           <p className='fw-bold'>
@@ -226,7 +248,7 @@ export default function SearchScreen() {
               <LoadingBox />
             </div>
           ) : (
-            <Grid container spacing={4}>
+            <Grid container spacing={4} mb={4}>
               {products &&
                 products.map((product) => (
                   <Grid

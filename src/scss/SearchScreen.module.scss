@@ -8,6 +8,7 @@
   }
 
   &__leftSide {
+    padding-bottom: 1rem;
     @include breakpoint(sm) {
       display: flex;
       flex-wrap: wrap;
@@ -40,14 +41,5 @@
     padding: 0 2rem;
     overflow-y: scroll;
     overflow-x: hidden;
-  }
-}
-
-.mobileSearch {
-  width: 15rem;
-  margin: 1rem 0;
-  display: none;
-  @include breakpoint(md) {
-    display: flex;
   }
 }

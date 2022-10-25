@@ -1,11 +1,13 @@
 .searchBox {
   display: flex;
+  justify-content: space-between;
   border: 2px solid #ccc;
   background-color: #fff;
+  width: 100%;
+  min-width: 15rem;
   padding: 0.2rem 1rem;
   &__input {
     border: none;
-    // color: #ccc;
     &:focus {
       outline: none;
     }
