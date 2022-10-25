@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, memo } from 'react'
 import { Link } from 'react-router-dom'
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
@@ -14,7 +14,7 @@ import SearchBox from './SearchBox'
 import { Badge, Button, Menu, MenuItem } from '@mui/material'
 import Style from '../scss/Header.module.scss'
 
-export default function Header() {
+const Header = () => {
   const { state, dispatch: ctxDispatch } = useContext(Store)
   const {
     cart: { cartItems },
@@ -115,3 +115,5 @@ export default function Header() {
     </header>
   )
 }
+
+export default memo(Header)

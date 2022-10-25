@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
@@ -7,11 +7,10 @@ import { toast } from 'react-toastify'
 import LoadingBox from '../components/LoadingBox'
 import { signup } from '../services/UserService'
 
-import Style from '../scss/RegisterScreen.module.scss'
 import Swal from 'sweetalert2'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
-import { Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 export default function SignupScreen() {
   const [loading, setLoading] = useState(false)
 
@@ -57,10 +56,22 @@ export default function SignupScreen() {
       <Helmet>
         <title>Signup</title>
       </Helmet>
-      <div className={Style.page}>
-        <form className={Style.form} onSubmit={handleSubmit(onSubmit)}>
-          <h1 className='text-center'>Signup</h1>
-          <div className={Style.formGroup}>
+      <Box
+        sx={{
+          padding: '2rem 0',
+          margin: '0 auto',
+          width: {
+            xs: '90%',
+            sm: '70%',
+            md: '50%',
+          },
+        }}
+      >
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Typography sx={{ textAlign: 'center', fontSize: '2rem' }}>
+            Signup
+          </Typography>
+          <Box>
             <label htmlFor='email'>
               Name{' '}
               {errors.name && (
@@ -82,8 +93,8 @@ export default function SignupScreen() {
                 minLength: 2,
               })}
             />
-          </div>
-          <div className={Style.formGroup}>
+          </Box>
+          <Box mt={2}>
             <label htmlFor='email'>
               Email{' '}
               {errors.email && (
@@ -100,8 +111,8 @@ export default function SignupScreen() {
               type='email'
               {...register('email', { required: true })}
             />
-          </div>
-          <div className={Style.formGroup}>
+          </Box>
+          <Box mt={2}>
             <label htmlFor='password'>
               Password{' '}
               {errors.password && (
@@ -119,20 +130,26 @@ export default function SignupScreen() {
               type='password'
               {...register('password', { required: true, minLength: 6 })}
             />
-          </div>
+          </Box>
 
-          <div className={Style.formGroup}>
+          <Box mt={2}>
             <Button type='submit' variant='contained' color='success' fullWidth>
               Signup
             </Button>
-            <div className='mt-4 text-center'>
+            <Box sx={{ textAlign: 'center' }} mt={2}>
               you already have account?
-              <Link to='/login'> Login</Link>
-            </div>
-          </div>
-          <div className='text-center'>{loading && <LoadingBox />}</div>
+              <Link
+                to='/login'
+                style={{ color: 'purple', textDecoration: 'none' }}
+              >
+                {' '}
+                Login
+              </Link>
+            </Box>
+          </Box>
+          <Box sx={{ textAlign: 'center' }}>{loading && <LoadingBox />}</Box>
         </form>
-      </div>
+      </Box>
       <Footer />
     </div>
   )

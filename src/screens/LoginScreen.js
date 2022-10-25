@@ -5,10 +5,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { login } from '../services/UserService'
 import LoadingBox from '../components/LoadingBox'
 import { Store } from '../Store'
-import Style from '../scss/RegisterScreen.module.scss'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
-import { Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 export default function LoginScreen() {
   const { dispatch: ctxDispatch } = useContext(Store)
 
@@ -39,10 +38,22 @@ export default function LoginScreen() {
       <Helmet>
         <title>Login</title>
       </Helmet>
-      <div className={Style.page}>
-        <form className={Style.form} onSubmit={submitHandler}>
-          <h1 className='text-center'>Login</h1>
-          <div className={Style.formGroup}>
+      <Box
+        sx={{
+          padding: '2rem 0',
+          margin: '0 auto',
+          width: {
+            xs: '90%',
+            sm: '70%',
+            md: '50%',
+          },
+        }}
+      >
+        <form onSubmit={submitHandler}>
+          <Typography sx={{ textAlign: 'center', fontSize: '2rem' }}>
+            Login
+          </Typography>
+          <Box>
             <label htmlFor='email'>Email</label>
             <input
               id='email'
@@ -54,8 +65,8 @@ export default function LoginScreen() {
                 setErrMessage()
               }}
             />
-          </div>
-          <div className={Style.formGroup}>
+          </Box>
+          <Box mt={2}>
             <label htmlFor='password'>Password</label>
             <input
               id='password'
@@ -67,26 +78,43 @@ export default function LoginScreen() {
                 setErrMessage()
               }}
             />
-          </div>
-          <div className={Style.formGroup}>
+          </Box>
+          <Box>
             {errMessage && errMessage !== '' && (
-              <p className='text-danger'>
+              <Typography sx={{ color: 'red' }} mt={1}>
                 {` * `}
                 {errMessage}
-              </p>
+              </Typography>
             )}
 
-            <Button type='submit' variant='contained' color='success' fullWidth>
-              Login
-            </Button>
-            <div className='mt-4 text-center'>
+            <Box mt={2}>
+              <Button
+                type='submit'
+                variant='contained'
+                color='success'
+                fullWidth
+              >
+                Login
+              </Button>
+            </Box>
+            <Box sx={{ textAlign: 'center' }} mt={2}>
               New customer?
-              <Link to='/signup'> Create your account</Link>
-            </div>
-            <div className='text-center'>{loading && <LoadingBox />}</div>
-          </div>
+              <Link
+                style={{
+                  textDecoration: 'none',
+                  color: 'purple',
+                  fontWeight: 'bold',
+                }}
+                to='/signup'
+              >
+                {' '}
+                Create your account
+              </Link>
+            </Box>
+            <Box sx={{ textAlign: 'center' }}>{loading && <LoadingBox />}</Box>
+          </Box>
         </form>
-      </div>
+      </Box>
       <Footer />
     </div>
   )

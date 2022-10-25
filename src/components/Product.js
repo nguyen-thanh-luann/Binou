@@ -5,8 +5,7 @@ import ProductRate from './ProductRate'
 import AddToCartBtn from './AddToCartBtn'
 import WishlistBtn from './WishlistBtn'
 
-import Style from '../scss/Product.module.scss'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 
 export default function Product({ product }) {
   let [orderNumber] = useState(1)
@@ -18,20 +17,36 @@ export default function Product({ product }) {
         borderRadius: '10px',
       }}
     >
-      <div className={Style.product__image}>
+      <Box sx={{ position: 'relative' }}>
         <Link to={`/product/${product._id}`}>
-          <img src={product.image} className='card-img-top img-fluid' alt='' />
+          <img
+            src={product.image}
+            style={{ width: '100%', borderRadius: '10px' }}
+            alt=''
+          />
         </Link>
-        <span className={Style.product__image__heart}>
+        <Box sx={{ position: 'absolute', top: '20px', right: '20px' }}>
           <WishlistBtn product={product} />
-        </span>
-      </div>
-      <div className={Style.product__body}>
-        <p className={Style.product__name}>{product.name}</p>
+        </Box>
+      </Box>
+      <Box sx={{ padding: '1rem 0.5rem' }}>
+        <Typography
+          sx={{
+            fontWeight: 'bold',
+            textTransform: 'capitalize',
+            width: '100%',
+            height: '2rem',
+            overflow: 'scroll',
+          }}
+        >
+          {product.name}
+        </Typography>
         <ProductRate rating={product.rating} />
-        <p className={Style.product__price}>${product.price}</p>
+        <Typography sx={{ fontWeight: 'bold', margin: '0.4rem 0' }}>
+          ${product.price}
+        </Typography>
         <AddToCartBtn product={product} orderNumber={orderNumber} />
-      </div>
+      </Box>
     </Box>
   )
 }

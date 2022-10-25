@@ -19,8 +19,8 @@ export default function HomeScreen() {
         {/* Men banners  */}
         <Carousel fade variant='dark'>
           {menBanners &&
-            menBanners.map((item) => (
-              <Carousel.Item>
+            menBanners.map((item, index) => (
+              <Carousel.Item key={index}>
                 <Box>
                   <Link to='/men'>
                     <img
@@ -79,8 +79,8 @@ export default function HomeScreen() {
         {/*Women banner*/}
         <Carousel fade variant='dark'>
           {womenBanners &&
-            womenBanners.map((item) => (
-              <Carousel.Item>
+            womenBanners.map((item, index) => (
+              <Carousel.Item key={index}>
                 <Box>
                   <Link to='/women'>
                     <img
@@ -139,8 +139,8 @@ export default function HomeScreen() {
         {/*Kids banner*/}
         <Carousel fade variant='dark'>
           {kidsBanners &&
-            kidsBanners.map((item) => (
-              <Carousel.Item>
+            kidsBanners.map((item, index) => (
+              <Carousel.Item key={index}>
                 <Box>
                   <Link to='/kids'>
                     <img
@@ -199,8 +199,8 @@ export default function HomeScreen() {
         {/*Baby banner  */}
         <Carousel fade variant='dark'>
           {babyBanners &&
-            babyBanners.map((item) => (
-              <Carousel.Item>
+            babyBanners.map((item, index) => (
+              <Carousel.Item key={index}>
                 <Box>
                   <Link to='/baby'>
                     <img

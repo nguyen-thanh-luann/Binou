@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link, useNavigate } from 'react-router-dom'
 import { DataGrid } from '@mui/x-data-grid'
@@ -7,7 +7,7 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout'
 import EditIcon from '@mui/icons-material/Edit'
 
 import { Store } from '../Store'
-import Style from '../scss/CartScreen.module.scss'
+
 import { Box, Button, Grid, Typography } from '@mui/material'
 import VerticalLine from '../components/VerticalLine'
 import { toast } from 'react-toastify'
@@ -180,17 +180,45 @@ export default function CartScreen() {
       </Helmet>
       <Header />
       {cartItems.length === 0 ? (
-        <div className={Style.cartNoti}>
-          <p>
-            Cart is empty.
-            <Link to='/'> Let's Shopping now!</Link>
-          </p>
-        </div>
+        <Box
+          sx={{
+            textAlign: 'center',
+            margin: '20vh 0',
+            fontSize: {
+              xs: '1rem',
+              sm: '1.5rem',
+              md: '2rem',
+            },
+          }}
+        >
+          <Link
+            to='/'
+            style={{
+              textDecoration: 'none',
+              color: 'pink',
+              fontWeight: 'bold',
+            }}
+          >
+            {' '}
+            Cart is empty <br />
+            Let's Shopping now!
+          </Link>
+        </Box>
       ) : (
         <Box p={4}>
-          <p className={Style.cartScreenTitle}>
+          <Typography
+            sx={{
+              textAlign: 'center',
+              color: 'purple',
+              marginBottom: '1rem',
+              fontSize: {
+                xs: '1.5rem',
+                sm: '2rem',
+              },
+            }}
+          >
             Cool! Let's checkout to get new clothes
-          </p>
+          </Typography>
 
           <Grid container spacing={2}>
             <Grid item xs={12} md={12} lg={9}>
