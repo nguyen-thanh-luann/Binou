@@ -84,7 +84,10 @@ export default function MenScreen() {
                 sx={{
                   position: 'absolute',
                   top: '25%',
-                  left: '10%',
+                  paddingLeft: {
+                    xs: '1rem',
+                    sm: '2rem',
+                  },
                   color: '#fff',
                   width: {
                     xs: '100%',

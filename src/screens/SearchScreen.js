@@ -9,7 +9,7 @@ import LoadingBox from '../components/LoadingBox'
 import { getProductUseQuery } from '../services/ProductService'
 import { getAllCategory } from '../services/CategoryService'
 import Style from '../scss/SearchScreen.module.scss'
-import { Box, Pagination, Stack } from '@mui/material'
+import { Box, Grid, Pagination, Stack } from '@mui/material'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 
@@ -226,17 +226,27 @@ export default function SearchScreen() {
               <LoadingBox />
             </div>
           ) : (
-            <div className='row'>
+            <Grid container spacing={4}>
               {products &&
                 products.map((product) => (
-                  <div
+                  <Grid
+                    item
                     key={product._id}
-                    className='col-sm-12 col-md-6 col-lg-3'
+                    xs={10}
+                    sm={6}
+                    md={4}
+                    lg={3}
+                    sx={{
+                      margin: {
+                        xs: '0 auto',
+                        sm: '0',
+                      },
+                    }}
                   >
                     <Product product={product} />
-                  </div>
+                  </Grid>
                 ))}
-            </div>
+            </Grid>
           )}
 
           <Stack sx={{ alignItems: 'center' }}>
