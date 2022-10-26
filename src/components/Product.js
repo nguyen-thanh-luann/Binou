@@ -35,8 +35,8 @@ export default function Product({ product }) {
             fontWeight: 'bold',
             textTransform: 'capitalize',
             width: '100%',
-            height: '2rem',
-            overflow: 'scroll',
+            maxHeight: '1.3rem',
+            overflow: 'hidden',
           }}
         >
           {product.name}
