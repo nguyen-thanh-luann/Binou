@@ -55,9 +55,9 @@ export default function MenScreen() {
       </Helmet>
       <Header />
       {isLoadingPage ? (
-        <div className='text-center'>
+        <Box sx={{ textAlign: 'center' }}>
           <LoadingBox />
-        </div>
+        </Box>
       ) : (
         <Box>
           {/* banner */}

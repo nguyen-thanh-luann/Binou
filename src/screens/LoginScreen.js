@@ -91,7 +91,7 @@ export default function LoginScreen() {
               <Button
                 type='submit'
                 variant='contained'
-                color='success'
+                color='secondary'
                 fullWidth
               >
                 Login

@@ -335,7 +335,7 @@ export default function CartScreen() {
                     <Button
                       fullWidth
                       variant='outlined'
-                      color='success'
+                      color='secondary'
                       onClick={() => {
                         navigate('/login')
                       }}

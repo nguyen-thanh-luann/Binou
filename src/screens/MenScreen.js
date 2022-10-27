@@ -8,6 +8,7 @@ import LoadingBox from '../components/LoadingBox'
 import { Box, Grid, Pagination, Stack, Typography } from '@mui/material'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { CircularProgress } from '@mui/material'
 
 export default function MenScreen() {
   const [products, setProducts] = useState()
@@ -54,9 +55,9 @@ export default function MenScreen() {
       </Helmet>
       <Header />
       {isLoadingPage ? (
-        <div className='text-center'>
+        <Box sx={{ textAlign: 'center' }}>
           <LoadingBox />
-        </div>
+        </Box>
       ) : (
         <Box>
           {/* banner */}

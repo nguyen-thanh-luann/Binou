@@ -125,25 +125,44 @@ export default function Wishlist() {
               </Grid>
             </Box>
           ) : (
-            <h3
-              style={{
+            <Box
+              sx={{
                 textAlign: 'center',
-                color: 'pink',
-                fontWeight: 'bold',
-                marginTop: '1rem',
               }}
             >
-              <p>There are no items in your wish lish!</p>
-              <p>Click the heart to add items to your wish list.</p>
+              <Typography
+                mt={2}
+                sx={{
+                  color: 'purple',
+                  fontSize: {
+                    xs: 20,
+                    sm: 25,
+                    md: 30,
+                  },
+                }}
+              >
+                There are no items in your wish lish!
+              </Typography>
+
               <Penguin />
-            </h3>
+            </Box>
           )}
         </>
       ) : (
         <Box p={4}>
-          <h3 className='text-center text-success'>
-            Hey! You Should login first
-          </h3>
+          <Typography
+            sx={{
+              color: 'purple',
+              fontSize: {
+                xs: 20,
+                sm: 25,
+                md: 30,
+              },
+              textAlign: 'center',
+            }}
+          >
+            You Should login first
+          </Typography>
           <Penguin />
         </Box>
       )}

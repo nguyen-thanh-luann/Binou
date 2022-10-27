@@ -133,16 +133,24 @@ export default function SignupScreen() {
           </Box>
 
           <Box mt={2}>
-            <Button type='submit' variant='contained' color='success' fullWidth>
+            <Button
+              type='submit'
+              variant='contained'
+              color='secondary'
+              fullWidth
+            >
               Signup
             </Button>
             <Box sx={{ textAlign: 'center' }} mt={2}>
-              you already have account?
+              you already have account?{' '}
               <Link
                 to='/login'
-                style={{ color: 'purple', textDecoration: 'none' }}
+                style={{
+                  color: 'purple',
+                  textDecoration: 'none',
+                  fontWeight: 'bold',
+                }}
               >
-                {' '}
                 Login
               </Link>
             </Box>

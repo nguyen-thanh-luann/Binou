@@ -58,7 +58,7 @@ export default function AddToCartBtn({ product, orderNumber }) {
             addToCartHandler(product, orderNumber)
           }}
           variant='outlined'
-          color='success'
+          color='secondary'
           startIcon={<ShoppingCartIcon />}
         >
           <span>Add to cart</span>

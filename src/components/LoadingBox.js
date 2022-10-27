@@ -1,13 +1,10 @@
-import Style from '../scss/LoadingBox.module.scss'
+import { CircularProgress } from '@mui/material'
+import { Box } from '@mui/material'
 
 export default function LoadingBox() {
   return (
-    <div className={Style.loadingBox}>
-      <div className={Style.loadingDot}></div>
-      <div className={Style.loadingDot}></div>
-      <div className={Style.loadingDot}></div>
-      <div className={Style.loadingDot}></div>
-      <div className={Style.loadingDot}></div>
-    </div>
+    <Box>
+      <CircularProgress color='secondary' />
+    </Box>
   )
 }

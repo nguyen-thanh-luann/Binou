@@ -13,9 +13,8 @@ import VerticalLine from '../components/VerticalLine'
 import LoadingBox from '../components/LoadingBox'
 import AddToCartBtn from '../components/AddToCartBtn'
 import { getProductById, reviewProduct } from '../services/ProductService'
-import Style from '../scss/ProductDetail.module.scss'
 import Swal from 'sweetalert2'
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, Grid, Typography } from '@mui/material'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { toast } from 'react-toastify'
@@ -122,72 +121,77 @@ export default function ProductScreen() {
     <div>
       <Header />
       {loading ? (
-        <div className='text-center'>
+        <Box sx={{ textAlign: 'center' }}>
           <LoadingBox />
-        </div>
+        </Box>
       ) : (
         product && (
           <Box p={4}>
-            <div className={Style.productPage}>
-              <Helmet>
-                <title>{product.name}</title>
-              </Helmet>
-              <div className={Style.productImage}>
-                <div className={Style.mainImage}>
+            <Helmet>
+              <title>{product.name}</title>
+            </Helmet>
+            {/* product infomation areas */}
+            <Grid container spacing={4} columns={12}>
+              <Grid item xs={12} sm={4}>
+                <Box>
+                  {/* main image */}
                   <img
                     src={`${proImg !== '' ? proImg : product.image}`}
                     alt=''
-                    className='img-fluid'
+                    className='w-100'
                   />
-                </div>
-                <div className={Style.listImage}>
+                </Box>
+                <Grid container mt={2} spacing={2} columns={10}>
+                  {/* list images */}
                   {product.images.length <= 0 ? (
-                    <div className={Style.imageItem}>
-                      <img src={product.image} alt='' className='img-fluid' />
-                    </div>
+                    <Grid item xs={2}>
+                      <img src={product.image} alt='' className='w-100' />
+                    </Grid>
                   ) : (
                     <>
                       {product.images.map((image, index) => (
-                        <div
+                        <Grid
+                          item
+                          xs={2}
+                          sx={{
+                            cursor: 'pointer',
+                          }}
                           key={index}
-                          className={Style.imageItem}
                           onClick={() => {
                             setProImg(image)
                           }}
-                          style={{ cursor: 'pointer' }}
                         >
-                          <img src={image} alt='' className='img-fluid' />
-                        </div>
+                          <img src={image} alt='' className='w-100' />
+                        </Grid>
                       ))}
                     </>
                   )}
-                </div>
-              </div>
-              <div className={Style.productInfo}>
-                <h3 className={Style.productInfo__name}>{product.name}</h3>
+                </Grid>
+              </Grid>
+              <Grid item xs={12} sm={8}>
+                <h3>{product.name}</h3>
 
-                <div className='d-flex'>
+                <Box sx={{ display: 'flex' }}>
                   <ProductRate
                     rating={product.rating}
                     numReviews={product.numReviews}
                   />
                   <VerticalLine />
                   <span>{product.numReviews} reviews</span>
-                </div>
+                </Box>
 
                 <h4 className='mt-2'>${product.price}</h4>
-                <div className={Style.productDescr}>
+                <div>
                   <p>{product.description}</p>
                 </div>
                 <Box mb={2}>
-                  <Typography>Quantity</Typography>
                   {orderNumber <= 1 ? (
                     <Button disabled variant='outlined'>
                       <RemoveIcon />
                     </Button>
                   ) : (
                     <Button
-                      color='success'
+                      color='secondary'
                       variant='outlined'
                       onClick={() => {
                         setOrderNumber(--orderNumber)
@@ -196,14 +200,14 @@ export default function ProductScreen() {
                       <RemoveIcon />
                     </Button>
                   )}
-                  <Button color='success'>{orderNumber}</Button>
+                  <Button color='secondary'>{orderNumber}</Button>
                   {orderNumber >= product.countInStock ? (
                     <Button disabled variant='outlined'>
                       <AddIcon />
                     </Button>
                   ) : (
                     <Button
-                      color='success'
+                      color='secondary'
                       variant='outlined'
                       onClick={() => {
                         setOrderNumber(++orderNumber)
@@ -214,70 +218,90 @@ export default function ProductScreen() {
                   )}
                 </Box>
                 <AddToCartBtn product={product} orderNumber={orderNumber} />
-              </div>
-            </div>
-            <h2>Reviews</h2>
+              </Grid>
+            </Grid>
 
-            <div className={Style.reviewArea}>
+            {/*preview areas  */}
+            <Box mt={2}>
+              <Typography sx={{ fontSize: '2rem' }}>Reviews</Typography>
               {product.reviews.length === 0 && (
-                <h4 className='text-center text-warning'>There is no review</h4>
+                <Typography
+                  color='secondary'
+                  sx={{ textAlign: 'center', fontSize: '1.5rem' }}
+                >
+                  There is no review
+                </Typography>
               )}
               {product.reviews.map((rev, index) => (
-                <div key={index} className={Style.review}>
+                <Box
+                  key={index}
+                  p={2}
+                  mb={2}
+                  sx={{ border: '1px solid #ccc', borderRadius: '10px' }}
+                >
                   <div>
-                    <span className={Style.review__name}>{rev.name}</span>
-                    <span className={Style.review__date}>
-                      {new Date(rev.updatedAt).toLocaleDateString()}
-                    </span>
+                    <span>{rev.name}</span>
+                    <span>{new Date(rev.updatedAt).toLocaleDateString()}</span>
                   </div>
                   <ProductRate rating={rev.rating} />
 
-                  <span className={Style.review__content}>{rev.comment}</span>
-                </div>
+                  <span>{rev.comment}</span>
+                </Box>
               ))}
-            </div>
-            <div className={Style.writeReviewArea}>
-              <h2>Write a review</h2>
+            </Box>
+            <Box>
+              <Typography sx={{ fontSize: '2rem' }}>Write a review</Typography>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <label htmlFor='rating' className={Style.label}>
-                  Rating
-                </label>
-                <Rating
-                  value={star}
-                  onChange={(e, value) => {
-                    setStar(value)
-                  }}
-                />
+                <Box
+                  fullwidth
+                  mt={2}
+                  sx={{ display: 'flex', alignItems: 'center' }}
+                >
+                  <Typography mr={2} sx={{ fontWeight: 'bold' }}>
+                    Rating
+                  </Typography>
+                  <Rating
+                    value={star}
+                    onChange={(e, value) => {
+                      setStar(value)
+                    }}
+                  />
+                </Box>
 
-                <label htmlFor='comment' className={Style.label}>
-                  Comment
-                </label>
-                <textarea
-                  id='comment'
-                  placeholder='write your comment'
-                  className={Style.commentBox}
-                  {...register('comment', { required: true })}
-                ></textarea>
-                {errors.comment && (
-                  <p>
-                    {errors.comment?.type === 'required' && (
-                      <span className='text-danger'>
-                        Please leave your comment
-                      </span>
-                    )}
-                  </p>
-                )}
-                {loadingReview && <LoadingBox />}
+                <Box mt={1}>
+                  <textarea
+                    id='comment'
+                    style={{
+                      width: '100%',
+                      height: '20vh',
+                      borderRadius: '10px',
+                      padding: '1rem',
+                    }}
+                    placeholder='Leave your comment...'
+                    {...register('comment', { required: true })}
+                  ></textarea>
+                  {errors.comment && (
+                    <p>
+                      {errors.comment?.type === 'required' && (
+                        <span className='text-danger'>
+                          Please leave your comment
+                        </span>
+                      )}
+                    </p>
+                  )}
+
+                  {loadingReview && <LoadingBox />}
+                </Box>
                 <Button
                   variant='outlined'
-                  color='warning'
+                  color='secondary'
                   sx={{ marginTop: '1rem' }}
                   type='submit'
                 >
                   Submit
                 </Button>
               </form>
-            </div>
+            </Box>
           </Box>
         )
       )}
